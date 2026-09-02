@@ -1,0 +1,6 @@
+{
+  "name": "HA Printer Card",
+  "render_readme": true,
+  "filename": "ha-printer-card.js",
+  "homeassistant": "2024.1.0"
+}
