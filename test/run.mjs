@@ -53,7 +53,7 @@ function render(printerState, cfg = {}, states = {}, attrs = {}) {
   return markup(c);
 }
 
-const label = html => (String(html).match(/<div class="state">([^<]*)</) || [])[1];
+const label = html => (String(html).match(/<div class="state"[^>]*>([^<]*)</) || [])[1];
 const cardClass = html => (String(html).match(/<ha-card class="([^"]*)"/) || [])[1];
 const COLORS_BLACK = 'fill="#26292e"';
 
@@ -662,6 +662,75 @@ contains('web_url: auto derive l\'adresse de uri_supported',
 contains('web_url explicite',
   render('idle', { web_url: 'http://printer.lan/' }), 'href="http://printer.lan/"');
 check('pas de bouton web sans web_url', /class="btn"/.test(render('idle')), false);
+// Home Assistant shows an address on the device page: that is the registry's
+// configuration_url, and `auto` should find the same one. The IPP integration
+// does not set it and publishes what it talks to as an attribute instead.
+function renderWithDevice(cfg, device, attrs = {}) {
+  const c = new Card();
+  c.setConfig({ entity: 'sensor.printer', ...cfg });
+  const hass = makeHass('idle', {}, attrs);
+  hass.entities = { 'sensor.printer': { device_id: 'dev1' } };
+  hass.devices = { dev1: { name: 'Printer', via_device_id: null, ...device } };
+  c.hass = hass;
+  return markup(c);
+}
+contains('auto prend la configuration_url de l\'appareil',
+  renderWithDevice({ web_url: 'auto' }, { configuration_url: 'http://192.168.0.128' }),
+  'href="http://192.168.0.128"');
+contains('une configuration_url en https est prise telle quelle',
+  renderWithDevice({ web_url: 'auto' }, { configuration_url: 'https://printer.lan/admin' }),
+  'href="https://printer.lan/admin"');
+contains('sans configuration_url on retombe sur uri_supported',
+  renderWithDevice({ web_url: 'auto' }, {}), 'href="http://192.168.0.128/"');
+check('un lien interne a Home Assistant n\'est pas une interface web',
+  /homeassistant:/.test(renderWithDevice({ web_url: 'auto' },
+    { configuration_url: 'homeassistant://navigate/config' })), false);
+contains('et on retombe alors sur uri_supported',
+  renderWithDevice({ web_url: 'auto' }, { configuration_url: 'homeassistant://navigate/config' }),
+  'href="http://192.168.0.128/"');
+check('une url explicite gagne sur la configuration_url',
+  /printer.lan/.test(renderWithDevice({ web_url: 'http://autre.lan/' },
+    { configuration_url: 'https://printer.lan/admin' })), false);
+
+// ── Every number opens its entity ────────────────────────────────────────────
+// A percentage you cannot click is a percentage whose history you cannot see.
+
+const clickable = renderDev('idle', {}, {
+  ...BROTHER,
+  'sensor.printer_page_counter': { state: '12480', attributes: { friendly_name: 'Page counter' } },
+}, { friendly_name: 'HL-L8360CDW Status' });
+contains('une cartouche porte son entite', clickable, 'data-entity="sensor.printer_black_toner_remaining"');
+contains('une piece d\'usure aussi', clickable, 'data-entity="sensor.printer_fuser_remaining_life"');
+contains('un compteur aussi', clickable, 'data-entity="sensor.printer_page_counter"');
+contains('le bloc nom et etat ouvre l\'imprimante', clickable, '<div class="body clickable" data-entity="sensor.printer"');
+contains('l\'etat brut de l\'imprimante est en infobulle', clickable, '<div class="state" title="idle"');
+contains('les cartouches dans la machine portent leur entite aussi',
+  renderDev('idle', { cartridge_style: 'inside' }, BROTHER), 'class="ink clickable" data-entity="sensor.printer_black_toner_remaining"');
+contains('le coin prise ouvre le capteur de puissance',
+  render('idle', { power_entity: 'sensor.w' }, w(10.6)), 'data-entity="sensor.w"');
+
+// Opening an entity is useful when its history is, and a toner that drops in
+// steps of ten has little to show. So it is a switch.
+const noTap = renderDev('idle', { more_info: false }, BROTHER, { friendly_name: 'HL-L8360CDW Status' });
+check('more_info: false retire les entites cliquables', /data-entity=/.test(noTap), false);
+check('more_info: false retire aussi le curseur', /class="cart clickable/.test(noTap), false);
+check('les cartouches restent affichees', (noTap.match(/class="cart /g) || []).length, 2);
+check('more_info: false dans la machine aussi',
+  /data-entity=/.test(renderDev('idle', { more_info: false, cartridge_style: 'inside' }, BROTHER)), false);
+check('l\'infobulle de l\'etat brut reste', /<div class="state" title="idle"/.test(noTap), true);
+
+const moreInfo = new Card();
+moreInfo.setConfig({ entity: 'sensor.printer' });
+moreInfo.hass = makeHass('idle');
+moreInfo._moreInfo('sensor.printer_black_toner_remaining');
+const mi = moreInfo.events.at(-1);
+check('le clic demande une fiche a Home Assistant', mi?.type, 'hass-more-info');
+check('avec la bonne entite', mi?.detail?.entityId, 'sensor.printer_black_toner_remaining');
+check('l\'evenement traverse le shadow DOM', mi?.composed, true);
+check('un data-entity vide ne declenche rien',
+  (() => { const c = new Card(); c.setConfig({ entity: 'sensor.printer' }); c.hass = makeHass('idle');
+    c._moreInfo(''); return c.events.length; })(), 0);
+
 check('web_url: auto sans uri_supported ne produit pas de lien',
   /class="btn"/.test(render('idle', { web_url: 'auto' }, {}, { uri_supported: undefined })), false);
 
@@ -806,7 +875,7 @@ check('dans l\'imprimante: le niveau est bien traduit en hauteur',
 contains('dans l\'imprimante: une infobulle nomme la cartouche et son niveau',
   ins, '<title>Black 34%</title>');
 check('une cartouche basse est cerclee de rouge',
-  /<g class="ink low"/.test(render('idle', insideCfg, { 'sensor.printer_black_cartridge_hp_cf400x': toner(8) })), true);
+  /<g class="ink clickable low"/.test(render('idle', insideCfg, { 'sensor.printer_black_cartridge_hp_cf400x': toner(8) })), true);
 check('l\'alerte cartouche basse reste affichee',
   /Cartridge low/.test(render('idle', insideCfg, { 'sensor.printer_black_cartridge_hp_cf400x': toner(8) })), true);
 check('compact reste en barres, il n\'a pas d\'illustration',

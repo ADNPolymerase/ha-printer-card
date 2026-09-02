@@ -1,4 +1,4 @@
-const CARD_VERSION = "0.4.0";
+const CARD_VERSION = "0.5.0";
 
 console.info(
   "%c HA-PRINTER-CARD %c v" + CARD_VERSION + " ",
@@ -20,7 +20,7 @@ const T = {
     low: "Low", alert_low: "Cartridge low", alert_part: "Wear part low",
     pages: "pages", pages_bw: "B&W", pages_color: "colour",
     fn_print: "Printed", fn_scan: "Scanned", fn_copy: "Copied", fn_fax: "Faxed",
-    show_parts: "Show the drum, fuser and other wear parts", show_counters: "Show the page counters",
+    show_parts: "Show the drum, fuser and other wear parts", show_counters: "Show the page counters", more_info: "Tap a value to open its entity",
     paper_entity: "Paper tray sensor",
     supplies: "Supplies", toner: "Toner", ink: "Ink",
     c_black: "Black", c_cyan: "Cyan", c_magenta: "Magenta", c_yellow: "Yellow",
@@ -51,7 +51,7 @@ const T = {
     low: "Bas", alert_low: "Cartouche presque vide", alert_part: "Pi\u00e8ce d'usure en fin de vie",
     pages: "pages", pages_bw: "N&B", pages_color: "couleur",
     fn_print: "Impression", fn_scan: "Num\u00e9risation", fn_copy: "Copie", fn_fax: "Fax",
-    show_parts: "Afficher le tambour, le four et les autres pi\u00e8ces d'usure", show_counters: "Afficher les compteurs de pages",
+    show_parts: "Afficher le tambour, le four et les autres pi\u00e8ces d'usure", show_counters: "Afficher les compteurs de pages", more_info: "Ouvrir l'entit\u00e9 au clic sur une valeur",
     paper_entity: "Capteur du bac \u00e0 papier",
     supplies: "Consommables", toner: "Toner", ink: "Encre",
     c_black: "Noir", c_cyan: "Cyan", c_magenta: "Magenta", c_yellow: "Jaune",
@@ -82,7 +82,7 @@ const T = {
     low: "Niedrig", alert_low: "Patrone fast leer", alert_part: "Verschlei\u00dfteil fast am Ende",
     pages: "Seiten", pages_bw: "S/W", pages_color: "Farbe",
     fn_print: "Gedruckt", fn_scan: "Gescannt", fn_copy: "Kopiert", fn_fax: "Fax",
-    show_parts: "Trommel, Fixiereinheit und andere Verschlei\u00dfteile anzeigen", show_counters: "Seitenz\u00e4hler anzeigen",
+    show_parts: "Trommel, Fixiereinheit und andere Verschlei\u00dfteile anzeigen", show_counters: "Seitenz\u00e4hler anzeigen", more_info: "Beim Klick auf einen Wert die Entit\u00e4t \u00f6ffnen",
     paper_entity: "Sensor des Papierfachs",
     supplies: "Verbrauchsmaterial", toner: "Toner", ink: "Tinte",
     c_black: "Schwarz", c_cyan: "Cyan", c_magenta: "Magenta", c_yellow: "Gelb",
@@ -113,7 +113,7 @@ const T = {
     low: "Bajo", alert_low: "Cartucho casi vac\u00edo", alert_part: "Pieza de desgaste al l\u00edmite",
     pages: "p\u00e1ginas", pages_bw: "B/N", pages_color: "color",
     fn_print: "Impresi\u00f3n", fn_scan: "Escaneo", fn_copy: "Copia", fn_fax: "Fax",
-    show_parts: "Mostrar el tambor, el fusor y otras piezas de desgaste", show_counters: "Mostrar los contadores de p\u00e1ginas",
+    show_parts: "Mostrar el tambor, el fusor y otras piezas de desgaste", show_counters: "Mostrar los contadores de p\u00e1ginas", more_info: "Abrir la entidad al pulsar un valor",
     paper_entity: "Sensor de la bandeja de papel",
     supplies: "Consumibles", toner: "T\u00f3ner", ink: "Tinta",
     c_black: "Negro", c_cyan: "Cian", c_magenta: "Magenta", c_yellow: "Amarillo",
@@ -144,7 +144,7 @@ const T = {
     low: "Basso", alert_low: "Cartuccia quasi esaurita", alert_part: "Parte di consumo quasi esaurita",
     pages: "pagine", pages_bw: "B/N", pages_color: "colore",
     fn_print: "Stampa", fn_scan: "Scansione", fn_copy: "Copia", fn_fax: "Fax",
-    show_parts: "Mostrare il tamburo, il fusore e le altre parti di consumo", show_counters: "Mostrare i contatori di pagine",
+    show_parts: "Mostrare il tamburo, il fusore e le altre parti di consumo", show_counters: "Mostrare i contatori di pagine", more_info: "Aprire l'entit\u00e0 toccando un valore",
     paper_entity: "Sensore del vassoio carta",
     supplies: "Materiali di consumo", toner: "Toner", ink: "Inchiostro",
     c_black: "Nero", c_cyan: "Ciano", c_magenta: "Magenta", c_yellow: "Giallo",
@@ -175,7 +175,7 @@ const T = {
     low: "Laag", alert_low: "Cartridge bijna leeg", alert_part: "Slijtdeel bijna op",
     pages: "pagina's", pages_bw: "Z/W", pages_color: "kleur",
     fn_print: "Afgedrukt", fn_scan: "Gescand", fn_copy: "Gekopieerd", fn_fax: "Fax",
-    show_parts: "Drum, fuser en andere slijtdelen tonen", show_counters: "Paginatellers tonen",
+    show_parts: "Drum, fuser en andere slijtdelen tonen", show_counters: "Paginatellers tonen", more_info: "Entiteit openen bij tik op een waarde",
     paper_entity: "Sensor van de papierlade",
     supplies: "Verbruiksartikelen", toner: "Toner", ink: "Inkt",
     c_black: "Zwart", c_cyan: "Cyaan", c_magenta: "Magenta", c_yellow: "Geel",
@@ -206,7 +206,7 @@ const T = {
     low: "Baixo", alert_low: "Cartucho quase vazio", alert_part: "Pe\u00e7a de desgaste no fim",
     pages: "p\u00e1ginas", pages_bw: "P/B", pages_color: "cor",
     fn_print: "Impress\u00e3o", fn_scan: "Digitaliza\u00e7\u00e3o", fn_copy: "C\u00f3pia", fn_fax: "Fax",
-    show_parts: "Mostrar o tambor, o fusor e outras pe\u00e7as de desgaste", show_counters: "Mostrar os contadores de p\u00e1ginas",
+    show_parts: "Mostrar o tambor, o fusor e outras pe\u00e7as de desgaste", show_counters: "Mostrar os contadores de p\u00e1ginas", more_info: "Abrir a entidade ao tocar num valor",
     paper_entity: "Sensor do tabuleiro de papel",
     supplies: "Consum\u00edveis", toner: "Toner", ink: "Tinta",
     c_black: "Preto", c_cyan: "Ciano", c_magenta: "Magenta", c_yellow: "Amarelo",
@@ -237,7 +237,7 @@ const T = {
     low: "L\u00e5g", alert_low: "Patron n\u00e4stan tom", alert_part: "Slitdel n\u00e4stan slut",
     pages: "sidor", pages_bw: "S/V", pages_color: "f\u00e4rg",
     fn_print: "Utskrift", fn_scan: "Skanning", fn_copy: "Kopiering", fn_fax: "Fax",
-    show_parts: "Visa trumma, fixeringsenhet och andra slitdelar", show_counters: "Visa sidr\u00e4knarna",
+    show_parts: "Visa trumma, fixeringsenhet och andra slitdelar", show_counters: "Visa sidr\u00e4knarna", more_info: "\u00d6ppna entiteten n\u00e4r ett v\u00e4rde trycks",
     paper_entity: "Sensor f\u00f6r pappersfacket",
     supplies: "F\u00f6rbrukningsmaterial", toner: "Toner", ink: "Bl\u00e4ck",
     c_black: "Svart", c_cyan: "Cyan", c_magenta: "Magenta", c_yellow: "Gul",
@@ -268,7 +268,7 @@ const T = {
     low: "Lav", alert_low: "Patron nesten tom", alert_part: "Slitedel nesten oppbrukt",
     pages: "sider", pages_bw: "S/H", pages_color: "farge",
     fn_print: "Utskrift", fn_scan: "Skanning", fn_copy: "Kopiering", fn_fax: "Faks",
-    show_parts: "Vis trommel, fikseringsenhet og andre slitedeler", show_counters: "Vis sidetellerne",
+    show_parts: "Vis trommel, fikseringsenhet og andre slitedeler", show_counters: "Vis sidetellerne", more_info: "\u00c5pne entiteten n\u00e5r en verdi trykkes",
     paper_entity: "Sensor for papirskuffen",
     supplies: "Forbruksmateriell", toner: "Toner", ink: "Blekk",
     c_black: "Svart", c_cyan: "Cyan", c_magenta: "Magenta", c_yellow: "Gul",
@@ -299,7 +299,7 @@ const T = {
     low: "Lav", alert_low: "Patron n\u00e6sten tom", alert_part: "Sliddel n\u00e6sten opbrugt",
     pages: "sider", pages_bw: "S/H", pages_color: "farve",
     fn_print: "Udskrift", fn_scan: "Scanning", fn_copy: "Kopiering", fn_fax: "Fax",
-    show_parts: "Vis tromle, fikseringsenhed og andre sliddele", show_counters: "Vis sidet\u00e6llerne",
+    show_parts: "Vis tromle, fikseringsenhed og andre sliddele", show_counters: "Vis sidet\u00e6llerne", more_info: "\u00c5bn entiteten n\u00e5r en v\u00e6rdi trykkes",
     paper_entity: "Sensor for papirbakken",
     supplies: "Forbrugsstoffer", toner: "Toner", ink: "Bl\u00e6k",
     c_black: "Sort", c_cyan: "Cyan", c_magenta: "Magenta", c_yellow: "Gul",
@@ -330,7 +330,7 @@ const T = {
     low: "Niski", alert_low: "Ko\u0144czy si\u0119 tusz", alert_part: "Cz\u0119\u015b\u0107 eksploatacyjna na wyczerpaniu",
     pages: "stron", pages_bw: "Cz/B", pages_color: "kolor",
     fn_print: "Wydruk", fn_scan: "Skanowanie", fn_copy: "Kopiowanie", fn_fax: "Faks",
-    show_parts: "Poka\u017c b\u0119ben, utrwalacz i inne cz\u0119\u015bci eksploatacyjne", show_counters: "Poka\u017c liczniki stron",
+    show_parts: "Poka\u017c b\u0119ben, utrwalacz i inne cz\u0119\u015bci eksploatacyjne", show_counters: "Poka\u017c liczniki stron", more_info: "Otw\u00f3rz encj\u0119 po klikni\u0119ciu warto\u015bci",
     paper_entity: "Czujnik podajnika papieru",
     supplies: "Materia\u0142y eksploatacyjne", toner: "Toner", ink: "Tusz",
     c_black: "Czarny", c_cyan: "Cyjan", c_magenta: "Magenta", c_yellow: "\u017b\u00f3\u0142ty",
@@ -361,7 +361,7 @@ const T = {
     low: "\u041c\u0430\u043b\u043e", alert_low: "\u041a\u0430\u0440\u0442\u0440\u0438\u0434\u0436 \u0437\u0430\u043a\u0430\u043d\u0447\u0438\u0432\u0430\u0435\u0442\u0441\u044f", alert_part: "\u0420\u0430\u0441\u0445\u043e\u0434\u043d\u0430\u044f \u0434\u0435\u0442\u0430\u043b\u044c \u043d\u0430 \u0438\u0441\u0445\u043e\u0434\u0435",
     pages: "\u0441\u0442\u0440\u0430\u043d\u0438\u0446", pages_bw: "\u0427/\u0411", pages_color: "\u0446\u0432\u0435\u0442",
     fn_print: "\u041f\u0435\u0447\u0430\u0442\u044c", fn_scan: "\u0421\u043a\u0430\u043d\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u0435", fn_copy: "\u041a\u043e\u043f\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u0435", fn_fax: "\u0424\u0430\u043a\u0441",
-    show_parts: "\u041f\u043e\u043a\u0430\u0437\u044b\u0432\u0430\u0442\u044c \u0431\u0430\u0440\u0430\u0431\u0430\u043d, \u043f\u0435\u0447\u043a\u0443 \u0438 \u0434\u0440\u0443\u0433\u0438\u0435 \u0440\u0430\u0441\u0445\u043e\u0434\u043d\u044b\u0435 \u0434\u0435\u0442\u0430\u043b\u0438", show_counters: "\u041f\u043e\u043a\u0430\u0437\u044b\u0432\u0430\u0442\u044c \u0441\u0447\u0451\u0442\u0447\u0438\u043a\u0438 \u0441\u0442\u0440\u0430\u043d\u0438\u0446",
+    show_parts: "\u041f\u043e\u043a\u0430\u0437\u044b\u0432\u0430\u0442\u044c \u0431\u0430\u0440\u0430\u0431\u0430\u043d, \u043f\u0435\u0447\u043a\u0443 \u0438 \u0434\u0440\u0443\u0433\u0438\u0435 \u0440\u0430\u0441\u0445\u043e\u0434\u043d\u044b\u0435 \u0434\u0435\u0442\u0430\u043b\u0438", show_counters: "\u041f\u043e\u043a\u0430\u0437\u044b\u0432\u0430\u0442\u044c \u0441\u0447\u0451\u0442\u0447\u0438\u043a\u0438 \u0441\u0442\u0440\u0430\u043d\u0438\u0446", more_info: "\u041e\u0442\u043a\u0440\u044b\u0432\u0430\u0442\u044c \u043e\u0431\u044a\u0435\u043a\u0442 \u043f\u043e \u043d\u0430\u0436\u0430\u0442\u0438\u044e \u043d\u0430 \u0437\u043d\u0430\u0447\u0435\u043d\u0438\u0435",
     paper_entity: "\u0414\u0430\u0442\u0447\u0438\u043a \u043b\u043e\u0442\u043a\u0430 \u0431\u0443\u043c\u0430\u0433\u0438",
     supplies: "\u0420\u0430\u0441\u0445\u043e\u0434\u043d\u044b\u0435 \u043c\u0430\u0442\u0435\u0440\u0438\u0430\u043b\u044b", toner: "\u0422\u043e\u043d\u0435\u0440", ink: "\u0427\u0435\u0440\u043d\u0438\u043b\u0430",
     c_black: "\u0427\u0451\u0440\u043d\u044b\u0439", c_cyan: "\u0413\u043e\u043b\u0443\u0431\u043e\u0439", c_magenta: "\u041f\u0443\u0440\u043f\u0443\u0440\u043d\u044b\u0439", c_yellow: "\u0416\u0451\u043b\u0442\u044b\u0439",
@@ -392,7 +392,7 @@ const T = {
     low: "\u4e0d\u8db3", alert_low: "\u58a8\u76d2\u5373\u5c06\u8017\u5c3d", alert_part: "\u8017\u6750\u90e8\u4ef6\u5373\u5c06\u8017\u5c3d",
     pages: "\u9875", pages_bw: "\u9ed1\u767d", pages_color: "\u5f69\u8272",
     fn_print: "\u6253\u5370", fn_scan: "\u626b\u63cf", fn_copy: "\u590d\u5370", fn_fax: "\u4f20\u771f",
-    show_parts: "\u663e\u793a\u7852\u9f13\u3001\u5b9a\u5f71\u5355\u5143\u7b49\u8017\u6750\u90e8\u4ef6", show_counters: "\u663e\u793a\u9875\u6570\u8ba1\u6570\u5668",
+    show_parts: "\u663e\u793a\u7852\u9f13\u3001\u5b9a\u5f71\u5355\u5143\u7b49\u8017\u6750\u90e8\u4ef6", show_counters: "\u663e\u793a\u9875\u6570\u8ba1\u6570\u5668", more_info: "\u70b9\u51fb\u6570\u503c\u65f6\u6253\u5f00\u5b9e\u4f53",
     paper_entity: "\u7eb8\u76d2\u4f20\u611f\u5668",
     supplies: "\u8017\u6750", toner: "\u78b3\u7c89", ink: "\u58a8\u6c34",
     c_black: "\u9ed1\u8272", c_cyan: "\u9752\u8272", c_magenta: "\u54c1\u7ea2", c_yellow: "\u9ec4\u8272",
@@ -886,10 +886,11 @@ function readCounters(hass, cfg) {
     if (value === null) continue;
     const fn = counterFunction(deviceId ? deviceLabel(hass, deviceId) : "", hay);
     const slot = COUNTER_BW.test(hay) ? "bw" : COUNTER_COLOR.test(hay) ? "color" : "total";
-    groups[fn] = groups[fn] || { total: null, bw: null, color: null };
+    groups[fn] = groups[fn] || { total: null, bw: null, color: null, ids: {} };
     ranks[fn] = ranks[fn] || {};
     if (groups[fn][slot] === null || rank < ranks[fn][slot]) {
       groups[fn][slot] = value;
+      groups[fn].ids[slot] = id;
       ranks[fn][slot] = rank;
     }
   }
@@ -1041,10 +1042,20 @@ function isPaperOut(st) {
 
 // `web_url: auto` reads the address the printer advertises itself, rather
 // than asking the user to retype an IP that DHCP may move.
-function webUrl(cfg, st) {
+// `auto` should find the same address Home Assistant puts on the device page.
+// That is the device registry's configuration_url, which most printer
+// integrations fill in; the IPP one does not, and publishes the address it
+// talks to as an attribute instead.
+function webUrl(cfg, st, hass) {
   const raw = cfg.web_url;
   if (!raw) return null;
   if (raw !== "auto") return raw;
+  const devices = hass && hass.devices;
+  const reg = hass && hass.entities;
+  const entry = reg ? reg[cfg.entity] : null;
+  const device = entry && entry.device_id && devices ? devices[entry.device_id] : null;
+  const configured = device && device.configuration_url ? String(device.configuration_url) : "";
+  if (/^https?:\/\//i.test(configured)) return configured;
   const uris = st && st.attributes ? st.attributes.uri_supported : null;
   const first = String(uris || "").split(",")[0].trim();
   const m = first.match(/^ipps?:\/\/([^/:]+)/i);
@@ -1110,7 +1121,7 @@ function panelBlock(x, y, w = 38, h = 21) {
 // Cartridges drawn inside the machine itself, for the layout that drops the
 // separate row. Each model declares a bay clear of everything that moves --
 // the page, the control panel, the jam warning -- so nothing ever overlaps.
-function inkBay(carts, bay) {
+function inkBay(carts, bay, tappable) {
   if (!carts.length) return "";
   const gap = 2.5;
   const w = Math.min(9, (bay.w - gap * (carts.length - 1)) / carts.length);
@@ -1125,7 +1136,7 @@ function inkBay(carts, bay) {
     const fh = +((inner - 2) * pct / 100).toFixed(1);
     const fy = +(top + inner - 1 - fh).toFixed(1);
     return `
-    <g class="ink${c.low ? " low" : ""}">
+    <g class="ink${tappable ? " clickable" : ""}${c.low ? " low" : ""}"${tappable && c.entity ? ` data-entity="${escapeHtml(c.entity)}"` : ""}>
       <title>${escapeHtml(c.label || c.title)} ${c.level === null ? "?" : Math.round(c.level)}%</title>
       <rect class="ink-cap" x="${+(x + w * 0.3).toFixed(1)}" y="${bay.y}" width="${+(w * 0.4).toFixed(1)}" height="${capH}" rx="1"/>
       <rect class="ink-track" x="${x}" y="${top}" width="${+w.toFixed(1)}" height="${inner}" rx="2"/>
@@ -1242,7 +1253,7 @@ const MODELS = {
 
 function printerSvg(norm, cfg, carts, noPaper) {
   const model = MODELS[cfg.printer_type] || MODELS.mfp;
-  const ink = carts && carts.length ? inkBay(carts, model.bay) : "";
+  const ink = carts && carts.length ? inkBay(carts, model.bay, cfg.more_info !== false) : "";
   return `
 <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" role="img">
   ${model.draw(norm === "stopped", ink, noPaper)}
@@ -1318,6 +1329,19 @@ class PrinterCard extends HTMLElement {
     this._render();
   }
 
+  // Home Assistant's own fireEvent: a plain Event carrying a detail, composed
+  // so it crosses the shadow boundary. Every number on this card comes from an
+  // entity, and an entity the user can open is an entity whose history and
+  // settings are one tap away.
+  _moreInfo(entityId) {
+    if (!entityId) return;
+    this.dispatchEvent(new CustomEvent("hass-more-info", {
+      detail: { entityId },
+      bubbles: true,
+      composed: true,
+    }));
+  }
+
   _togglePlug() {
     const id = this._config.plug_entity;
     if (id) this._hass.callService("homeassistant", "toggle", { entity_id: id });
@@ -1383,7 +1407,7 @@ class PrinterCard extends HTMLElement {
     const lows = carts.filter((c) => c.low);
     const lowParts = parts.filter((c) => c.low);
     const counters = cfg.show_counters === false ? null : readCounters(hass, cfg);
-    const url = webUrl(cfg, st);
+    const url = webUrl(cfg, st, hass);
     const noPaper = isPaperOut(st) || paperEntityEmpty(hass, cfg)
       || (!!msg && PAPER_OUT_PATTERNS.some((re) => re.test(stripAccents(msg))));
     // "inside" draws the cartridges in the machine and drops the row below it,
@@ -1405,28 +1429,35 @@ class PrinterCard extends HTMLElement {
     if (signature === this._signature) return;
     this._signature = signature;
 
+    // Opening an entity is useful when its history is: a toner that drops in
+    // steps of ten tells you little. So it is a switch, on by default because
+    // a value you cannot tap is a surprise in Home Assistant.
+    const tappable = cfg.more_info !== false;
+    const clk = tappable ? " clickable" : "";
+    const ent = (id) => (tappable && id ? ` data-entity="${escapeHtml(id)}"` : "");
+
     const cartMarkup = carts.length === 0 || inside ? "" : bars
       ? `<div class="supplies bars">${carts.map((c) => `
-          <div class="row-b ${c.low ? "low" : ""}" title="${escapeHtml(c.title)}">
+          <div class="row-b${clk} ${c.low ? "low" : ""}"${ent(c.entity)} title="${escapeHtml(c.title)}">
             <span class="lbl">${escapeHtml(c.label)}</span>
             ${cartridgeBar(c.level, c.swatch)}
             <span class="pct">${c.level === null ? "?" : Math.round(c.level)}%</span>
           </div>`).join("")}</div>`
       : `<div class="supplies">${carts.map((c, i) => `
-          <div class="cart ${c.low ? "low" : ""}" title="${escapeHtml(c.title)}">
+          <div class="cart${clk} ${c.low ? "low" : ""}"${ent(c.entity)} title="${escapeHtml(c.title)}">
             <span class="wrap">${cartridgeSvg(c.level, c.swatch, i)}${c.low ? '<span class="lowdot">!</span>' : ""}</span>
             <span class="pct">${c.level === null ? "?" : Math.round(c.level)}%</span>
             <span class="lbl">${escapeHtml(c.label)}</span>
           </div>`).join("")}</div>`;
 
-    const corner = showPower ? `<div class="corner ${plugOn ? "on" : ""}">
+    const corner = showPower ? `<div class="corner${clk} ${plugOn ? "on" : ""}"${ent(cfg.power_entity || cfg.plug_entity)}>
           ${plugOn !== null ? `<ha-icon icon="${plugOn ? "mdi:power-plug" : "mdi:power-plug-off"}"></ha-icon>` : ""}
           ${watts !== null ? `${watts.toFixed(watts >= 100 ? 0 : 1)} W` : ""}
         </div>` : "";
 
     const nf = new Intl.NumberFormat(lang(hass));
     const partsMarkup = parts.length === 0 ? "" : `<div class="parts">${parts.map((c) => `
-          <span class="part ${c.low ? "low" : ""}" title="${escapeHtml(c.title)}">
+          <span class="part${clk} ${c.low ? "low" : ""}"${ent(c.entity)} title="${escapeHtml(c.title)}">
             <span class="pname">${escapeHtml(c.label)}</span>
             <span class="pval">${c.level === null ? "?" : Math.round(c.level)}%</span>
             <i style="width:${Math.max(0, Math.min(100, c.level === null ? 0 : c.level)) * 0.42}px"></i>
@@ -1441,9 +1472,9 @@ class PrinterCard extends HTMLElement {
       const g = counters[fn];
       return `<div class="crow">
             ${labelled ? `<span class="cfn">${t(hass, "fn_" + fn)}</span>` : ""}
-            ${g.total !== null ? `<span><b>${nf.format(g.total)}</b> ${t(hass, "pages")}</span>` : ""}
-            ${g.bw !== null ? `<span><b>${nf.format(g.bw)}</b> ${t(hass, "pages_bw")}</span>` : ""}
-            ${g.color !== null ? `<span><b>${nf.format(g.color)}</b> ${t(hass, "pages_color")}</span>` : ""}
+            ${g.total !== null ? `<span class="${tappable ? "clickable" : ""}"${ent(g.ids.total)}><b>${nf.format(g.total)}</b> ${t(hass, "pages")}</span>` : ""}
+            ${g.bw !== null ? `<span class="${tappable ? "clickable" : ""}"${ent(g.ids.bw)}><b>${nf.format(g.bw)}</b> ${t(hass, "pages_bw")}</span>` : ""}
+            ${g.color !== null ? `<span class="${tappable ? "clickable" : ""}"${ent(g.ids.color)}><b>${nf.format(g.color)}</b> ${t(hass, "pages_color")}</span>` : ""}
           </div>`;
     }).join("")}</div>`;
 
@@ -1527,6 +1558,9 @@ button ha-icon, .btn ha-icon { --mdc-icon-size:18px; }
 .supplies { display:flex; gap:8px; justify-content:space-around; }
 .cart { flex:1 1 0; min-width:0; display:flex; flex-direction:column; align-items:center; gap:1px; }
 .wrap { position:relative; display:block; }
+.clickable { cursor:pointer; }
+.body.clickable:hover .name, .clickable:hover .pct, .clickable:hover .pval { text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:2px; }
+svg .clickable { cursor:pointer; }
 .cart svg { display:block; width:30px; height:54px; }
 .ink-track { fill:#d3d8de; }
 .ink-cap { fill:${SHELL_LINE}; }
@@ -1567,9 +1601,9 @@ button ha-icon, .btn ha-icon { --mdc-icon-size:18px; }
             ? `<div class="badge"><ha-icon icon="${STATE_ICONS[norm]}"></ha-icon></div>`
             : `<div class="illu">${printerSvg(norm, cfg, inside ? carts : null, noPaper)}</div>`}
           ${cfg.compact ? `<div class="bottom">
-            <div class="body">
+            <div class="body${clk}"${ent(cfg.entity)}>
               <div class="name">${escapeHtml(name)}</div>
-              <div class="state">${t(hass, norm)}</div>
+              <div class="state" title="${escapeHtml(st ? String(st.state) : "")}">${t(hass, norm)}</div>
               ${msg ? `<div class="msg${msgSevere ? " severe" : ""}">${escapeHtml(msg)}</div>` : ""}
             </div>
             ${corner}
@@ -1577,9 +1611,9 @@ button ha-icon, .btn ha-icon { --mdc-icon-size:18px; }
           </div>` : ""}
         </div>
         ${cfg.compact ? "" : `<div class="bottom">
-          <div class="body">
+          <div class="body${clk}"${ent(cfg.entity)}>
             <div class="name">${escapeHtml(name)}</div>
-            <div class="state">${t(hass, norm)}</div>
+            <div class="state" title="${escapeHtml(st ? String(st.state) : "")}">${t(hass, norm)}</div>
             ${msg ? `<div class="msg${msgSevere ? " severe" : ""}">${escapeHtml(msg)}</div>` : ""}
           </div>
           <div class="actions">${buttons}</div>
@@ -1593,6 +1627,14 @@ button ha-icon, .btn ha-icon { --mdc-icon-size:18px; }
         ${countersMarkup}
       </ha-card>`;
 
+    this._root.querySelectorAll("[data-entity]").forEach((el) => {
+      const id = el.getAttribute("data-entity");
+      if (!id) return;
+      el.addEventListener("click", (ev) => {
+        ev.stopPropagation();
+        this._moreInfo(id);
+      });
+    });
     this._root.querySelectorAll("button[data-action]").forEach((b) => {
       b.addEventListener("click", (ev) => {
         ev.stopPropagation();
@@ -1732,6 +1774,9 @@ details .form { padding-top:10px; }
         <div class="row row-inline">
           <label><input type="checkbox" data-field="show_power" ${cfg.show_power !== false ? "checked" : ""}/> ${t(hass, "show_power")}</label>
         </div>
+        <div class="row row-inline">
+          <label><input type="checkbox" data-field="more_info" ${cfg.more_info !== false ? "checked" : ""}/> ${t(hass, "more_info")}</label>
+        </div>
         <details open>
           <summary>${t(hass, "section_look")}</summary>
           <div class="form">
@@ -1816,7 +1861,7 @@ details .form { padding-top:10px; }
     this._root.querySelectorAll('input[type="checkbox"][data-field]').forEach((cb) => {
       cb.addEventListener("change", () => {
         const field = cb.dataset.field;
-        if (["show_supplies", "show_message", "show_power", "show_parts", "show_counters"].includes(field)) {
+        if (["show_supplies", "show_message", "show_power", "show_parts", "show_counters", "more_info"].includes(field)) {
           // defaults to true -- only store the key when disabled
           this._set(field, cb.checked ? undefined : false);
         } else {

@@ -77,11 +77,12 @@ Copier `dist/ha-printer-card.js` dans `/config/www/`, puis l'ajouter en ressourc
 | `printing_watts` | Watts au-delà desquels l'imprimante est considérée en impression, quoi qu'elle annonce. `0` ou vide désactive. À sens unique : ne masque jamais un bourrage ni une prise coupée. |
 | `paper_entity` | Capteur du bac à papier. Un `binary_sensor` est lu selon sa classe : `problem` signifie que *on* est le bac vide, sinon *on* signifie qu'il y a du papier. Un nombre à zéro, ou un état qui dit « vide », comptent aussi. |
 | `print_entity` | `button`, `input_button`, `script` ou `switch` déclenché par le bouton *Test*. |
-| `web_url` | `auto` déduit l'interface web de l'imprimante depuis son propre `uri_supported`, ou indiquer une URL. Vide, pas de bouton. |
+| `web_url` | `auto` reprend l'adresse que Home Assistant affiche sur la page de l'appareil (la `configuration_url` du registre), et retombe sur le propre `uri_supported` de l'imprimante. Ou indiquer une URL. Vide, pas de bouton. |
 | `low_threshold` | Seuil de consommable bas en %. Par défaut 20, ou le `marker_low_level` de l'imprimante s'il est plus haut. |
 | `full_threshold` | Pour un consommable déclaré `kind: waste_fill`, le % au-delà duquel il est signalé plein. Par défaut 90. |
 | `printer_type` | `mfp` (défaut), `inkjet`, `laser` ou `office`. |
 | `cartridge_style` | `cartridges` (défaut), `bars`, ou `inside` : les niveaux dessinés dans la machine elle-même, ce qui supprime la rangée du dessous et raccourcit la carte de deux lignes. Chaque modèle a son propre emplacement, à l'écart de la feuille, du bandeau et du triangle de bourrage. Survoler une cartouche donne son nom et son niveau. |
+| `more_info` | `false` pour que les valeurs n'ouvrent plus leur entité au clic. Par défaut `true`. |
 | `state_map` | Table facultative : état brut → `printing`\|`idle`\|`sleep`\|`warning`\|`stopped`\|`offline`\|`unknown`. |
 | `name` | Titre de la carte. Par défaut le nom de l'appareil, puis le nom convivial de l'entité. |
 | `compact` | `true` pour une icône colorée au lieu de l'illustration (cartouches en barres, boutons en icônes). |
@@ -115,6 +116,24 @@ cartridges:
   - entity: sensor.imprimante_recuperateur_toner
     kind: waste_fill
 ```
+
+## Correspondance des états
+
+Chaque intégration nomme l'état de l'imprimante à sa façon, alors la carte les
+lit à travers une seule table et affiche un libellé unique. C'est pourquoi une
+imprimante `ipp` qui annonce `idle` s'affiche **Prête**. Survoler l'état montre
+la valeur brute, cliquer dessus ouvre l'entité.
+
+| Carte | Couleur | États bruts reconnus |
+|---|---|---|
+| Prête | vert | `idle`, `ready`, `online`, `normal`, `standby`, et leurs traductions |
+| Impression | bleu | `printing`, `processing`, `busy`, `copying`, `scanprocessing`, `warming_up` |
+| Veille | gris | `sleep`, `inpowersave`, `power save`, `eco` |
+| Attention requise | orange | `warning`, `toner low`, `low ink`, `service required` |
+| Arrêtée | rouge | `stopped`, `error`, `jam`, `cover open`, `out of paper`, `replace toner` |
+| Hors ligne | gris | `offline`, `unavailable`, `unreachable`, `off`, ou une prise coupée |
+
+`state_map` permet de tout redéfinir.
 
 ## Notes
 

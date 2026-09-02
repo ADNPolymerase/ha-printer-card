@@ -77,11 +77,12 @@ Copy `dist/ha-printer-card.js` into `/config/www/`, then add it as a dashboard r
 | `printing_watts` | Watts above which the printer counts as printing, whatever it reports. `0` or unset disables it. One-way: it never hides a jam or an unplugged socket. |
 | `paper_entity` | Paper tray sensor. A `binary_sensor` is read by its device class: `problem` means *on* is the empty tray, anything else means *on* is paper present. A number at zero, or a state saying "empty", also counts. |
 | `print_entity` | `button`, `input_button`, `script` or `switch` fired by the *Test print* button. |
-| `web_url` | `auto` derives the printer's web interface from its own `uri_supported`, or give a URL. Unset, no button. |
+| `web_url` | `auto` uses the address Home Assistant shows on the device page (the registry's `configuration_url`), falling back to the printer's own `uri_supported`. Or give a URL. Unset, no button. |
 | `low_threshold` | Low-supply threshold in %. Default: 20, or the printer's `marker_low_level` when that is higher. |
 | `full_threshold` | For a supply declared `kind: waste_fill`, the % above which it is reported full. Default 90. |
 | `printer_type` | `mfp` (default), `inkjet`, `laser` or `office`. |
 | `cartridge_style` | `cartridges` (default), `bars`, or `inside`: the levels drawn in the machine itself, which drops the row below and makes the card two rows shorter. Each model has its own bay, clear of the page, the panel and the jam warning. Hover a cartridge for its name and level. |
+| `more_info` | `false` to stop values from opening their entity when tapped. Default `true`. |
 | `state_map` | Optional map: raw state → `printing`\|`idle`\|`sleep`\|`warning`\|`stopped`\|`offline`\|`unknown`. |
 | `name` | Card title. Defaults to the device name, then to the entity's friendly name. |
 | `compact` | `true` for a colored icon instead of the illustration (cartridges switch to bars, buttons to icons). |
@@ -115,6 +116,24 @@ cartridges:
   - entity: sensor.printer_waste_toner_box
     kind: waste_fill
 ```
+
+## How states are mapped
+
+Every integration words the printer's state differently, so the card reads them
+through one table and shows a single label. This is why an `ipp` printer
+reporting `idle` reads **Ready** on the card. Hover the state to see the raw
+value, or tap it to open the entity.
+
+| Card | Colour | Raw states it recognizes |
+|---|---|---|
+| Ready | green | `idle`, `ready`, `online`, `normal`, `standby`, and their translations |
+| Printing | blue | `printing`, `processing`, `busy`, `copying`, `scanprocessing`, `warming_up` |
+| Sleep | grey | `sleep`, `inpowersave`, `power save`, `eco` |
+| Attention needed | orange | `warning`, `toner low`, `low ink`, `service required` |
+| Stopped | red | `stopped`, `error`, `jam`, `cover open`, `out of paper`, `replace toner` |
+| Offline | grey | `offline`, `unavailable`, `unreachable`, `off`, or a socket that is off |
+
+`state_map` overrides any of it.
 
 ## Notes
 
