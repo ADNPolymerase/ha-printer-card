@@ -16,7 +16,7 @@ console.info(
 const T = {
   en: {
     printing: "Printing\u2026", idle: "Ready", sleep: "Sleep", stopped: "Stopped",
-    offline: "Offline", unknown: "Unknown state", since: "since",
+    offline: "Offline", unknown: "Unknown state",
     low: "Low", alert_low: "Cartridge low",
     supplies: "Supplies", toner: "Toner", ink: "Ink",
     c_black: "Black", c_cyan: "Cyan", c_magenta: "Magenta", c_yellow: "Yellow",
@@ -43,7 +43,7 @@ const T = {
   },
   fr: {
     printing: "Impression\u2026", idle: "Pr\u00eate", sleep: "Veille", stopped: "Arr\u00eat\u00e9e",
-    offline: "Hors ligne", unknown: "\u00c9tat inconnu", since: "depuis",
+    offline: "Hors ligne", unknown: "\u00c9tat inconnu",
     low: "Bas", alert_low: "Cartouche presque vide",
     supplies: "Consommables", toner: "Toner", ink: "Encre",
     c_black: "Noir", c_cyan: "Cyan", c_magenta: "Magenta", c_yellow: "Jaune",
@@ -70,7 +70,7 @@ const T = {
   },
   de: {
     printing: "Druckt\u2026", idle: "Bereit", sleep: "Ruhezustand", stopped: "Gestoppt",
-    offline: "Offline", unknown: "Unbekannter Zustand", since: "seit",
+    offline: "Offline", unknown: "Unbekannter Zustand",
     low: "Niedrig", alert_low: "Patrone fast leer",
     supplies: "Verbrauchsmaterial", toner: "Toner", ink: "Tinte",
     c_black: "Schwarz", c_cyan: "Cyan", c_magenta: "Magenta", c_yellow: "Gelb",
@@ -97,7 +97,7 @@ const T = {
   },
   es: {
     printing: "Imprimiendo\u2026", idle: "Lista", sleep: "Reposo", stopped: "Detenida",
-    offline: "Sin conexi\u00f3n", unknown: "Estado desconocido", since: "desde",
+    offline: "Sin conexi\u00f3n", unknown: "Estado desconocido",
     low: "Bajo", alert_low: "Cartucho casi vac\u00edo",
     supplies: "Consumibles", toner: "T\u00f3ner", ink: "Tinta",
     c_black: "Negro", c_cyan: "Cian", c_magenta: "Magenta", c_yellow: "Amarillo",
@@ -124,7 +124,7 @@ const T = {
   },
   it: {
     printing: "Stampa in corso\u2026", idle: "Pronta", sleep: "Sospensione", stopped: "Ferma",
-    offline: "Non in linea", unknown: "Stato sconosciuto", since: "da",
+    offline: "Non in linea", unknown: "Stato sconosciuto",
     low: "Basso", alert_low: "Cartuccia quasi esaurita",
     supplies: "Materiali di consumo", toner: "Toner", ink: "Inchiostro",
     c_black: "Nero", c_cyan: "Ciano", c_magenta: "Magenta", c_yellow: "Giallo",
@@ -151,7 +151,7 @@ const T = {
   },
   nl: {
     printing: "Bezig met afdrukken\u2026", idle: "Gereed", sleep: "Slaapstand", stopped: "Gestopt",
-    offline: "Offline", unknown: "Onbekende status", since: "sinds",
+    offline: "Offline", unknown: "Onbekende status",
     low: "Laag", alert_low: "Cartridge bijna leeg",
     supplies: "Verbruiksartikelen", toner: "Toner", ink: "Inkt",
     c_black: "Zwart", c_cyan: "Cyaan", c_magenta: "Magenta", c_yellow: "Geel",
@@ -178,7 +178,7 @@ const T = {
   },
   pt: {
     printing: "A imprimir\u2026", idle: "Pronta", sleep: "Suspensa", stopped: "Parada",
-    offline: "Offline", unknown: "Estado desconhecido", since: "desde",
+    offline: "Offline", unknown: "Estado desconhecido",
     low: "Baixo", alert_low: "Cartucho quase vazio",
     supplies: "Consum\u00edveis", toner: "Toner", ink: "Tinta",
     c_black: "Preto", c_cyan: "Ciano", c_magenta: "Magenta", c_yellow: "Amarelo",
@@ -205,7 +205,7 @@ const T = {
   },
   sv: {
     printing: "Skriver ut\u2026", idle: "Redo", sleep: "Vilol\u00e4ge", stopped: "Stoppad",
-    offline: "Offline", unknown: "Ok\u00e4nt tillst\u00e5nd", since: "sedan",
+    offline: "Offline", unknown: "Ok\u00e4nt tillst\u00e5nd",
     low: "L\u00e5g", alert_low: "Patron n\u00e4stan tom",
     supplies: "F\u00f6rbrukningsmaterial", toner: "Toner", ink: "Bl\u00e4ck",
     c_black: "Svart", c_cyan: "Cyan", c_magenta: "Magenta", c_yellow: "Gul",
@@ -232,7 +232,7 @@ const T = {
   },
   no: {
     printing: "Skriver ut\u2026", idle: "Klar", sleep: "Hvilemodus", stopped: "Stoppet",
-    offline: "Frakoblet", unknown: "Ukjent tilstand", since: "siden",
+    offline: "Frakoblet", unknown: "Ukjent tilstand",
     low: "Lav", alert_low: "Patron nesten tom",
     supplies: "Forbruksmateriell", toner: "Toner", ink: "Blekk",
     c_black: "Svart", c_cyan: "Cyan", c_magenta: "Magenta", c_yellow: "Gul",
@@ -259,7 +259,7 @@ const T = {
   },
   da: {
     printing: "Udskriver\u2026", idle: "Klar", sleep: "Dvale", stopped: "Stoppet",
-    offline: "Offline", unknown: "Ukendt tilstand", since: "siden",
+    offline: "Offline", unknown: "Ukendt tilstand",
     low: "Lav", alert_low: "Patron n\u00e6sten tom",
     supplies: "Forbrugsstoffer", toner: "Toner", ink: "Bl\u00e6k",
     c_black: "Sort", c_cyan: "Cyan", c_magenta: "Magenta", c_yellow: "Gul",
@@ -286,7 +286,7 @@ const T = {
   },
   pl: {
     printing: "Drukowanie\u2026", idle: "Gotowa", sleep: "U\u015bpienie", stopped: "Zatrzymana",
-    offline: "Offline", unknown: "Nieznany stan", since: "od",
+    offline: "Offline", unknown: "Nieznany stan",
     low: "Niski", alert_low: "Ko\u0144czy si\u0119 tusz",
     supplies: "Materia\u0142y eksploatacyjne", toner: "Toner", ink: "Tusz",
     c_black: "Czarny", c_cyan: "Cyjan", c_magenta: "Magenta", c_yellow: "\u017b\u00f3\u0142ty",
@@ -313,7 +313,7 @@ const T = {
   },
   ru: {
     printing: "\u041f\u0435\u0447\u0430\u0442\u044c\u2026", idle: "\u0413\u043e\u0442\u043e\u0432", sleep: "\u0421\u043f\u044f\u0449\u0438\u0439 \u0440\u0435\u0436\u0438\u043c", stopped: "\u041e\u0441\u0442\u0430\u043d\u043e\u0432\u043b\u0435\u043d",
-    offline: "\u041d\u0435 \u0432 \u0441\u0435\u0442\u0438", unknown: "\u041d\u0435\u0438\u0437\u0432\u0435\u0441\u0442\u043d\u043e\u0435 \u0441\u043e\u0441\u0442\u043e\u044f\u043d\u0438\u0435", since: "\u0441",
+    offline: "\u041d\u0435 \u0432 \u0441\u0435\u0442\u0438", unknown: "\u041d\u0435\u0438\u0437\u0432\u0435\u0441\u0442\u043d\u043e\u0435 \u0441\u043e\u0441\u0442\u043e\u044f\u043d\u0438\u0435",
     low: "\u041c\u0430\u043b\u043e", alert_low: "\u041a\u0430\u0440\u0442\u0440\u0438\u0434\u0436 \u0437\u0430\u043a\u0430\u043d\u0447\u0438\u0432\u0430\u0435\u0442\u0441\u044f",
     supplies: "\u0420\u0430\u0441\u0445\u043e\u0434\u043d\u044b\u0435 \u043c\u0430\u0442\u0435\u0440\u0438\u0430\u043b\u044b", toner: "\u0422\u043e\u043d\u0435\u0440", ink: "\u0427\u0435\u0440\u043d\u0438\u043b\u0430",
     c_black: "\u0427\u0451\u0440\u043d\u044b\u0439", c_cyan: "\u0413\u043e\u043b\u0443\u0431\u043e\u0439", c_magenta: "\u041f\u0443\u0440\u043f\u0443\u0440\u043d\u044b\u0439", c_yellow: "\u0416\u0451\u043b\u0442\u044b\u0439",
@@ -340,7 +340,7 @@ const T = {
   },
   zh: {
     printing: "\u6253\u5370\u4e2d\u2026", idle: "\u5c31\u7eea", sleep: "\u7761\u7720", stopped: "\u5df2\u505c\u6b62",
-    offline: "\u79bb\u7ebf", unknown: "\u72b6\u6001\u672a\u77e5", since: "\u81ea",
+    offline: "\u79bb\u7ebf", unknown: "\u72b6\u6001\u672a\u77e5",
     low: "\u4e0d\u8db3", alert_low: "\u58a8\u76d2\u5373\u5c06\u8017\u5c3d",
     supplies: "\u8017\u6750", toner: "\u78b3\u7c89", ink: "\u58a8\u6c34",
     c_black: "\u9ed1\u8272", c_cyan: "\u9752\u8272", c_magenta: "\u54c1\u7ea2", c_yellow: "\u9ec4\u8272",
@@ -612,12 +612,6 @@ function stateObj(hass, entityId) {
 
 function domainOf(entityId) {
   return entityId ? entityId.split(".")[0] : null;
-}
-
-function formatSince(isoDate) {
-  const d = new Date(isoDate);
-  if (isNaN(d)) return null;
-  return d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 }
 
 // The printer's own status text, when it has something to say. IPP fills
@@ -986,7 +980,6 @@ class PrinterCard extends HTMLElement {
 
     const color = STATE_COLORS[norm];
     const name = cfg.name || (st && st.attributes.friendly_name) || "Printer";
-    const since = st && norm !== "printing" ? formatSince(st.last_changed) : null;
     const msg = cfg.show_message === false ? null : statusMessage(st);
     const carts = cfg.show_supplies === false ? [] : readCartridges(hass, cfg);
     carts.forEach((c) => { c.label = cartridgeLabel(hass, c); });
@@ -1004,7 +997,7 @@ class PrinterCard extends HTMLElement {
     const showPower = cfg.show_power !== false && (plugOn !== null || watts !== null);
 
     const signature = JSON.stringify([
-      norm, name, since, msg, url, lang(hass), cfg.compact, cfg.printer_type,
+      norm, name, msg, url, lang(hass), cfg.compact, cfg.printer_type,
       cfg.cartridge_style, showPower, plugOn, watts, !!cfg.print_entity,
       inside, noPaper, carts.map((c) => [c.entity, c.level, c.low, c.color]),
     ]);
@@ -1025,15 +1018,20 @@ class PrinterCard extends HTMLElement {
             <span class="lbl">${escapeHtml(c.label)}</span>
           </div>`).join("")}</div>`;
 
+    const corner = showPower ? `<div class="corner ${plugOn ? "on" : ""}">
+          ${plugOn !== null ? `<ha-icon icon="${plugOn ? "mdi:power-plug" : "mdi:power-plug-off"}"></ha-icon>` : ""}
+          ${watts !== null ? `${watts.toFixed(watts >= 100 ? 0 : 1)} W` : ""}
+        </div>` : "";
+
     const buttons = [
       cfg.plug_entity && plugOn !== null
-        ? `<button data-action="plug"><ha-icon icon="${plugOn ? "mdi:power-plug-off" : "mdi:power-plug"}"></ha-icon><span>${t(hass, plugOn ? "plug_off" : "plug_on")}</span></button>`
+        ? `<button data-action="plug" title="${t(hass, plugOn ? "plug_off" : "plug_on")}"><ha-icon icon="${plugOn ? "mdi:power-plug-off" : "mdi:power-plug"}"></ha-icon><span>${t(hass, plugOn ? "plug_off" : "plug_on")}</span></button>`
         : "",
       cfg.print_entity
-        ? `<button data-action="print"><ha-icon icon="mdi:printer-check"></ha-icon><span>${t(hass, "print_btn")}</span></button>`
+        ? `<button data-action="print" title="${t(hass, "print_btn")}"><ha-icon icon="mdi:printer-check"></ha-icon><span>${t(hass, "print_btn")}</span></button>`
         : "",
       url
-        ? `<a class="btn" href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer"><ha-icon icon="mdi:open-in-new"></ha-icon><span>${t(hass, "web_btn")}</span></a>`
+        ? `<a class="btn" href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" title="${t(hass, "web_btn")}"><ha-icon icon="mdi:open-in-new"></ha-icon><span>${t(hass, "web_btn")}</span></a>`
         : "",
     ].join("");
 
@@ -1082,13 +1080,22 @@ ha-card.compact .bottom { align-items:center; flex:1; }
 .body { min-width:0; flex:1 1 auto; }
 .name { font-size:15px; font-weight:500; color:var(--primary-text-color); }
 .state { font-size:13.5px; font-weight:500; color:var(--pc-color); }
-.since, .msg { font-size:12px; color:var(--secondary-text-color); }
+.msg { font-size:12px; }
 .msg { color:var(--error-color, #f44336); }
 .alert { display:flex; align-items:center; gap:6px; font-size:12.5px; color:var(--warning-color, #ff9800); }
 .alert ha-icon { --mdc-icon-size:17px; }
 .corner { position:absolute; top:10px; right:12px; display:flex; align-items:center; gap:5px; font-size:12px; color:var(--secondary-text-color); z-index:2; }
 .corner ha-icon { --mdc-icon-size:16px; }
 .corner.on { color:var(--success-color, #4caf50); }
+ha-card.compact .corner { position:static; flex:none; white-space:nowrap; }
+/* A flex child with min-width:0 collapses to nothing on an over-full row and
+   its text then paints over its neighbours. Compact rows are the ones that
+   overflow, so there the text truncates and the buttons keep icons only. */
+ha-card.compact .bottom { flex-wrap:wrap; row-gap:8px; }
+ha-card.compact .name, ha-card.compact .state, ha-card.compact .msg {
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+ha-card.compact button, ha-card.compact .btn { min-width:0; padding:8px 10px; }
+ha-card.compact button span, ha-card.compact .btn span { display:none; }
 .actions { display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end; flex:0 0 auto; }
 button, .btn { display:flex; align-items:center; justify-content:center; gap:6px; padding:8px 13px; border:none; border-radius:12px; cursor:pointer; font:inherit; font-size:13px; text-decoration:none; background:var(--secondary-background-color); color:var(--primary-text-color); }
 button:hover, .btn:hover { filter:brightness(.93); }
@@ -1119,10 +1126,7 @@ button ha-icon, .btn ha-icon { --mdc-icon-size:18px; }
 }
       </style>
       <ha-card class="${norm}${cfg.compact ? " compact" : ""}">
-        ${showPower ? `<div class="corner ${plugOn ? "on" : ""}">
-          ${plugOn !== null ? `<ha-icon icon="${plugOn ? "mdi:power-plug" : "mdi:power-plug-off"}"></ha-icon>` : ""}
-          ${watts !== null ? `${watts.toFixed(watts >= 100 ? 0 : 1)} W` : ""}
-        </div>` : ""}
+        ${cfg.compact ? "" : corner}
         <div class="top">
           ${cfg.compact
             ? `<div class="badge"><ha-icon icon="${STATE_ICONS[norm]}"></ha-icon></div>`
@@ -1133,6 +1137,7 @@ button ha-icon, .btn ha-icon { --mdc-icon-size:18px; }
               <div class="state">${t(hass, norm)}</div>
               ${msg ? `<div class="msg">${escapeHtml(msg)}</div>` : ""}
             </div>
+            ${corner}
             <div class="actions">${buttons}</div>
           </div>` : ""}
         </div>
@@ -1141,7 +1146,6 @@ button ha-icon, .btn ha-icon { --mdc-icon-size:18px; }
             <div class="name">${escapeHtml(name)}</div>
             <div class="state">${t(hass, norm)}</div>
             ${msg ? `<div class="msg">${escapeHtml(msg)}</div>` : ""}
-            ${since && !msg ? `<div class="since">${t(hass, "since")} ${since}</div>` : ""}
           </div>
           <div class="actions">${buttons}</div>
         </div>`}

@@ -259,6 +259,37 @@ const compact = render('printing', { compact: true }, TONERS);
 contains('compact: badge au lieu de l\'illustration', compact, 'class="badge"');
 check('compact: pas d\'illustration', /class="illu"/.test(compact), false);
 contains('compact: cartouches en barres', compact, 'class="supplies bars"');
+// The socket chip is pinned over the illustration, which compact mode does not
+// have: pinned there it landed on top of the buttons. It joins the flow instead.
+const compactPower = render('printing', { compact: true, plug_entity: 'switch.plug', power_entity: 'sensor.w' },
+  { ...plugOn, ...w(318) });
+check('compact: la prise n\'est plus en position absolue',
+  /ha-card.compact .corner \{ position:static/.test(compactPower), true);
+check('compact: la prise est dans la ligne, avant les boutons',
+  compactPower.indexOf('class="corner') < compactPower.indexOf('class="actions"'), true);
+check('compact: la prise est apres le texte, pas devant lui',
+  compactPower.indexOf('class="body"') < compactPower.indexOf('class="corner'), true);
+const fullPower = render('printing', { plug_entity: 'switch.plug', power_entity: 'sensor.w' }, { ...plugOn, ...w(318) });
+check('en pleine carte la prise reste epinglee au coin',
+  fullPower.indexOf('class="corner') < fullPower.indexOf('class="top"'), true);
+contains('compact: les watts sont bien affiches', compactPower, '318 W');
+// A flex child with min-width:0 collapses to nothing on an over-full row and
+// its text then paints over its neighbours, which is how the socket chip ended
+// up under the name. Compact truncates instead, and drops the button labels.
+contains('compact: le nom est tronque plutot que deborder', compactPower,
+  'ha-card.compact .name, ha-card.compact .state, ha-card.compact .msg {');
+contains('compact: la ligne peut passer a la ligne en dernier recours', compactPower,
+  'ha-card.compact .bottom { flex-wrap:wrap;');
+contains('compact: les libelles de boutons sont masques', compactPower,
+  'ha-card.compact button span, ha-card.compact .btn span { display:none; }');
+// Icon-only buttons still have to say what they do.
+contains('les boutons portent leur libelle en infobulle', compactPower, 'title="Off"');
+contains('le lien web aussi', render('idle', { web_url: 'auto' }), 'title="Web"');
+
+// A printer sits idle for days and never prints for hours: the state's age was
+// noise, and it was hidden on the one state where it would have meant something.
+check('plus de ligne de duree', /class="since"/.test(render('idle')), false);
+check('plus de duree non plus en impression', /class="since"/.test(render('printing')), false);
 // ── The four models ──────────────────────────────────────────────────────────
 // Each machine is told apart by where the page comes out, and that is carried
 // by --pc-hidden: negative, the page drops out over the front; positive, it
