@@ -416,6 +416,120 @@ const explicit = renderHp({ cartridges: ['sensor.hp_black_niveau', 'sensor.ipp_b
 check('une liste explicite n\'est pas dedupliquee',
   (explicit.match(/class="cart /g) || []).length, 2);
 
+// ── An integration that describes its own supplies (SNMP) ────────────────────
+// The SNMP integration publishes the colour, the full description and the
+// type of every supply as attributes. Reading them beats guessing from a name.
+
+const snmpSupply = (v, name, extra) => ({
+  state: String(v),
+  attributes: { unit_of_measurement: '%', friendly_name: name, ...extra },
+  last_changed: '2026-09-02T10:00:00Z',
+});
+function renderSnmp(states, cfg = {}) {
+  const c = new Card();
+  c.setConfig({ entity: 'sensor.printer', ...cfg });
+  const hass = makeHass('idle', states, { friendly_name: 'HP Color LaserJet MFP M277dw' });
+  hass.entities = Object.fromEntries(Object.keys(hass.states).map((id) => [id, { device_id: 'dev1' }]));
+  hass.devices = { dev1: { name: 'HP Color LaserJet MFP M277dw', via_device_id: null } };
+  c.hass = hass;
+  return markup(c);
+}
+
+const described = renderSnmp({
+  'sensor.printer_noir': snmpSupply(34, 'HP Color LaserJet MFP M277dw Noir',
+    { type: 'toner', color: 'Black', description: 'Black Cartridge HP CF400X', rgb_color: [0, 0, 0] }),
+});
+check('la description de l\'integration devient une cartouche',
+  (described.match(/class="cart /g) || []).length, 1);
+contains('elle est reconnue noire', described, 'fill="#26292e"');
+contains('la description complete sert d\'infobulle', described, 'title="Black Cartridge HP CF400X"');
+check('une couleur connue garde la palette de la carte, pas le rgb brut',
+  /rgb\(0,0,0\)/.test(described), false);
+
+// An exotic supply the card cannot name is better drawn in the shade the
+// printer reports than in a default grey.
+const exotic = renderSnmp({
+  'sensor.printer_supply': snmpSupply(70, 'HP Color LaserJet MFP M277dw Supply',
+    { type: 'toner', description: 'Gloss Enhancer', rgb_color: [120, 200, 90] }),
+});
+contains('une couleur inconnue prend le rgb du fabricant', exotic, 'fill="rgb(120,200,90)"');
+const noRgb = renderSnmp({
+  'sensor.printer_supply': snmpSupply(70, 'HP Color LaserJet MFP M277dw Supply', { type: 'toner', description: 'Gloss Enhancer' }),
+});
+contains('sans rgb on retombe sur le gris neutre', noRgb, `fill="#5b6470"`);
+
+// A tray is a percentage on a printer and it is not a supply. The SNMP
+// integration leaves it at unknown when the printer answers "at least one
+// sheet" rather than a count, which would have drawn a blank cartridge.
+const withTrays = renderSnmp({
+  'sensor.printer_noir': snmpSupply(34, 'HP Color LaserJet MFP M277dw Noir',
+    { type: 'toner', color: 'Black', description: 'Black Cartridge HP CF400X' }),
+  'sensor.printer_bac_1': { state: 'unknown', attributes: { unit_of_measurement: '%', friendly_name: 'HP Color LaserJet MFP M277dw Bac 1', max_capacity: 1 } },
+  'sensor.printer_bac_2': { state: 'unknown', attributes: { unit_of_measurement: '%', friendly_name: 'HP Color LaserJet MFP M277dw Bac 2', max_capacity: 150 } },
+  'sensor.printer_etat_du_capot': { state: 'unknown', attributes: { friendly_name: 'HP Color LaserJet MFP M277dw Etat du capot' } },
+});
+check('les bacs ne deviennent pas des cartouches',
+  (withTrays.match(/class="cart /g) || []).length, 1);
+check('aucune cartouche sans niveau', /">\?%</.test(withTrays), false);
+check('un capot sans etat ne devient pas un message',
+  /class="msg"/.test(withTrays), false);
+
+check('"online" est une imprimante disponible', label(render('online')), 'Ready');
+check('"warming_up" est une imprimante qui travaille', label(render('warming_up')), 'Printing…');
+
+// ── The printer's own words, in their own entities ───────────────────────────
+// The SNMP integration gives the RFC 3805 error bits and the front panel text
+// their own sensors rather than attributes.
+
+const withErrors = (err, disp, cfg = {}) => renderSnmp({
+  'sensor.printer_erreurs': { state: err, attributes: { friendly_name: 'HP Color LaserJet MFP M277dw Erreurs' } },
+  'sensor.printer_affichage': { state: disp, attributes: { friendly_name: 'HP Color LaserJet MFP M277dw Affichage' } },
+}, cfg);
+
+contains('le capteur d\'erreurs est affiche', withErrors('jammed', 'Bourrage'), '>Jammed<');
+check('une erreur de bourrage arrete l\'imprimante malgre un etat idle',
+  label(withErrors('jammed', 'Pret')), 'Stopped');
+check('"none" n\'est pas une erreur', /class="msg"/.test(withErrors('none', '')), false);
+contains('sans erreur on affiche le panneau', withErrors('none', 'Mode veille active'), 'Mode veille active');
+// The panel is chatty: it must not talk the printer out of its real state.
+check('un panneau en veille ne change pas un etat pret',
+  label(withErrors('none', 'Mode veille active')), 'Ready');
+check('un panneau qui signale un toner bas leve un avertissement',
+  label(withErrors('none', 'Toner low')), 'Attention needed');
+// The panel says ordinary things most of the time. Red is for what earns it.
+check('un message banal n\'est pas en rouge',
+  /class="msg severe"/.test(withErrors('none', 'Mode veille active')), false);
+check('un bourrage est en rouge',
+  /class="msg severe"/.test(withErrors('jammed', 'Bourrage')), true);
+// RFC 3805 error bits arrive as bare tokens. A sentence is left alone.
+contains('un token d\'erreur est rendu lisible', withErrors('jammed', ''), '>Jammed<');
+contains('le camelCase est separe', withErrors('doorOpen', ''), '>Door open<');
+contains('le snake_case aussi', withErrors('media_empty', ''), '>Media empty<');
+contains('une phrase du panneau reste intacte',
+  withErrors('none', 'Mode veille active'), '>Mode veille active<');
+// A "no paper" error empties the tray, like a state_reason would.
+check('une erreur de bac vide vide le bac dessine',
+  /class="paper-stack"/.test(withErrors('media_empty', '', { printer_type: 'inkjet' })), false);
+check('un bourrage ne vide pas le bac',
+  /class="paper-stack"/.test(withErrors('jammed', '', { printer_type: 'inkjet' })), true);
+check('show_message: false coupe la recherche',
+  /class="msg"/.test(withErrors('jammed', 'Bourrage', { show_message: false })), false);
+check('un capteur avec une unite n\'est jamais un message',
+  /class="msg"/.test(renderSnmp({
+    'sensor.printer_erreurs': { state: '3', attributes: { unit_of_measurement: 'errors', friendly_name: 'Erreurs' } },
+  })), false);
+// A message on a neighbour's device is not this printer's message.
+const foreign = (() => {
+  const c = new Card();
+  c.setConfig({ entity: 'sensor.printer' });
+  const hass = makeHass('idle', { 'sensor.autre_erreurs': { state: 'jammed', attributes: { friendly_name: 'Autre Erreurs' } } });
+  hass.entities = { 'sensor.printer': { device_id: 'dev1' }, 'sensor.autre_erreurs': { device_id: 'dev2' } };
+  hass.devices = { dev1: { name: 'P1', via_device_id: null }, dev2: { name: 'P2', via_device_id: null } };
+  c.hass = hass;
+  return markup(c);
+})();
+check('le message d\'un autre appareil est ignore', label(foreign), 'Ready');
+
 // ── Wear parts and waste receptacles ─────────────────────────────────────────
 
 check('show_parts: false masque les pieces',
@@ -590,6 +704,9 @@ const tablesBody = cardSource.slice(cardSource.indexOf('const T = {'), cardSourc
 const tables = [...tablesBody.matchAll(/^  ([a-z]{2}): \{([\s\S]*?)\n  \},/gm)];
 const keysOf = body => new Set([...body.matchAll(/(\w+):\s*"/g)].map(m => m[1]));
 check('13 langues', tables.length, 13);
+// A stale rule painting every message red would defeat the severity colouring.
+check('une seule regle de couleur pour les messages',
+  (cardSource.match(/^\.msg \{/gm) || []).length, 1);
 const enKeys = keysOf(tables[0][2]);
 const incomplete = tables.filter(([, , body]) => [...enKeys].some(k => !keysOf(body).has(k)))
   .map(t => t[1]);

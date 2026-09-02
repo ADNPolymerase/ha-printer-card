@@ -1,4 +1,4 @@
-const CARD_VERSION = "0.3.0";
+const CARD_VERSION = "0.4.0";
 
 console.info(
   "%c HA-PRINTER-CARD %c v" + CARD_VERSION + " ",
@@ -491,7 +491,7 @@ const STATE_KEYWORDS = {
     "\u043d\u0435 \u0432 \u0441\u0435\u0442\u0438", "\u79bb\u7ebf"],
   idle: ["idle", "ready", "pret", "prete", "inactif", "disponible", "bereit", "listo",
     "inattiv", "pronta", "gereed", "klaar", "redo", "klar", "gotow", "bezczynn",
-    "\u0433\u043e\u0442\u043e\u0432", "\u5c31\u7eea", "\u7a7a\u95f2", "standby", "normal"],
+    "\u0433\u043e\u0442\u043e\u0432", "\u5c31\u7eea", "\u7a7a\u95f2", "standby", "normal", "online", "en ligne"],
   printing: ["print", "imprim", "druck", "stampa", "afdruk", "skriver ut", "utskrift",
     "udskriv", "drukowanie", "drukuje", "\u043f\u0435\u0447\u0430\u0442", "\u6253\u5370",
     "processing", "busy", "en cours", "traitement", "job", "testing", "warming",
@@ -625,7 +625,11 @@ const WASTE_KEYWORDS = [
 // Percentages on a printer's device that are not supplies at all: Epson
 // exposes Wi-Fi metrics, and integrations happily hang diagnostics off the
 // same device.
-const SUPPLY_DENY = /signal|wifi|wi-fi|batter|humid|\bcpu\b|memor|uptime|volume|brightness|\bfan\b|temperat|disk|storage|progress/i;
+// Paper trays and covers are percentages on a printer too, and neither is a
+// supply. The SNMP integration publishes a tray as a % that sits at unknown
+// when the printer answers "at least one sheet" instead of a count, which
+// would otherwise have drawn a blank cartridge next to the toners.
+const SUPPLY_DENY = /signal|wifi|wi-fi|batter|humid|\bcpu\b|memor|uptime|volume|brightness|\bfan\b|temperat|disk|storage|progress|tray|\bbac\b|cassette|papierfach|bandeja|vassoio|papierlade|\bcover\b|capot|deckel|\btapa\b|coperchio/i;
 
 function matchesAny(hay, keywords) {
   return keywords.some((kw) => new RegExp(kw.startsWith("\\b") ? kw : `\\b${kw.replace(/ /g, "[ _-]")}`, "i").test(hay));
@@ -745,11 +749,16 @@ function readCartridges(hass, cfg) {
     if (!st) continue;
     const attrs = st.attributes || {};
     const level = toNumber(st.state);
-    const hay = cleanHay(entry.entity, attrs.friendly_name, printerName, cfg.entity);
-    const kind = entry.kind || (attrs.marker_type !== undefined && /toner|ink/i.test(attrs.marker_type)
+    // Some integrations hand over what this card otherwise has to guess: the
+    // SNMP one publishes the supply's colour, its full description and its
+    // type as attributes. Read them before falling back to the name.
+    const described = attrs.description ? `${attrs.color || ""} ${attrs.description}` : "";
+    const hay = described || cleanHay(entry.entity, attrs.friendly_name, printerName, cfg.entity);
+    const declaredType = attrs.marker_type !== undefined ? attrs.marker_type : attrs.type;
+    const kind = entry.kind || (declaredType !== undefined && /toner|ink/i.test(String(declaredType))
       ? "ink"
       : classifyKind(hay));
-    const color = entry.color || detectColor(hay);
+    const color = entry.color || detectColor(attrs.color ? `${attrs.color} ${hay}` : hay);
     const attrLow = toNumber(attrs.marker_low_level);
     const low = toNumber(cfg.low_threshold);
     const threshold = low !== null ? low : Math.max(20, attrLow !== null ? attrLow : 0);
@@ -760,9 +769,14 @@ function readCartridges(hass, cfg) {
       level,
       kind,
       color,
-      swatch: COLOR_SWATCH[color] || (entry.color && /^#|^rgb|^var\(/.test(entry.color) ? entry.color : COLOR_SWATCH.other),
+      swatch: (color === "other" && Array.isArray(attrs.rgb_color) && attrs.rgb_color.length === 3
+        ? `rgb(${attrs.rgb_color.map((n) => Math.max(0, Math.min(255, Number(n) || 0))).join(",")})`
+        : COLOR_SWATCH[color]) || (entry.color && /^#|^rgb|^var\(/.test(entry.color) ? entry.color : COLOR_SWATCH.other),
       name: entry.name || null,
-      title: attrs.friendly_name || entry.entity,
+      // The integration said what this is, so "other" is an answer and not a
+      // gap to be filled by the mono-printer guess below.
+      described: !!(attrs.description || (Array.isArray(attrs.rgb_color) && attrs.rgb_color.length === 3)),
+      title: attrs.description || attrs.friendly_name || entry.entity,
       type: attrs.marker_type || null,
       // A receptacle declared as filling up is in trouble when it runs high,
       // everything else when it runs low.
@@ -790,7 +804,7 @@ function readCartridges(hass, cfg) {
   // Brother HL-L2350DW just calls it "Toner remaining". One nameless ink and
   // nothing else means black, and drawing it grey would be plain wrong.
   const inks = out.filter((c) => c.kind === "ink");
-  if (inks.length === 1 && inks[0].color === "other" && !inks[0].name) {
+  if (inks.length === 1 && inks[0].color === "other" && !inks[0].name && !inks[0].described) {
     inks[0].color = "black";
     inks[0].swatch = COLOR_SWATCH.black;
   }
@@ -890,6 +904,43 @@ function readCounters(hass, cfg) {
     if (g.total === null && g.bw === null && g.color === null) delete groups[fn];
   }
   return Object.keys(groups).length ? groups : null;
+}
+
+// Not every integration puts the printer's own words in an attribute. The
+// SNMP one gives them their own entities: one for the RFC 3805 error bits,
+// one for the text on the front panel. Both sit on the printer's own device,
+// so they can be found rather than configured. Errors come first: a jam
+// matters more than whatever the panel happens to be showing.
+const MESSAGE_NAME = /error|erreur|fehler|alert|alarm|message/i;
+const DISPLAY_NAME = /display|affichage|console|panel|panneau|anzeige|pantalla/i;
+
+// RFC 3805 error bits arrive as bare tokens: "jammed", "doorOpen",
+// "media_empty". A sentence is left alone; a lone token is made readable.
+// Not translated, because it is what the printer said.
+function prettyMessage(text) {
+  const raw = String(text || "").trim();
+  if (!raw || /\s/.test(raw)) return raw;
+  const words = raw.replace(/[_-]+/g, " ").replace(/([a-z0-9])([A-Z])/g, "$1 $2").toLowerCase().trim();
+  return words.charAt(0).toUpperCase() + words.slice(1);
+}
+
+function deviceMessage(hass, cfg) {
+  const reg = hass.entities;
+  const seed = reg && reg[cfg.entity] ? reg[cfg.entity].device_id : null;
+  if (!seed) return null;
+  let display = null;
+  for (const [id, st] of Object.entries(hass.states)) {
+    if (id === cfg.entity || !id.startsWith("sensor.")) continue;
+    if (!reg[id] || reg[id].device_id !== seed) continue;
+    const attrs = (st && st.attributes) || {};
+    if (attrs.unit_of_measurement) continue;
+    const text = String(st.state || "").trim();
+    if (!text || ["none", "unknown", "unavailable", "0", "ok", "idle"].includes(text.toLowerCase())) continue;
+    const hay = `${attrs.friendly_name || ""} ${id}`;
+    if (MESSAGE_NAME.test(hay)) return prettyMessage(text);
+    if (display === null && DISPLAY_NAME.test(hay)) display = prettyMessage(text);
+  }
+  return display;
 }
 
 // An explicit paper sensor, for the printers whose status text says nothing.
@@ -1311,18 +1362,30 @@ class PrinterCard extends HTMLElement {
       norm = "printing";
     }
 
-    const color = STATE_COLORS[norm];
     const name = cfg.name || deviceName(hass, cfg.entity) || (st && st.attributes.friendly_name) || "Printer";
-    const msg = cfg.show_message === false ? null : statusMessage(st);
+    const msg = cfg.show_message === false ? null : (statusMessage(st) || deviceMessage(hass, cfg));
+    // A panel that says "paper jam" outranks a poll that still says idle, but
+    // a chatty display must never talk the printer out of a worse state.
+    let msgSevere = false;
+    if (msg) {
+      const fromMsg = normalizeState(msg, cfg.state_map);
+      if ((fromMsg === "stopped" && norm !== "offline")
+          || (fromMsg === "warning" && ["idle", "sleep", "printing", "unknown"].includes(norm))) {
+        norm = fromMsg;
+        msgSevere = true;
+      }
+    }
     const supplies = cfg.show_supplies === false ? [] : readCartridges(hass, cfg);
     supplies.forEach((c) => { c.label = supplyLabel(hass, c, name); });
+    const color = STATE_COLORS[norm];
     const carts = supplies.filter((c) => c.kind === "ink");
     const parts = cfg.show_parts === false ? [] : supplies.filter((c) => c.kind !== "ink");
     const lows = carts.filter((c) => c.low);
     const lowParts = parts.filter((c) => c.low);
     const counters = cfg.show_counters === false ? null : readCounters(hass, cfg);
     const url = webUrl(cfg, st);
-    const noPaper = isPaperOut(st) || paperEntityEmpty(hass, cfg);
+    const noPaper = isPaperOut(st) || paperEntityEmpty(hass, cfg)
+      || (!!msg && PAPER_OUT_PATTERNS.some((re) => re.test(stripAccents(msg))));
     // "inside" draws the cartridges in the machine and drops the row below it,
     // which is the shortest the card gets while keeping the illustration. It
     // needs that illustration, so compact mode falls back to bars.
@@ -1441,8 +1504,8 @@ ha-card.compact .bottom { align-items:center; flex:1; }
 .body { min-width:0; flex:1 1 auto; }
 .name { font-size:15px; font-weight:500; color:var(--primary-text-color); }
 .state { font-size:13.5px; font-weight:500; color:var(--pc-color); }
-.msg { font-size:12px; }
-.msg { color:var(--error-color, #f44336); }
+.msg { font-size:12px; color:var(--secondary-text-color); }
+.msg.severe { color:var(--pc-color); }
 .alert { display:flex; align-items:center; gap:6px; font-size:12.5px; color:var(--warning-color, #ff9800); }
 .alert ha-icon { --mdc-icon-size:17px; }
 .corner { position:absolute; top:10px; right:12px; display:flex; align-items:center; gap:5px; font-size:12px; color:var(--secondary-text-color); z-index:2; }
@@ -1507,7 +1570,7 @@ button ha-icon, .btn ha-icon { --mdc-icon-size:18px; }
             <div class="body">
               <div class="name">${escapeHtml(name)}</div>
               <div class="state">${t(hass, norm)}</div>
-              ${msg ? `<div class="msg">${escapeHtml(msg)}</div>` : ""}
+              ${msg ? `<div class="msg${msgSevere ? " severe" : ""}">${escapeHtml(msg)}</div>` : ""}
             </div>
             ${corner}
             <div class="actions">${buttons}</div>
@@ -1517,7 +1580,7 @@ button ha-icon, .btn ha-icon { --mdc-icon-size:18px; }
           <div class="body">
             <div class="name">${escapeHtml(name)}</div>
             <div class="state">${t(hass, norm)}</div>
-            ${msg ? `<div class="msg">${escapeHtml(msg)}</div>` : ""}
+            ${msg ? `<div class="msg${msgSevere ? " severe" : ""}">${escapeHtml(msg)}</div>` : ""}
           </div>
           <div class="actions">${buttons}</div>
         </div>`}
