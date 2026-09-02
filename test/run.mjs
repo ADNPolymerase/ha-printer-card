@@ -512,6 +512,15 @@ check('une erreur de bac vide vide le bac dessine',
   /class="paper-stack"/.test(withErrors('media_empty', '', { printer_type: 'inkjet' })), false);
 check('un bourrage ne vide pas le bac',
   /class="paper-stack"/.test(withErrors('jammed', '', { printer_type: 'inkjet' })), true);
+// An IPP state_reason is a token too, and it reaches the card through the
+// attributes rather than through a sensor of its own.
+contains('un state_reason IPP est rendu lisible',
+  render('stopped', {}, {}, { state_reason: 'marker-supply-low-warning' }),
+  '>Marker supply low warning<');
+check('et il leve bien un avertissement',
+  label(render('idle', {}, {}, { state_reason: 'marker-supply-low-warning' })), 'Attention needed');
+contains('une phrase en attribut reste intacte',
+  render('stopped', {}, {}, { state_message: 'Paper jam in tray 2' }), '>Paper jam in tray 2<');
 check('show_message: false coupe la recherche',
   /class="msg"/.test(withErrors('jammed', 'Bourrage', { show_message: false })), false);
 check('un capteur avec une unite n\'est jamais un message',
@@ -584,8 +593,20 @@ check('la baie reste dans ses limites',
 
 // Eight columns do not fit across a card: the row wraps instead of squeezing
 // every label into an ellipsis.
-contains('la rangee de cartouches peut passer a la ligne', canon, '.supplies { display:flex; flex-wrap:wrap;');
-contains('et chaque cartouche garde une largeur lisible', canon, '.cart { flex:1 1 62px; min-width:56px;');
+// Flexbox fills a line and then overflows, so eight inks came out 6 + 2 on a
+// wide card and 4 + 4 on a narrow one. A grid whose column count is computed
+// from how many inks there are is balanced whatever the card's width.
+const cols = html => (String(html).match(/grid-template-columns:repeat\((\d+),/) || [])[1];
+check('8 encres tiennent sur deux rangees de 4', cols(canon), '4');
+check('4 encres restent sur une seule rangee',
+  cols(renderInks(['black', 'cyan', 'magenta', 'yellow'])), '4');
+check('5 encres aussi', cols(renderInks(['black', 'cyan', 'magenta', 'yellow', 'gray'])), '5');
+check('6 encres donnent 3 et 3',
+  cols(renderInks(['black', 'cyan', 'magenta', 'yellow', 'gray', 'light_gray'])), '3');
+check('10 encres donnent 5 et 5',
+  cols(renderInks(['pk', 'mk', 'lk', 'llk', 'c', 'm', 'y', 'lc', 'lm', 'gray'])), '5');
+check('le style barres reste une liste verticale',
+  /\.supplies\.bars \{ display:flex; flex-direction:column;/.test(canon), true);
 check('chaque encre a sa propre teinte',
   new Set([...canon.matchAll(/fill="(#[0-9a-f]{6})"/g)].map(m => m[1])).size, 8);
 

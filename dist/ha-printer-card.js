@@ -1,4 +1,4 @@
-const CARD_VERSION = "0.5.2";
+const CARD_VERSION = "0.5.3";
 
 console.info(
   "%c HA-PRINTER-CARD %c v" + CARD_VERSION + " ",
@@ -1059,7 +1059,7 @@ function statusMessage(st) {
     if (v === null || v === undefined) continue;
     const s = String(v).trim();
     if (!s || ["none", "0", "null", "unknown", "idle"].includes(s.toLowerCase())) continue;
-    return s;
+    return prettyMessage(s);
   }
   return null;
 }
@@ -1502,7 +1502,7 @@ class PrinterCard extends HTMLElement {
             ${cartridgeBar(c.level, c.swatch)}
             <span class="pct">${c.level === null ? "?" : Math.round(c.level)}%</span>
           </div>`).join("")}</div>`
-      : `<div class="supplies">${carts.map((c, i) => `
+      : `<div class="supplies" style="grid-template-columns:repeat(${carts.length <= 5 ? carts.length : Math.ceil(carts.length / 2)},minmax(0,1fr))">${carts.map((c, i) => `
           <div class="cart${clk} ${c.low ? "low" : ""}"${ent(c.entity)} title="${escapeHtml(c.title)}">
             <span class="wrap">${cartridgeSvg(c.level, c.swatch, i)}${c.low ? '<span class="lowdot">!</span>' : ""}</span>
             <span class="pct">${c.level === null ? "?" : Math.round(c.level)}%</span>
@@ -1614,8 +1614,8 @@ ha-card.compact button span, ha-card.compact .btn span { display:none; }
 button, .btn { display:flex; align-items:center; justify-content:center; gap:6px; padding:8px 13px; border:none; border-radius:12px; cursor:pointer; font:inherit; font-size:13px; text-decoration:none; background:var(--secondary-background-color); color:var(--primary-text-color); }
 button:hover, .btn:hover { filter:brightness(.93); }
 button ha-icon, .btn ha-icon { --mdc-icon-size:18px; }
-.supplies { display:flex; flex-wrap:wrap; gap:10px 8px; justify-content:space-around; }
-.cart { flex:1 1 62px; min-width:56px; max-width:110px; display:flex; flex-direction:column; align-items:center; gap:1px; }
+.supplies { display:grid; gap:10px 8px; justify-items:center; }
+.cart { min-width:0; width:100%; max-width:110px; display:flex; flex-direction:column; align-items:center; gap:1px; }
 .wrap { position:relative; display:block; }
 .clickable { cursor:pointer; }
 .body.clickable:hover .name, .clickable:hover .pct, .clickable:hover .pval { text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:2px; }
@@ -1642,7 +1642,7 @@ svg .clickable { cursor:pointer; }
 .crow { display:flex; flex-wrap:wrap; gap:2px 12px; align-items:baseline; }
 .cfn { flex:none; min-width:82px; }
 .counters b { color:var(--primary-text-color); font-weight:600; }
-.supplies.bars { flex-direction:column; gap:6px; }
+.supplies.bars { display:flex; flex-direction:column; gap:6px; }
 .row-b { display:flex; align-items:center; gap:8px; }
 .row-b .lbl { flex:none; width:88px; text-align:left; }
 .row-b .pct { flex:none; width:38px; text-align:right; }
