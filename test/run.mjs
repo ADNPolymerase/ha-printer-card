@@ -605,6 +605,18 @@ check('6 encres donnent 3 et 3',
   cols(renderInks(['black', 'cyan', 'magenta', 'yellow', 'gray', 'light_gray'])), '3');
 check('10 encres donnent 5 et 5',
   cols(renderInks(['pk', 'mk', 'lk', 'llk', 'c', 'm', 'y', 'lc', 'lm', 'gray'])), '5');
+// A card spanning several dashboard columns is wide enough for eight inks in
+// one row, and only the person who placed it knows that.
+check('une rangee forcee met tout sur une ligne', cols(renderInks(CANON, { cartridge_rows: 1 })), '8');
+check('deux rangees forcees donnent 4 et 4', cols(renderInks(CANON, { cartridge_rows: 2 })), '4');
+check('trois rangees forcees donnent 3, 3 et 2', cols(renderInks(CANON, { cartridge_rows: 3 })), '3');
+check('auto est le defaut', cols(renderInks(CANON, { cartridge_rows: 'auto' })), '4');
+check('4 encres sur 2 rangees, si on le demande',
+  cols(renderInks(['black', 'cyan', 'magenta', 'yellow'], { cartridge_rows: 2 })), '2');
+check('plus de rangees que d\'encres ne cree pas de rangee vide',
+  cols(renderInks(['black', 'cyan'], { cartridge_rows: 3 })), '1');
+check('une valeur absurde retombe sur auto',
+  cols(renderInks(CANON, { cartridge_rows: 0 })), '4');
 check('le style barres reste une liste verticale',
   /\.supplies\.bars \{ display:flex; flex-direction:column;/.test(canon), true);
 check('chaque encre a sa propre teinte',

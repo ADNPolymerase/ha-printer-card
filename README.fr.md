@@ -82,6 +82,7 @@ Copier `dist/ha-printer-card.js` dans `/config/www/`, puis l'ajouter en ressourc
 | `low_threshold` | Seuil de consommable bas en %. Par défaut 20, ou le `marker_low_level` de l'imprimante s'il est plus haut. |
 | `full_threshold` | Pour un consommable déclaré `kind: waste_fill`, le % au-delà duquel il est signalé plein. Par défaut 90. |
 | `printer_type` | `mfp` (défaut), `inkjet`, `laser` ou `office`. |
+| `cartridge_rows` | Sur combien de rangées les cartouches sont disposées : `auto` (défaut : une rangée jusqu'à cinq, moitié-moitié au-delà), ou `1`, `2`, `3`. Une carte posée sur plusieurs colonnes du tableau de bord est assez large pour huit encres d'affilée, et vous seul le savez. Les niveaux dessinés dans la machine s'équilibrent toujours seuls, la largeur de leur emplacement venant du dessin et non de la carte. |
 | `cartridge_style` | `cartridges` (défaut), `bars`, ou `inside` : les niveaux dessinés dans la machine elle-même, ce qui supprime la rangée du dessous et raccourcit la carte de deux lignes. Chaque modèle a son propre emplacement, à l'écart de la feuille, du bandeau et du triangle de bourrage, et au-delà de cinq encres elles s'y empilent sur deux rangées plutôt que de devenir des traits. Survoler une cartouche donne son nom et son niveau. |
 | `more_info` | `false` pour que les valeurs n'ouvrent plus leur entité au clic. Par défaut `true`. |
 | `state_map` | Table facultative : état brut → `printing`\|`idle`\|`sleep`\|`warning`\|`stopped`\|`offline`\|`unknown`. |

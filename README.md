@@ -82,6 +82,7 @@ Copy `dist/ha-printer-card.js` into `/config/www/`, then add it as a dashboard r
 | `low_threshold` | Low-supply threshold in %. Default: 20, or the printer's `marker_low_level` when that is higher. |
 | `full_threshold` | For a supply declared `kind: waste_fill`, the % above which it is reported full. Default 90. |
 | `printer_type` | `mfp` (default), `inkjet`, `laser` or `office`. |
+| `cartridge_rows` | How many rows the cartridges are laid out on: `auto` (default: one row up to five, half and half beyond), or `1`, `2`, `3`. A card spanning several dashboard columns is wide enough for eight inks in a row, and only you know that. The levels drawn inside the machine always balance themselves, since the bay's width comes from the drawing and not from the card. |
 | `cartridge_style` | `cartridges` (default), `bars`, or `inside`: the levels drawn in the machine itself, which drops the row below and makes the card two rows shorter. Each model has its own bay, clear of the page, the panel and the jam warning, and past five inks they stack in two rows there rather than becoming slivers. Hover a cartridge for its name and level. |
 | `more_info` | `false` to stop values from opening their entity when tapped. Default `true`. |
 | `state_map` | Optional map: raw state → `printing`\|`idle`\|`sleep`\|`warning`\|`stopped`\|`offline`\|`unknown`. |

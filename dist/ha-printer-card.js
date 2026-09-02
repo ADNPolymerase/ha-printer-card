@@ -1,4 +1,4 @@
-const CARD_VERSION = "0.5.3";
+const CARD_VERSION = "0.6.0";
 
 console.info(
   "%c HA-PRINTER-CARD %c v" + CARD_VERSION + " ",
@@ -38,7 +38,7 @@ const T = {
     language: "Language", language_auto: "Follow Home Assistant",
     printer_type: "Printer type", type_mfp: "All-in-one (with scanner)", type_inkjet: "Inkjet (rear feed)",
     type_laser: "Laser (top output)", type_office: "Office multifunction",
-    cartridge_style: "Cartridge style", style_cartridges: "Cartridges", style_bars: "Bars", style_inside: "Inside the printer",
+    cartridge_style: "Cartridge style", style_cartridges: "Cartridges", style_bars: "Bars", style_inside: "Inside the printer", cartridge_rows: "Cartridge rows", rows_auto: "Automatic",
     show_supplies: "Show the cartridges",
     show_message: "Show the printer message (jam, cover open\u2026)",
     show_power: "Show the socket and its power draw",
@@ -71,7 +71,7 @@ const T = {
     language: "Langue", language_auto: "Suivre Home Assistant",
     printer_type: "Type d'imprimante", type_mfp: "Multifonction (avec scanner)", type_inkjet: "Jet d'encre (bac arri\u00e8re)",
     type_laser: "Laser (sortie dessus)", type_office: "Multifonction de bureau",
-    cartridge_style: "Style des cartouches", style_cartridges: "Cartouches", style_bars: "Barres", style_inside: "Dans l'imprimante",
+    cartridge_style: "Style des cartouches", style_cartridges: "Cartouches", style_bars: "Barres", style_inside: "Dans l'imprimante", cartridge_rows: "Rang\u00e9es de cartouches", rows_auto: "Automatique",
     show_supplies: "Afficher les cartouches",
     show_message: "Afficher le message de l'imprimante (bourrage, capot ouvert\u2026)",
     show_power: "Afficher la prise et sa consommation",
@@ -104,7 +104,7 @@ const T = {
     language: "Sprache", language_auto: "Home Assistant folgen",
     printer_type: "Druckertyp", type_mfp: "Multifunktionsger\u00e4t (mit Scanner)", type_inkjet: "Tintenstrahl (hintere Zufuhr)",
     type_laser: "Laser (Ausgabe oben)", type_office: "B\u00fcro-Multifunktionsger\u00e4t",
-    cartridge_style: "Patronen-Stil", style_cartridges: "Patronen", style_bars: "Balken", style_inside: "Im Drucker",
+    cartridge_style: "Patronen-Stil", style_cartridges: "Patronen", style_bars: "Balken", style_inside: "Im Drucker", cartridge_rows: "Patronenreihen", rows_auto: "Automatisch",
     show_supplies: "Patronen anzeigen",
     show_message: "Druckermeldung anzeigen (Papierstau, Klappe offen\u2026)",
     show_power: "Steckdose und Verbrauch anzeigen",
@@ -137,7 +137,7 @@ const T = {
     language: "Idioma", language_auto: "Seguir a Home Assistant",
     printer_type: "Tipo de impresora", type_mfp: "Multifunci\u00f3n (con esc\u00e1ner)", type_inkjet: "Inyecci\u00f3n de tinta (bandeja trasera)",
     type_laser: "L\u00e1ser (salida superior)", type_office: "Multifunci\u00f3n de oficina",
-    cartridge_style: "Estilo de cartuchos", style_cartridges: "Cartuchos", style_bars: "Barras", style_inside: "Dentro de la impresora",
+    cartridge_style: "Estilo de cartuchos", style_cartridges: "Cartuchos", style_bars: "Barras", style_inside: "Dentro de la impresora", cartridge_rows: "Filas de cartuchos", rows_auto: "Autom\u00e1tico",
     show_supplies: "Mostrar los cartuchos",
     show_message: "Mostrar el mensaje de la impresora (atasco, tapa abierta\u2026)",
     show_power: "Mostrar el enchufe y su consumo",
@@ -170,7 +170,7 @@ const T = {
     language: "Lingua", language_auto: "Segui Home Assistant",
     printer_type: "Tipo di stampante", type_mfp: "Multifunzione (con scanner)", type_inkjet: "Getto d'inchiostro (vassoio posteriore)",
     type_laser: "Laser (uscita superiore)", type_office: "Multifunzione da ufficio",
-    cartridge_style: "Stile delle cartucce", style_cartridges: "Cartucce", style_bars: "Barre", style_inside: "Dentro la stampante",
+    cartridge_style: "Stile delle cartucce", style_cartridges: "Cartucce", style_bars: "Barre", style_inside: "Dentro la stampante", cartridge_rows: "Righe di cartucce", rows_auto: "Automatico",
     show_supplies: "Mostra le cartucce",
     show_message: "Mostra il messaggio della stampante (inceppamento, coperchio aperto\u2026)",
     show_power: "Mostra la presa e il suo consumo",
@@ -203,7 +203,7 @@ const T = {
     language: "Taal", language_auto: "Home Assistant volgen",
     printer_type: "Type printer", type_mfp: "All-in-one (met scanner)", type_inkjet: "Inkjet (invoer achter)",
     type_laser: "Laser (uitvoer boven)", type_office: "Kantoormultifunctional",
-    cartridge_style: "Cartridgestijl", style_cartridges: "Cartridges", style_bars: "Balken", style_inside: "In de printer",
+    cartridge_style: "Cartridgestijl", style_cartridges: "Cartridges", style_bars: "Balken", style_inside: "In de printer", cartridge_rows: "Rijen cartridges", rows_auto: "Automatisch",
     show_supplies: "Cartridges tonen",
     show_message: "Printerbericht tonen (papierstoring, klep open\u2026)",
     show_power: "Stopcontact en verbruik tonen",
@@ -236,7 +236,7 @@ const T = {
     language: "Idioma", language_auto: "Seguir o Home Assistant",
     printer_type: "Tipo de impressora", type_mfp: "Multifun\u00e7\u00f5es (com scanner)", type_inkjet: "Jato de tinta (alimenta\u00e7\u00e3o traseira)",
     type_laser: "Laser (sa\u00edda superior)", type_office: "Multifun\u00e7\u00f5es de escrit\u00f3rio",
-    cartridge_style: "Estilo dos cartuchos", style_cartridges: "Cartuchos", style_bars: "Barras", style_inside: "Dentro da impressora",
+    cartridge_style: "Estilo dos cartuchos", style_cartridges: "Cartuchos", style_bars: "Barras", style_inside: "Dentro da impressora", cartridge_rows: "Linhas de cartuchos", rows_auto: "Autom\u00e1tico",
     show_supplies: "Mostrar os cartuchos",
     show_message: "Mostrar a mensagem da impressora (encravamento, tampa aberta\u2026)",
     show_power: "Mostrar a tomada e o seu consumo",
@@ -269,7 +269,7 @@ const T = {
     language: "Spr\u00e5k", language_auto: "F\u00f6lj Home Assistant",
     printer_type: "Skrivartyp", type_mfp: "Allt-i-ett (med skanner)", type_inkjet: "Bl\u00e4ckstr\u00e5le (bakre inmatning)",
     type_laser: "Laser (utmatning upptill)", type_office: "Kontorsmultifunktion",
-    cartridge_style: "Patronstil", style_cartridges: "Patroner", style_bars: "Staplar", style_inside: "Inuti skrivaren",
+    cartridge_style: "Patronstil", style_cartridges: "Patroner", style_bars: "Staplar", style_inside: "Inuti skrivaren", cartridge_rows: "Patronrader", rows_auto: "Automatiskt",
     show_supplies: "Visa patronerna",
     show_message: "Visa skrivarens meddelande (pappersstopp, lucka \u00f6ppen\u2026)",
     show_power: "Visa uttaget och dess f\u00f6rbrukning",
@@ -302,7 +302,7 @@ const T = {
     language: "Spr\u00e5k", language_auto: "F\u00f8lg Home Assistant",
     printer_type: "Skrivertype", type_mfp: "Alt-i-ett (med skanner)", type_inkjet: "Blekk (bakre mating)",
     type_laser: "Laser (utmating p\u00e5 toppen)", type_office: "Kontormultifunksjon",
-    cartridge_style: "Patronstil", style_cartridges: "Patroner", style_bars: "S\u00f8yler", style_inside: "Inni skriveren",
+    cartridge_style: "Patronstil", style_cartridges: "Patroner", style_bars: "S\u00f8yler", style_inside: "Inni skriveren", cartridge_rows: "Patronrader", rows_auto: "Automatisk",
     show_supplies: "Vis patronene",
     show_message: "Vis skriverens melding (papirstopp, deksel \u00e5pent\u2026)",
     show_power: "Vis stikkontakten og forbruket",
@@ -335,7 +335,7 @@ const T = {
     language: "Sprog", language_auto: "F\u00f8lg Home Assistant",
     printer_type: "Printertype", type_mfp: "Alt-i-en (med scanner)", type_inkjet: "Bl\u00e6k (bagerste indf\u00f8ring)",
     type_laser: "Laser (udskrift foroven)", type_office: "Kontormultifunktion",
-    cartridge_style: "Patronstil", style_cartridges: "Patroner", style_bars: "Bj\u00e6lker", style_inside: "Inde i printeren",
+    cartridge_style: "Patronstil", style_cartridges: "Patroner", style_bars: "Bj\u00e6lker", style_inside: "Inde i printeren", cartridge_rows: "Patronr\u00e6kker", rows_auto: "Automatisk",
     show_supplies: "Vis patronerne",
     show_message: "Vis printerens meddelelse (papirstop, l\u00e5ge \u00e5ben\u2026)",
     show_power: "Vis stikkontakten og forbruget",
@@ -368,7 +368,7 @@ const T = {
     language: "J\u0119zyk", language_auto: "Zgodnie z Home Assistant",
     printer_type: "Typ drukarki", type_mfp: "Urz\u0105dzenie wielofunkcyjne (ze skanerem)", type_inkjet: "Atramentowa (podajnik z ty\u0142u)",
     type_laser: "Laserowa (wyj\u015bcie u g\u00f3ry)", type_office: "Biurowe urz\u0105dzenie wielofunkcyjne",
-    cartridge_style: "Styl kartrid\u017cy", style_cartridges: "Kartrid\u017ce", style_bars: "S\u0142upki", style_inside: "Wewn\u0105trz drukarki",
+    cartridge_style: "Styl kartrid\u017cy", style_cartridges: "Kartrid\u017ce", style_bars: "S\u0142upki", style_inside: "Wewn\u0105trz drukarki", cartridge_rows: "Rz\u0119dy kartrid\u017cy", rows_auto: "Automatycznie",
     show_supplies: "Poka\u017c kartrid\u017ce",
     show_message: "Poka\u017c komunikat drukarki (zaci\u0119cie, otwarta pokrywa\u2026)",
     show_power: "Poka\u017c gniazdko i jego pob\u00f3r",
@@ -401,7 +401,7 @@ const T = {
     language: "\u042f\u0437\u044b\u043a", language_auto: "\u0421\u043b\u0435\u0434\u043e\u0432\u0430\u0442\u044c Home Assistant",
     printer_type: "\u0422\u0438\u043f \u043f\u0440\u0438\u043d\u0442\u0435\u0440\u0430", type_mfp: "\u041c\u0424\u0423 (\u0441\u043e \u0441\u043a\u0430\u043d\u0435\u0440\u043e\u043c)", type_inkjet: "\u0421\u0442\u0440\u0443\u0439\u043d\u044b\u0439 (\u0437\u0430\u0434\u043d\u044f\u044f \u043f\u043e\u0434\u0430\u0447\u0430)",
     type_laser: "\u041b\u0430\u0437\u0435\u0440\u043d\u044b\u0439 (\u0432\u044b\u0432\u043e\u0434 \u0441\u0432\u0435\u0440\u0445\u0443)", type_office: "\u041e\u0444\u0438\u0441\u043d\u043e\u0435 \u041c\u0424\u0423",
-    cartridge_style: "\u0421\u0442\u0438\u043b\u044c \u043a\u0430\u0440\u0442\u0440\u0438\u0434\u0436\u0435\u0439", style_cartridges: "\u041a\u0430\u0440\u0442\u0440\u0438\u0434\u0436\u0438", style_bars: "\u041f\u043e\u043b\u043e\u0441\u044b", style_inside: "\u0412\u043d\u0443\u0442\u0440\u0438 \u043f\u0440\u0438\u043d\u0442\u0435\u0440\u0430",
+    cartridge_style: "\u0421\u0442\u0438\u043b\u044c \u043a\u0430\u0440\u0442\u0440\u0438\u0434\u0436\u0435\u0439", style_cartridges: "\u041a\u0430\u0440\u0442\u0440\u0438\u0434\u0436\u0438", style_bars: "\u041f\u043e\u043b\u043e\u0441\u044b", style_inside: "\u0412\u043d\u0443\u0442\u0440\u0438 \u043f\u0440\u0438\u043d\u0442\u0435\u0440\u0430", cartridge_rows: "\u0420\u044f\u0434\u044b \u043a\u0430\u0440\u0442\u0440\u0438\u0434\u0436\u0435\u0439", rows_auto: "\u0410\u0432\u0442\u043e\u043c\u0430\u0442\u0438\u0447\u0435\u0441\u043a\u0438",
     show_supplies: "\u041f\u043e\u043a\u0430\u0437\u044b\u0432\u0430\u0442\u044c \u043a\u0430\u0440\u0442\u0440\u0438\u0434\u0436\u0438",
     show_message: "\u041f\u043e\u043a\u0430\u0437\u044b\u0432\u0430\u0442\u044c \u0441\u043e\u043e\u0431\u0449\u0435\u043d\u0438\u0435 \u043f\u0440\u0438\u043d\u0442\u0435\u0440\u0430 (\u0437\u0430\u043c\u044f\u0442\u0438\u0435, \u043e\u0442\u043a\u0440\u044b\u0442\u0430 \u043a\u0440\u044b\u0448\u043a\u0430\u2026)",
     show_power: "\u041f\u043e\u043a\u0430\u0437\u044b\u0432\u0430\u0442\u044c \u0440\u043e\u0437\u0435\u0442\u043a\u0443 \u0438 \u0435\u0451 \u043f\u043e\u0442\u0440\u0435\u0431\u043b\u0435\u043d\u0438\u0435",
@@ -434,7 +434,7 @@ const T = {
     language: "\u8bed\u8a00", language_auto: "\u8ddf\u968f Home Assistant",
     printer_type: "\u6253\u5370\u673a\u7c7b\u578b", type_mfp: "\u4e00\u4f53\u673a\uff08\u542b\u626b\u63cf\u4eea\uff09", type_inkjet: "\u55b7\u58a8\uff08\u540e\u8fdb\u7eb8\uff09",
     type_laser: "\u6fc0\u5149\uff08\u9876\u90e8\u51fa\u7eb8\uff09", type_office: "\u529e\u516c\u591a\u529f\u80fd\u4e00\u4f53\u673a",
-    cartridge_style: "\u58a8\u76d2\u6837\u5f0f", style_cartridges: "\u58a8\u76d2", style_bars: "\u6761\u5f62", style_inside: "\u6253\u5370\u673a\u5185\u90e8",
+    cartridge_style: "\u58a8\u76d2\u6837\u5f0f", style_cartridges: "\u58a8\u76d2", style_bars: "\u6761\u5f62", style_inside: "\u6253\u5370\u673a\u5185\u90e8", cartridge_rows: "\u58a8\u76d2\u884c\u6570", rows_auto: "\u81ea\u52a8",
     show_supplies: "\u663e\u793a\u58a8\u76d2",
     show_message: "\u663e\u793a\u6253\u5370\u673a\u6d88\u606f\uff08\u5361\u7eb8\u3001\u673a\u76d6\u6253\u5f00\u2026\uff09",
     show_power: "\u663e\u793a\u63d2\u5ea7\u53ca\u5176\u529f\u8017",
@@ -1171,6 +1171,15 @@ function panelBlock(x, y, w = 38, h = 21) {
 // Cartridges drawn inside the machine itself, for the layout that drops the
 // separate row. Each model declares a bay clear of everything that moves --
 // the page, the control panel, the jam warning -- so nothing ever overlaps.
+// Up to five inks sit on one row, beyond that they split in half. A card
+// spanning several dashboard columns is wide enough for eight in a row
+// though, and only the person who placed it knows, hence cartridge_rows.
+function supplyColumns(count, rows) {
+  const forced = Number(rows);
+  if (Number.isFinite(forced) && forced >= 1) return Math.ceil(count / Math.min(forced, count));
+  return count <= 5 ? count : Math.ceil(count / 2);
+}
+
 function inkBay(carts, bay, tappable) {
   if (!carts.length) return "";
   // A photo printer's eight inks laid side by side in a thirty unit bay would
@@ -1482,7 +1491,7 @@ class PrinterCard extends HTMLElement {
     const signature = JSON.stringify([
       norm, name, msg, url, lang(hass), cfg.compact, cfg.printer_type,
       cfg.cartridge_style, showPower, plugOn, watts, !!cfg.print_entity,
-      inside, noPaper, counters,
+      inside, noPaper, counters, cfg.cartridge_rows,
       supplies.map((c) => [c.entity, c.level, c.low, c.color, c.kind]),
     ]);
     if (signature === this._signature) return;
@@ -1502,7 +1511,7 @@ class PrinterCard extends HTMLElement {
             ${cartridgeBar(c.level, c.swatch)}
             <span class="pct">${c.level === null ? "?" : Math.round(c.level)}%</span>
           </div>`).join("")}</div>`
-      : `<div class="supplies" style="grid-template-columns:repeat(${carts.length <= 5 ? carts.length : Math.ceil(carts.length / 2)},minmax(0,1fr))">${carts.map((c, i) => `
+      : `<div class="supplies" style="grid-template-columns:repeat(${supplyColumns(carts.length, cfg.cartridge_rows)},minmax(0,1fr))">${carts.map((c, i) => `
           <div class="cart${clk} ${c.low ? "low" : ""}"${ent(c.entity)} title="${escapeHtml(c.title)}">
             <span class="wrap">${cartridgeSvg(c.level, c.swatch, i)}${c.low ? '<span class="lowdot">!</span>' : ""}</span>
             <span class="pct">${c.level === null ? "?" : Math.round(c.level)}%</span>
@@ -1856,6 +1865,13 @@ details .form { padding-top:10px; }
               </select>
             </div>
             <div class="row">
+              <label>${t(hass, "cartridge_rows")}</label>
+              <select data-field="cartridge_rows">
+                <option value="auto" ${!cfg.cartridge_rows || cfg.cartridge_rows === "auto" ? "selected" : ""}>${t(hass, "rows_auto")}</option>
+                ${[1, 2, 3].map((v) => `<option value="${v}" ${Number(cfg.cartridge_rows) === v ? "selected" : ""}>${v}</option>`).join("")}
+              </select>
+            </div>
+            <div class="row">
               <label>${t(hass, "language")}</label>
               <select data-field="language">
                 <option value="auto" ${!cfg.language || cfg.language === "auto" ? "selected" : ""}>${t(hass, "language_auto")}</option>
@@ -1913,7 +1929,7 @@ details .form { padding-top:10px; }
         const field = el.dataset.field;
         // Every select has a default -- only store the key when it differs,
         // so the YAML stays as short as what the user actually chose.
-        const dflt = { printer_type: "mfp", cartridge_style: "cartridges", language: "auto" }[field];
+        const dflt = { printer_type: "mfp", cartridge_style: "cartridges", language: "auto", cartridge_rows: "auto" }[field];
         this._set(field, el.value === dflt ? undefined : el.value);
       });
     });
