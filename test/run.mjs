@@ -198,6 +198,216 @@ contains('niveau non numerique affiche ?',
 check('show_supplies: false masque les cartouches',
   /class="cart /.test(render('idle', { show_supplies: false }, TONERS)), false);
 
+// ── Supplies across integrations ─────────────────────────────────────────────
+// The IPP integration tags its sensors with marker_type. Nobody else does:
+// Brother, Samsung, Epson and Dell just publish percentages. The card has to
+// pick those up without hoovering up the Wi-Fi diagnostics sitting on the
+// same device.
+
+const pct = (v, name, extra = {}) => ({
+  state: String(v),
+  attributes: { unit_of_measurement: '%', friendly_name: name, ...extra },
+  last_changed: '2026-09-02T10:00:00Z',
+});
+
+// Renders with an entity registry, so the scope is the device and not the id.
+function renderDev(printerState, cfg, states, attrs = {}) {
+  const c = new Card();
+  c.setConfig({ entity: 'sensor.printer', ...cfg });
+  const hass = makeHass(printerState, states, attrs);
+  hass.entities = Object.fromEntries(Object.keys(hass.states).map((id) => [id, { device_id: 'dev1' }]));
+  c.hass = hass;
+  return markup(c);
+}
+
+const BROTHER = {
+  'sensor.printer_black_toner_remaining': pct(64, 'HL-L8360 Black toner remaining'),
+  'sensor.printer_cyan_toner_remaining': pct(80, 'HL-L8360 Cyan toner remaining'),
+  'sensor.printer_drum_remaining_life': pct(52, 'HL-L8360 Drum remaining lifetime'),
+  'sensor.printer_fuser_remaining_life': pct(74, 'HL-L8360 Fuser remaining lifetime'),
+  'sensor.printer_belt_unit_remaining_life': pct(88, 'HL-L8360 Belt unit remaining lifetime'),
+  'sensor.printer_pf_kit_1_remaining_life': pct(91, 'HL-L8360 PF Kit 1 remaining lifetime'),
+};
+const brother = renderDev('idle', {}, BROTHER, { friendly_name: 'HL-L8360 Status' });
+check('Brother: 2 toners en cartouches', (brother.match(/class="cart /g) || []).length, 2);
+check('Brother: 4 pieces d\'usure en pastilles', (brother.match(/class="part /g) || []).length, 4);
+contains('Brother: le tambour est reconnu', brother, 'Drum');
+contains('Brother: le four est reconnu', brother, 'Fuser');
+const partNames = html => [...String(html).matchAll(/<span class="pname">([^<]*)</g)].map(m => m[1]);
+check('le nom de l\'imprimante est retire du libelle',
+  partNames(brother).some(n => n.includes('HL-L8360')), false);
+check('le qualificatif de fin est retire',
+  partNames(brother).some(n => /remaining/i.test(n)), false);
+check('les libelles de pieces sont propres',
+  partNames(brother).join(','), 'Drum,Fuser,Belt unit,PF Kit 1');
+// The tooltip keeps the full name the integration gave it.
+contains('le nom complet reste en infobulle', brother, 'title="HL-L8360 Drum remaining lifetime"');
+
+// The title comes from the device, not from the status entity: a Brother's
+// status sensor is called "HL-L8360CDW Status", which is a poor card title.
+const withDevice = (() => {
+  const c = new Card();
+  c.setConfig({ entity: 'sensor.printer' });
+  const hass = makeHass('idle', BROTHER, { friendly_name: 'HL-L8360CDW Status' });
+  hass.entities = Object.fromEntries(Object.keys(hass.states).map((id) => [id, { device_id: 'dev1' }]));
+  hass.devices = { dev1: { name: 'HL-L8360CDW', name_by_user: null } };
+  c.hass = hass;
+  return markup(c);
+})();
+contains('le titre vient du nom de l\'appareil', withDevice, '<div class="name">HL-L8360CDW</div>');
+check('le suffixe du capteur d\'etat ne finit pas dans le titre',
+  /HL-L8360CDW Status<\/div>/.test(withDevice), false);
+contains('sans registre d\'appareils on retombe sur le nom convivial',
+  renderDev('idle', {}, BROTHER, { friendly_name: 'HL-L8360CDW Status' }), 'HL-L8360CDW Status</div>');
+contains('un nom configure gagne sur tout',
+  render('idle', { name: 'Imprimante du bureau' }), 'Imprimante du bureau');
+
+const SYNCTHRU = {
+  'sensor.printer_toner_black': pct(41, 'M2070 Toner black'),
+  'sensor.printer_drum_black': pct(77, 'M2070 Drum black'),
+};
+const syncthru = renderDev('normal', {}, SYNCTHRU);
+check('SyncThru: le toner est une cartouche', (syncthru.match(/class="cart /g) || []).length, 1);
+check('SyncThru: le tambour est une piece', (syncthru.match(/class="part /g) || []).length, 1);
+check('SyncThru "normal" est un etat pret', label(syncthru), 'Ready');
+
+const EPSON = {
+  'sensor.printer_ink_bk': pct(70, 'Ink level Black'),
+  'sensor.printer_ink_lc': pct(55, 'Ink level Light Cyan'),
+  'sensor.printer_clean': pct(35, 'Cleaning level'),
+  'sensor.printer_signal_strength': pct(62, 'Signal Strength'),
+};
+const epson = renderDev('idle', {}, EPSON);
+check('Epson: 2 encres', (epson.match(/class="cart /g) || []).length, 2);
+contains('Epson: le code court bk vaut noir', epson, '>Black<');
+contains('Epson: le code court lc vaut cyan clair', epson, '>Light cyan<');
+check('Epson: le recuperateur est une piece', (epson.match(/class="part /g) || []).length, 1);
+check('la force du signal Wi-Fi n\'est pas un consommable',
+  /Signal Strength/.test(epson), false);
+
+// Dell names its toners after the colour and nothing else.
+const dell = renderDev('idle', {}, {
+  'sensor.printer_black': pct(30, 'Dell C1765 Black'),
+  'sensor.printer_cyan': pct(60, 'Dell C1765 Cyan'),
+});
+check('Dell: des noms de couleur nus suffisent', (dell.match(/class="cart /g) || []).length, 2);
+
+// Without the entity registry the scope falls back to the id prefix, and the
+// deny list still has to hold.
+const noReg = render('idle', {}, {
+  'sensor.printer_black_toner_remaining': pct(64, 'Black toner remaining'),
+  'sensor.printer_wifi_signal': pct(70, 'Wifi signal'),
+  'sensor.autre_black_toner_remaining': pct(10, 'Black toner remaining'),
+});
+check('sans registre: prefixe respecte', (noReg.match(/class="cart /g) || []).length, 1);
+check('sans registre: la deny list tient', /Wifi signal/.test(noReg), false);
+
+// ── Wear parts and waste receptacles ─────────────────────────────────────────
+
+check('show_parts: false masque les pieces',
+  /class="part /.test(renderDev('idle', { show_parts: false }, BROTHER)), false);
+const lowPart = renderDev('idle', {}, { 'sensor.printer_fuser_remaining_life': pct(8, 'Fuser remaining lifetime') });
+contains('une piece en fin de vie a sa propre alerte', lowPart, 'Wear part low');
+contains('l\'alerte piece nomme la piece', lowPart, 'Fuser 8%');
+check('une piece basse ne declenche pas l\'alerte cartouche',
+  /Cartridge low/.test(lowPart), false);
+
+// A receptacle that fills up is in trouble when it runs high, not low. There
+// is no way to tell the two conventions apart from the data, so it is opt-in.
+const wasteFill = renderDev('idle', { cartridges: [{ entity: 'sensor.printer_waste', kind: 'waste_fill' }] },
+  { 'sensor.printer_waste': pct(95, 'Waste toner box') });
+contains('waste_fill: plein = alerte', wasteFill, 'Wear part low');
+const wasteFillOk = renderDev('idle', { cartridges: [{ entity: 'sensor.printer_waste', kind: 'waste_fill' }] },
+  { 'sensor.printer_waste': pct(12, 'Waste toner box') });
+check('waste_fill: vide = pas d\'alerte', /Wear part low/.test(wasteFillOk), false);
+const wasteRemaining = renderDev('idle', {}, { 'sensor.printer_waste': pct(12, 'Waste toner box') });
+contains('par defaut un recuperateur se lit comme une capacite restante',
+  wasteRemaining, 'Wear part low');
+
+// ── Page counters ────────────────────────────────────────────────────────────
+
+const COUNTERS = {
+  'sensor.printer_page_counter': { state: '12480', attributes: { friendly_name: 'Page counter' } },
+  'sensor.printer_bw_counter': { state: '9210', attributes: { friendly_name: 'B/W pages' } },
+  'sensor.printer_color_counter': { state: '3270', attributes: { friendly_name: 'Color pages' } },
+  'sensor.printer_bw_scans': { state: '55', attributes: { friendly_name: 'B&W Scans' } },
+  'sensor.printer_color_copies': { state: '12', attributes: { friendly_name: 'Color Copies' } },
+  'sensor.printer_drum_remaining_pages': { state: '4000', attributes: { friendly_name: 'Drum remaining pages' } },
+};
+const counters = renderDev('idle', {}, COUNTERS);
+contains('compteur total', counters, '12,480');
+contains('compteur noir et blanc', counters, '9,210');
+contains('compteur couleur', counters, '3,270');
+const countersLine = html => (String(html).match(/<div class="counters">[\s\S]*?<\/div>/) || [''])[0];
+check('les scans ne sont pas des impressions', /55/.test(countersLine(counters)), false);
+check('les copies non plus', />12</.test(countersLine(counters)), false);
+check('les pages restantes d\'un tambour ne sont pas un compteur',
+  /4,000/.test(countersLine(counters)), false);
+check('trois compteurs et pas un de plus',
+  (countersLine(counters).match(/<b>/g) || []).length, 3);
+check('show_counters: false masque la ligne',
+  /class="counters"/.test(renderDev('idle', { show_counters: false }, COUNTERS)), false);
+check('pas de ligne de compteurs sans compteur',
+  /class="counters"/.test(render('idle')), false);
+contains('les compteurs suivent la langue de la carte',
+  renderDev('idle', { language: 'fr' }, COUNTERS), '12\u202f480');
+
+// ── Mono printers ────────────────────────────────────────────────────────────
+// One cartridge, no colour anywhere in its name, and the machine prints black.
+
+const mono = renderDev('idle', {}, { 'sensor.printer_toner_remaining': pct(45, 'HL-L2350DW Toner remaining') });
+check('mono: une seule cartouche', (mono.match(/class="cart /g) || []).length, 1);
+contains('mono: elle est noire', mono, 'fill="#26292e"');
+contains('mono: elle est nommee noir', mono, '>Black<');
+// Two nameless supplies is not a mono printer, and guessing black would be wrong.
+const twoUnknown = renderDev('idle', {}, {
+  'sensor.printer_supply_a': pct(45, 'Supply A'),
+  'sensor.printer_supply_b': pct(60, 'Supply B'),
+});
+check('deux consommables anonymes ne deviennent pas noirs',
+  /fill="#26292e"/.test(twoUnknown), false);
+// A mono machine counts every page in black: the same number twice is noise.
+const monoCounters = renderDev('idle', {}, {
+  'sensor.printer_page_counter': { state: '5000', attributes: { friendly_name: 'Page counter' } },
+  'sensor.printer_bw_counter': { state: '5000', attributes: { friendly_name: 'B/W pages' } },
+});
+check('mono: le compteur N&B redondant est masque',
+  (monoCounters.match(/5,000/g) || []).length, 1);
+
+// ── The warning state ────────────────────────────────────────────────────────
+// A printer that says "toner low" still prints. Calling that stopped was wrong.
+
+check('"warning" (SyncThru)', label(render('warning')), 'Attention needed');
+check('"Toner low" (Brother)', label(render('Toner low')), 'Attention needed');
+check('"Low ink"', label(render('Low ink')), 'Attention needed');
+check('un avertissement n\'est pas un arret', label(render('Toner low')) === label(render('stopped')), false);
+contains('l\'avertissement est orange', render('warning'), '--pc-color: var(--warning-color');
+check('"Replace toner" reste un arret', label(render('Replace toner')), 'Stopped');
+check('"unreachable" est hors ligne', label(render('unreachable')), 'Offline');
+check('un avertissement ne dessine pas de bourrage', /class="warn"/.test(render('warning')), false);
+
+// ── An explicit paper sensor ─────────────────────────────────────────────────
+
+const paperCfg = { printer_type: 'inkjet', paper_entity: 'binary_sensor.tray' };
+const bs = (state, dc) => ({ 'binary_sensor.tray': { state, attributes: dc ? { device_class: dc } : {} } });
+check('binary_sensor off = bac vide',
+  /class="paper-stack"/.test(render('idle', paperCfg, bs('off'))), false);
+check('binary_sensor on = du papier',
+  /class="paper-stack"/.test(render('idle', paperCfg, bs('on'))), true);
+check('device_class problem: on = bac vide',
+  /class="paper-stack"/.test(render('idle', paperCfg, bs('on', 'problem'))), false);
+check('un capteur numerique a zero = bac vide',
+  /class="paper-stack"/.test(render('idle', { printer_type: 'inkjet', paper_entity: 'sensor.tray' },
+    { 'sensor.tray': { state: '0', attributes: { unit_of_measurement: '%' } } })), false);
+check('un capteur numerique non nul = du papier',
+  /class="paper-stack"/.test(render('idle', { printer_type: 'inkjet', paper_entity: 'sensor.tray' },
+    { 'sensor.tray': { state: '80', attributes: { unit_of_measurement: '%' } } })), true);
+check('un capteur texte "Empty" = bac vide',
+  /class="paper-stack"/.test(render('idle', { printer_type: 'inkjet', paper_entity: 'sensor.tray' },
+    { 'sensor.tray': { state: 'Empty', attributes: {} } })), false);
+check('un capteur de bac introuvable ne vide pas le bac',
+  /class="paper-stack"/.test(render('idle', { printer_type: 'inkjet', paper_entity: 'sensor.nope' })), true);
+
 // ── Status message ───────────────────────────────────────────────────────────
 
 contains('state_message affiche',

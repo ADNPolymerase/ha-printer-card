@@ -1,4 +1,4 @@
-const CARD_VERSION = "0.1.0";
+const CARD_VERSION = "0.2.0";
 
 console.info(
   "%c HA-PRINTER-CARD %c v" + CARD_VERSION + " ",
@@ -15,9 +15,12 @@ console.info(
 
 const T = {
   en: {
-    printing: "Printing\u2026", idle: "Ready", sleep: "Sleep", stopped: "Stopped",
+    printing: "Printing\u2026", idle: "Ready", sleep: "Sleep", stopped: "Stopped", warning: "Attention needed",
     offline: "Offline", unknown: "Unknown state",
-    low: "Low", alert_low: "Cartridge low",
+    low: "Low", alert_low: "Cartridge low", alert_part: "Wear part low",
+    pages: "pages", pages_bw: "B&W", pages_color: "colour",
+    show_parts: "Show the drum, fuser and other wear parts", show_counters: "Show the page counters",
+    paper_entity: "Paper tray sensor",
     supplies: "Supplies", toner: "Toner", ink: "Ink",
     c_black: "Black", c_cyan: "Cyan", c_magenta: "Magenta", c_yellow: "Yellow",
     c_grey: "Grey", c_photo: "Photo black", c_light_cyan: "Light cyan",
@@ -42,9 +45,12 @@ const T = {
     section_look: "Appearance", section_advanced: "Advanced",
   },
   fr: {
-    printing: "Impression\u2026", idle: "Pr\u00eate", sleep: "Veille", stopped: "Arr\u00eat\u00e9e",
+    printing: "Impression\u2026", idle: "Pr\u00eate", sleep: "Veille", stopped: "Arr\u00eat\u00e9e", warning: "Attention requise",
     offline: "Hors ligne", unknown: "\u00c9tat inconnu",
-    low: "Bas", alert_low: "Cartouche presque vide",
+    low: "Bas", alert_low: "Cartouche presque vide", alert_part: "Pi\u00e8ce d'usure en fin de vie",
+    pages: "pages", pages_bw: "N&B", pages_color: "couleur",
+    show_parts: "Afficher le tambour, le four et les autres pi\u00e8ces d'usure", show_counters: "Afficher les compteurs de pages",
+    paper_entity: "Capteur du bac \u00e0 papier",
     supplies: "Consommables", toner: "Toner", ink: "Encre",
     c_black: "Noir", c_cyan: "Cyan", c_magenta: "Magenta", c_yellow: "Jaune",
     c_grey: "Gris", c_photo: "Noir photo", c_light_cyan: "Cyan clair",
@@ -69,9 +75,12 @@ const T = {
     section_look: "Apparence", section_advanced: "Avanc\u00e9",
   },
   de: {
-    printing: "Druckt\u2026", idle: "Bereit", sleep: "Ruhezustand", stopped: "Gestoppt",
+    printing: "Druckt\u2026", idle: "Bereit", sleep: "Ruhezustand", stopped: "Gestoppt", warning: "Achtung",
     offline: "Offline", unknown: "Unbekannter Zustand",
-    low: "Niedrig", alert_low: "Patrone fast leer",
+    low: "Niedrig", alert_low: "Patrone fast leer", alert_part: "Verschlei\u00dfteil fast am Ende",
+    pages: "Seiten", pages_bw: "S/W", pages_color: "Farbe",
+    show_parts: "Trommel, Fixiereinheit und andere Verschlei\u00dfteile anzeigen", show_counters: "Seitenz\u00e4hler anzeigen",
+    paper_entity: "Sensor des Papierfachs",
     supplies: "Verbrauchsmaterial", toner: "Toner", ink: "Tinte",
     c_black: "Schwarz", c_cyan: "Cyan", c_magenta: "Magenta", c_yellow: "Gelb",
     c_grey: "Grau", c_photo: "Fotoschwarz", c_light_cyan: "Hellcyan",
@@ -96,9 +105,12 @@ const T = {
     section_look: "Darstellung", section_advanced: "Erweitert",
   },
   es: {
-    printing: "Imprimiendo\u2026", idle: "Lista", sleep: "Reposo", stopped: "Detenida",
+    printing: "Imprimiendo\u2026", idle: "Lista", sleep: "Reposo", stopped: "Detenida", warning: "Requiere atenci\u00f3n",
     offline: "Sin conexi\u00f3n", unknown: "Estado desconocido",
-    low: "Bajo", alert_low: "Cartucho casi vac\u00edo",
+    low: "Bajo", alert_low: "Cartucho casi vac\u00edo", alert_part: "Pieza de desgaste al l\u00edmite",
+    pages: "p\u00e1ginas", pages_bw: "B/N", pages_color: "color",
+    show_parts: "Mostrar el tambor, el fusor y otras piezas de desgaste", show_counters: "Mostrar los contadores de p\u00e1ginas",
+    paper_entity: "Sensor de la bandeja de papel",
     supplies: "Consumibles", toner: "T\u00f3ner", ink: "Tinta",
     c_black: "Negro", c_cyan: "Cian", c_magenta: "Magenta", c_yellow: "Amarillo",
     c_grey: "Gris", c_photo: "Negro foto", c_light_cyan: "Cian claro",
@@ -123,9 +135,12 @@ const T = {
     section_look: "Apariencia", section_advanced: "Avanzado",
   },
   it: {
-    printing: "Stampa in corso\u2026", idle: "Pronta", sleep: "Sospensione", stopped: "Ferma",
+    printing: "Stampa in corso\u2026", idle: "Pronta", sleep: "Sospensione", stopped: "Ferma", warning: "Richiede attenzione",
     offline: "Non in linea", unknown: "Stato sconosciuto",
-    low: "Basso", alert_low: "Cartuccia quasi esaurita",
+    low: "Basso", alert_low: "Cartuccia quasi esaurita", alert_part: "Parte di consumo quasi esaurita",
+    pages: "pagine", pages_bw: "B/N", pages_color: "colore",
+    show_parts: "Mostrare il tamburo, il fusore e le altre parti di consumo", show_counters: "Mostrare i contatori di pagine",
+    paper_entity: "Sensore del vassoio carta",
     supplies: "Materiali di consumo", toner: "Toner", ink: "Inchiostro",
     c_black: "Nero", c_cyan: "Ciano", c_magenta: "Magenta", c_yellow: "Giallo",
     c_grey: "Grigio", c_photo: "Nero foto", c_light_cyan: "Ciano chiaro",
@@ -150,9 +165,12 @@ const T = {
     section_look: "Aspetto", section_advanced: "Avanzate",
   },
   nl: {
-    printing: "Bezig met afdrukken\u2026", idle: "Gereed", sleep: "Slaapstand", stopped: "Gestopt",
+    printing: "Bezig met afdrukken\u2026", idle: "Gereed", sleep: "Slaapstand", stopped: "Gestopt", warning: "Aandacht nodig",
     offline: "Offline", unknown: "Onbekende status",
-    low: "Laag", alert_low: "Cartridge bijna leeg",
+    low: "Laag", alert_low: "Cartridge bijna leeg", alert_part: "Slijtdeel bijna op",
+    pages: "pagina's", pages_bw: "Z/W", pages_color: "kleur",
+    show_parts: "Drum, fuser en andere slijtdelen tonen", show_counters: "Paginatellers tonen",
+    paper_entity: "Sensor van de papierlade",
     supplies: "Verbruiksartikelen", toner: "Toner", ink: "Inkt",
     c_black: "Zwart", c_cyan: "Cyaan", c_magenta: "Magenta", c_yellow: "Geel",
     c_grey: "Grijs", c_photo: "Fotozwart", c_light_cyan: "Lichtcyaan",
@@ -177,9 +195,12 @@ const T = {
     section_look: "Weergave", section_advanced: "Geavanceerd",
   },
   pt: {
-    printing: "A imprimir\u2026", idle: "Pronta", sleep: "Suspensa", stopped: "Parada",
+    printing: "A imprimir\u2026", idle: "Pronta", sleep: "Suspensa", stopped: "Parada", warning: "Requer aten\u00e7\u00e3o",
     offline: "Offline", unknown: "Estado desconhecido",
-    low: "Baixo", alert_low: "Cartucho quase vazio",
+    low: "Baixo", alert_low: "Cartucho quase vazio", alert_part: "Pe\u00e7a de desgaste no fim",
+    pages: "p\u00e1ginas", pages_bw: "P/B", pages_color: "cor",
+    show_parts: "Mostrar o tambor, o fusor e outras pe\u00e7as de desgaste", show_counters: "Mostrar os contadores de p\u00e1ginas",
+    paper_entity: "Sensor do tabuleiro de papel",
     supplies: "Consum\u00edveis", toner: "Toner", ink: "Tinta",
     c_black: "Preto", c_cyan: "Ciano", c_magenta: "Magenta", c_yellow: "Amarelo",
     c_grey: "Cinzento", c_photo: "Preto foto", c_light_cyan: "Ciano claro",
@@ -204,9 +225,12 @@ const T = {
     section_look: "Apar\u00eancia", section_advanced: "Avan\u00e7ado",
   },
   sv: {
-    printing: "Skriver ut\u2026", idle: "Redo", sleep: "Vilol\u00e4ge", stopped: "Stoppad",
+    printing: "Skriver ut\u2026", idle: "Redo", sleep: "Vilol\u00e4ge", stopped: "Stoppad", warning: "Kr\u00e4ver \u00e5tg\u00e4rd",
     offline: "Offline", unknown: "Ok\u00e4nt tillst\u00e5nd",
-    low: "L\u00e5g", alert_low: "Patron n\u00e4stan tom",
+    low: "L\u00e5g", alert_low: "Patron n\u00e4stan tom", alert_part: "Slitdel n\u00e4stan slut",
+    pages: "sidor", pages_bw: "S/V", pages_color: "f\u00e4rg",
+    show_parts: "Visa trumma, fixeringsenhet och andra slitdelar", show_counters: "Visa sidr\u00e4knarna",
+    paper_entity: "Sensor f\u00f6r pappersfacket",
     supplies: "F\u00f6rbrukningsmaterial", toner: "Toner", ink: "Bl\u00e4ck",
     c_black: "Svart", c_cyan: "Cyan", c_magenta: "Magenta", c_yellow: "Gul",
     c_grey: "Gr\u00e5", c_photo: "Fotosvart", c_light_cyan: "Ljus cyan",
@@ -231,9 +255,12 @@ const T = {
     section_look: "Utseende", section_advanced: "Avancerat",
   },
   no: {
-    printing: "Skriver ut\u2026", idle: "Klar", sleep: "Hvilemodus", stopped: "Stoppet",
+    printing: "Skriver ut\u2026", idle: "Klar", sleep: "Hvilemodus", stopped: "Stoppet", warning: "Krever tilsyn",
     offline: "Frakoblet", unknown: "Ukjent tilstand",
-    low: "Lav", alert_low: "Patron nesten tom",
+    low: "Lav", alert_low: "Patron nesten tom", alert_part: "Slitedel nesten oppbrukt",
+    pages: "sider", pages_bw: "S/H", pages_color: "farge",
+    show_parts: "Vis trommel, fikseringsenhet og andre slitedeler", show_counters: "Vis sidetellerne",
+    paper_entity: "Sensor for papirskuffen",
     supplies: "Forbruksmateriell", toner: "Toner", ink: "Blekk",
     c_black: "Svart", c_cyan: "Cyan", c_magenta: "Magenta", c_yellow: "Gul",
     c_grey: "Gr\u00e5", c_photo: "Fotosvart", c_light_cyan: "Lys cyan",
@@ -258,9 +285,12 @@ const T = {
     section_look: "Utseende", section_advanced: "Avansert",
   },
   da: {
-    printing: "Udskriver\u2026", idle: "Klar", sleep: "Dvale", stopped: "Stoppet",
+    printing: "Udskriver\u2026", idle: "Klar", sleep: "Dvale", stopped: "Stoppet", warning: "Kr\u00e6ver opm\u00e6rksomhed",
     offline: "Offline", unknown: "Ukendt tilstand",
-    low: "Lav", alert_low: "Patron n\u00e6sten tom",
+    low: "Lav", alert_low: "Patron n\u00e6sten tom", alert_part: "Sliddel n\u00e6sten opbrugt",
+    pages: "sider", pages_bw: "S/H", pages_color: "farve",
+    show_parts: "Vis tromle, fikseringsenhed og andre sliddele", show_counters: "Vis sidet\u00e6llerne",
+    paper_entity: "Sensor for papirbakken",
     supplies: "Forbrugsstoffer", toner: "Toner", ink: "Bl\u00e6k",
     c_black: "Sort", c_cyan: "Cyan", c_magenta: "Magenta", c_yellow: "Gul",
     c_grey: "Gr\u00e5", c_photo: "Fotosort", c_light_cyan: "Lys cyan",
@@ -285,9 +315,12 @@ const T = {
     section_look: "Udseende", section_advanced: "Avanceret",
   },
   pl: {
-    printing: "Drukowanie\u2026", idle: "Gotowa", sleep: "U\u015bpienie", stopped: "Zatrzymana",
+    printing: "Drukowanie\u2026", idle: "Gotowa", sleep: "U\u015bpienie", stopped: "Zatrzymana", warning: "Wymaga uwagi",
     offline: "Offline", unknown: "Nieznany stan",
-    low: "Niski", alert_low: "Ko\u0144czy si\u0119 tusz",
+    low: "Niski", alert_low: "Ko\u0144czy si\u0119 tusz", alert_part: "Cz\u0119\u015b\u0107 eksploatacyjna na wyczerpaniu",
+    pages: "stron", pages_bw: "Cz/B", pages_color: "kolor",
+    show_parts: "Poka\u017c b\u0119ben, utrwalacz i inne cz\u0119\u015bci eksploatacyjne", show_counters: "Poka\u017c liczniki stron",
+    paper_entity: "Czujnik podajnika papieru",
     supplies: "Materia\u0142y eksploatacyjne", toner: "Toner", ink: "Tusz",
     c_black: "Czarny", c_cyan: "Cyjan", c_magenta: "Magenta", c_yellow: "\u017b\u00f3\u0142ty",
     c_grey: "Szary", c_photo: "Czarny foto", c_light_cyan: "Jasny cyjan",
@@ -312,9 +345,12 @@ const T = {
     section_look: "Wygl\u0105d", section_advanced: "Zaawansowane",
   },
   ru: {
-    printing: "\u041f\u0435\u0447\u0430\u0442\u044c\u2026", idle: "\u0413\u043e\u0442\u043e\u0432", sleep: "\u0421\u043f\u044f\u0449\u0438\u0439 \u0440\u0435\u0436\u0438\u043c", stopped: "\u041e\u0441\u0442\u0430\u043d\u043e\u0432\u043b\u0435\u043d",
+    printing: "\u041f\u0435\u0447\u0430\u0442\u044c\u2026", idle: "\u0413\u043e\u0442\u043e\u0432", sleep: "\u0421\u043f\u044f\u0449\u0438\u0439 \u0440\u0435\u0436\u0438\u043c", stopped: "\u041e\u0441\u0442\u0430\u043d\u043e\u0432\u043b\u0435\u043d", warning: "\u0422\u0440\u0435\u0431\u0443\u0435\u0442 \u0432\u043d\u0438\u043c\u0430\u043d\u0438\u044f",
     offline: "\u041d\u0435 \u0432 \u0441\u0435\u0442\u0438", unknown: "\u041d\u0435\u0438\u0437\u0432\u0435\u0441\u0442\u043d\u043e\u0435 \u0441\u043e\u0441\u0442\u043e\u044f\u043d\u0438\u0435",
-    low: "\u041c\u0430\u043b\u043e", alert_low: "\u041a\u0430\u0440\u0442\u0440\u0438\u0434\u0436 \u0437\u0430\u043a\u0430\u043d\u0447\u0438\u0432\u0430\u0435\u0442\u0441\u044f",
+    low: "\u041c\u0430\u043b\u043e", alert_low: "\u041a\u0430\u0440\u0442\u0440\u0438\u0434\u0436 \u0437\u0430\u043a\u0430\u043d\u0447\u0438\u0432\u0430\u0435\u0442\u0441\u044f", alert_part: "\u0420\u0430\u0441\u0445\u043e\u0434\u043d\u0430\u044f \u0434\u0435\u0442\u0430\u043b\u044c \u043d\u0430 \u0438\u0441\u0445\u043e\u0434\u0435",
+    pages: "\u0441\u0442\u0440\u0430\u043d\u0438\u0446", pages_bw: "\u0427/\u0411", pages_color: "\u0446\u0432\u0435\u0442",
+    show_parts: "\u041f\u043e\u043a\u0430\u0437\u044b\u0432\u0430\u0442\u044c \u0431\u0430\u0440\u0430\u0431\u0430\u043d, \u043f\u0435\u0447\u043a\u0443 \u0438 \u0434\u0440\u0443\u0433\u0438\u0435 \u0440\u0430\u0441\u0445\u043e\u0434\u043d\u044b\u0435 \u0434\u0435\u0442\u0430\u043b\u0438", show_counters: "\u041f\u043e\u043a\u0430\u0437\u044b\u0432\u0430\u0442\u044c \u0441\u0447\u0451\u0442\u0447\u0438\u043a\u0438 \u0441\u0442\u0440\u0430\u043d\u0438\u0446",
+    paper_entity: "\u0414\u0430\u0442\u0447\u0438\u043a \u043b\u043e\u0442\u043a\u0430 \u0431\u0443\u043c\u0430\u0433\u0438",
     supplies: "\u0420\u0430\u0441\u0445\u043e\u0434\u043d\u044b\u0435 \u043c\u0430\u0442\u0435\u0440\u0438\u0430\u043b\u044b", toner: "\u0422\u043e\u043d\u0435\u0440", ink: "\u0427\u0435\u0440\u043d\u0438\u043b\u0430",
     c_black: "\u0427\u0451\u0440\u043d\u044b\u0439", c_cyan: "\u0413\u043e\u043b\u0443\u0431\u043e\u0439", c_magenta: "\u041f\u0443\u0440\u043f\u0443\u0440\u043d\u044b\u0439", c_yellow: "\u0416\u0451\u043b\u0442\u044b\u0439",
     c_grey: "\u0421\u0435\u0440\u044b\u0439", c_photo: "\u0424\u043e\u0442\u043e \u0447\u0451\u0440\u043d\u044b\u0439", c_light_cyan: "\u0421\u0432\u0435\u0442\u043b\u043e-\u0433\u043e\u043b\u0443\u0431\u043e\u0439",
@@ -339,9 +375,12 @@ const T = {
     section_look: "\u0412\u043d\u0435\u0448\u043d\u0438\u0439 \u0432\u0438\u0434", section_advanced: "\u0414\u043e\u043f\u043e\u043b\u043d\u0438\u0442\u0435\u043b\u044c\u043d\u043e",
   },
   zh: {
-    printing: "\u6253\u5370\u4e2d\u2026", idle: "\u5c31\u7eea", sleep: "\u7761\u7720", stopped: "\u5df2\u505c\u6b62",
+    printing: "\u6253\u5370\u4e2d\u2026", idle: "\u5c31\u7eea", sleep: "\u7761\u7720", stopped: "\u5df2\u505c\u6b62", warning: "\u9700\u8981\u6ce8\u610f",
     offline: "\u79bb\u7ebf", unknown: "\u72b6\u6001\u672a\u77e5",
-    low: "\u4e0d\u8db3", alert_low: "\u58a8\u76d2\u5373\u5c06\u8017\u5c3d",
+    low: "\u4e0d\u8db3", alert_low: "\u58a8\u76d2\u5373\u5c06\u8017\u5c3d", alert_part: "\u8017\u6750\u90e8\u4ef6\u5373\u5c06\u8017\u5c3d",
+    pages: "\u9875", pages_bw: "\u9ed1\u767d", pages_color: "\u5f69\u8272",
+    show_parts: "\u663e\u793a\u7852\u9f13\u3001\u5b9a\u5f71\u5355\u5143\u7b49\u8017\u6750\u90e8\u4ef6", show_counters: "\u663e\u793a\u9875\u6570\u8ba1\u6570\u5668",
+    paper_entity: "\u7eb8\u76d2\u4f20\u611f\u5668",
     supplies: "\u8017\u6750", toner: "\u78b3\u7c89", ink: "\u58a8\u6c34",
     c_black: "\u9ed1\u8272", c_cyan: "\u9752\u8272", c_magenta: "\u54c1\u7ea2", c_yellow: "\u9ec4\u8272",
     c_grey: "\u7070\u8272", c_photo: "\u7167\u7247\u9ed1", c_light_cyan: "\u6de1\u9752\u8272",
@@ -409,26 +448,40 @@ function localizedHass(hass, cfg) {
 // Order matters: a panel that spells out "Ready to print" must not be read
 // as printing, so the settled states are tested first and printing is the
 // fallback of the five.
+// Order matters: a panel that spells out "Ready to print" must not be read
+// as printing, so the settled states are tested first and printing is the
+// fallback of the six. "warning" sits between stopped and sleep: a Samsung
+// SyncThru reports plain "warning", a Brother says "toner low", and neither
+// means the machine has stopped.
 const STATE_KEYWORDS = {
   stopped: ["stop", "error", "jam", "bourrage", "arret", "fehler", "gestoppt", "papierstau",
     "detenid", "atasco", "errore", "incepp", "ferma", "fout", "storing", "gestopt",
     "erro", "encravamento", "parada", "fel", "pappersstopp", "stoppad", "feil",
     "stoppet", "papirstopp", "zatrzyman", "blad", "zaciec", "\u043e\u0448\u0438\u0431",
     "\u043e\u0441\u0442\u0430\u043d\u043e\u0432", "\u505c\u6b62", "\u9519\u8bef",
-    "attention", "warning", "cover open", "capot", "out of paper", "no paper"],
+    "halted", "paused", "cover open", "capot", "door open", "out of paper", "no paper",
+    "replace toner", "replace cartridge", "remplacer"],
+  warning: ["warning", "avertissement", "attention", "achtung", "advertencia", "avviso",
+    "waarschuwing", "aviso", "varning", "advarsel", "ostrzezenie",
+    "\u043f\u0440\u0435\u0434\u0443\u043f\u0440\u0435\u0436\u0434", "\u8b66\u544a",
+    "low toner", "toner low", "low ink", "ink low", "niveau bas", "encre faible",
+    "toner faible", "niedrig", "wenig toner", "bajo", "poco toner", "in esaurimento",
+    "bijna leeg", "quase vazio", "lite toner", "lavt niva", "niski poziom",
+    "\u0437\u0430\u043a\u0430\u043d\u0447\u0438\u0432\u0430", "\u4e0d\u8db3",
+    "service required", "maintenance required", "check "],
   sleep: ["sleep", "veille", "schlaf", "ruhezustand", "reposo", "sospension", "slaap",
     "suspens", "vilolage", "dvale", "hvilemodus", "uspien",
     "\u0441\u043f\u044f\u0449", "\u7761\u7720", "power save", "eco"],
-  offline: ["offline", "off line", "unavailable", "unreachable", "hors ligne", "deconnect",
+  offline: ["offline", "off line", "unavailable", "unreachable", "invalid", "hors ligne", "deconnect",
     "nicht erreichbar", "nicht verbunden", "desconect", "sin conexion", "non in linea",
     "niet beschikbaar", "frankoppl", "afkoblet", "niedostep", "wylaczona",
     "\u043d\u0435 \u0432 \u0441\u0435\u0442\u0438", "\u79bb\u7ebf"],
   idle: ["idle", "ready", "pret", "prete", "inactif", "disponible", "bereit", "listo",
     "inattiv", "pronta", "gereed", "klaar", "redo", "klar", "gotow", "bezczynn",
-    "\u0433\u043e\u0442\u043e\u0432", "\u5c31\u7eea", "\u7a7a\u95f2", "standby"],
+    "\u0433\u043e\u0442\u043e\u0432", "\u5c31\u7eea", "\u7a7a\u95f2", "standby", "normal"],
   printing: ["print", "imprim", "druck", "stampa", "afdruk", "skriver ut", "utskrift",
     "udskriv", "drukowanie", "drukuje", "\u043f\u0435\u0447\u0430\u0442", "\u6253\u5370",
-    "processing", "busy", "en cours", "traitement", "job"],
+    "processing", "busy", "en cours", "traitement", "job", "testing", "warming"]
 };
 
 function stripAccents(str) {
@@ -470,6 +523,7 @@ function normalizeState(raw, stateMap) {
 
 const STATE_COLORS = {
   printing: "var(--info-color, #2196f3)",
+  warning: "var(--warning-color, #ff9800)",
   idle: "var(--success-color, #4caf50)",
   sleep: "var(--secondary-text-color, #727272)",
   stopped: "var(--error-color, #f44336)",
@@ -477,8 +531,11 @@ const STATE_COLORS = {
   unknown: "var(--error-color, #f44336)",
 };
 
+// Warning and stopped share an icon: the colour carries the severity, and
+// there is no second printer-with-a-problem glyph that reads differently.
 const STATE_ICONS = {
   printing: "mdi:printer",
+  warning: "mdi:printer-alert",
   idle: "mdi:printer-check",
   sleep: "mdi:printer-off",
   stopped: "mdi:printer-alert",
@@ -494,16 +551,16 @@ const STATE_ICONS = {
 // before plain "cyan" and "black", and the resulting order is the one the
 // cartridges are drawn in (KCMY, the order they sit in the machine).
 const COLOR_KEYWORDS = [
-  ["light_cyan", ["light cyan", "lightcyan", "cyan clair", "hellcyan", "ljus cyan", "lys cyan", "jasny cyjan"]],
-  ["light_magenta", ["light magenta", "lightmagenta", "magenta clair", "hellmagenta", "ljus magenta", "lys magenta", "jasna magenta"]],
-  ["photo", ["photo black", "photoblack", "noir photo", "fotoschwarz", "negro foto", "nero foto", "fotozwart", "preto foto", "fotosvart", "fotosort", "czarny foto"]],
+  ["light_cyan", ["light cyan", "lightcyan", "cyan clair", "hellcyan", "ljus cyan", "lys cyan", "jasny cyjan", "\blc\b"]],
+  ["light_magenta", ["light magenta", "lightmagenta", "magenta clair", "hellmagenta", "ljus magenta", "lys magenta", "jasna magenta", "\blm\b"]],
+  ["photo", ["photo black", "photoblack", "noir photo", "fotoschwarz", "negro foto", "nero foto", "fotozwart", "preto foto", "fotosvart", "fotosort", "czarny foto", "\bpb\b"]],
   ["black", ["black", "noir", "schwarz", "negro", "nero", "zwart", "preto", "svart", "sort", "czarny",
     "\u0447\u0435\u0440\u043d", "\u9ed1", "\bk\b", "\bbk\b"]],
   ["cyan", ["cyan", "cian", "ciano", "cyaan", "cyjan", "\u0433\u043e\u043b\u0443\u0431", "\u9752", "\bc\b"]],
   ["magenta", ["magenta", "\u043f\u0443\u0440\u043f\u0443\u0440", "\u54c1\u7ea2", "\bm\b"]],
   ["yellow", ["yellow", "jaune", "gelb", "amarill", "giallo", "geel", "gul", "zolty",
     "\u0436\u0435\u043b\u0442", "\u9ec4", "\by\b"]],
-  ["grey", ["grey", "gray", "gris", "grau", "grigio", "grijs", "cinzent", "\u0441\u0435\u0440", "\u7070"]],
+  ["grey", ["grey", "gray", "gris", "grau", "grigio", "grijs", "cinzent", "\u0441\u0435\u0440", "\u7070", "\bgy\b"]],
   ["color", ["tri-color", "tricolor", "tri color", "colour", "color", "couleur", "farbe", "colore", "kleur", "\u5f69\u8272"]],
 ];
 
@@ -530,16 +587,56 @@ function detectColor(entityId, friendlyName) {
   return "other";
 }
 
+// A printer's supplies are not only its cartridges. Brother reports a drum, a
+// belt, a fuser, a laser unit and paper-feed kits; Samsung a drum per colour;
+// Epson a maintenance box. They are all percentages that run down, they all
+// need replacing, and none of them is an ink to be drawn in its own colour.
+const PART_KEYWORDS = [
+  "drum", "tambour", "trommel", "tambor", "cilindro", "bildtrommel",
+  "belt", "courroie", "riemen", "correa", "cinghia", "band",
+  "fuser", "fusion", "four", "fixiereinheit", "fusor", "fusore", "fixering",
+  "laser", "pf kit", "feed kit", "kit d alimentation", "papiereinzug",
+  "transfer", "transfert", "ubertragung",
+  "maintenance kit", "kit de maintenance", "wartungskit",
+  "developer", "developpeur", "entwickler",
+  "imaging", "photoconduct", "\bopc\b",
+];
+// Waste receptacles: same shape, opposite meaning depending on the maker.
+const WASTE_KEYWORDS = [
+  "waste", "residu", "recuperateur", "resttoner", "abfall", "afval", "spild",
+  "maintenance box", "boite de maintenance", "wartungsbox", "caja de mantenimiento",
+  "cleaning", "nettoyage", "reinigung", "limpieza",
+  "ink pad", "tampon", "flushing",
+];
+// Percentages on a printer's device that are not supplies at all: Epson
+// exposes Wi-Fi metrics, and integrations happily hang diagnostics off the
+// same device.
+const SUPPLY_DENY = /signal|wifi|wi-fi|batter|humid|\bcpu\b|memor|uptime|volume|brightness|\bfan\b|temperat|disk|storage|progress/i;
+
+function matchesAny(hay, keywords) {
+  return keywords.some((kw) => new RegExp(kw.startsWith("\\b") ? kw : `\\b${kw.replace(/ /g, "[ _-]")}`, "i").test(hay));
+}
+
+// waste before part: a "waste toner box" carries both words.
+function classifyKind(entityId, friendlyName) {
+  const hay = stripAccents(`${friendlyName || ""} ${entityId || ""}`).toLowerCase().replace(/_/g, " ");
+  if (matchesAny(hay, WASTE_KEYWORDS)) return "waste";
+  if (matchesAny(hay, PART_KEYWORDS)) return "part";
+  return "ink";
+}
+
 function toNumber(v) {
   const n = Number(v);
   return Number.isFinite(n) ? n : null;
 }
 
-// A cartridge sensor is one carrying the IPP/CUPS `marker_type` attribute, or
-// failing that a percentage whose name says cartridge. Scoped to the printer:
-// by device when the entity registry is reachable (hass.entities is only
-// there from 2023.4 on), by entity_id prefix otherwise -- which is exactly
-// how the IPP integration names them.
+// A supply sensor is one carrying the IPP/CUPS `marker_type` attribute, or
+// failing that any percentage on the printer's own device that is not an
+// obvious diagnostic. That wider net is what picks up Brother's drums and
+// fuser, Samsung's per-colour drums, Epson's maintenance box and Dell's bare
+// `sensor.black`, none of which say "cartridge" anywhere in their name.
+// Scoped to the printer by device when the entity registry is reachable
+// (hass.entities is only there from 2023.4 on), by entity_id prefix otherwise.
 function autoCartridgeIds(hass, printerEntity) {
   const reg = hass.entities || null;
   const deviceId = reg && reg[printerEntity] ? reg[printerEntity].device_id : null;
@@ -548,8 +645,9 @@ function autoCartridgeIds(hass, printerEntity) {
   for (const [id, st] of Object.entries(hass.states)) {
     if (id === printerEntity || !id.startsWith("sensor.")) continue;
     const attrs = (st && st.attributes) || {};
-    const named = /cartridge|cartouche|patrone|cartucc|cartuch|toner|\bink\b|encre|tinte|tinta|blaeck|blekk|blak|tusz/i.test(id);
-    if (attrs.marker_type === undefined && !(attrs.unit_of_measurement === "%" && named)) continue;
+    const hay = `${attrs.friendly_name || ""} ${id}`;
+    const isPercent = attrs.unit_of_measurement === "%" && !SUPPLY_DENY.test(hay);
+    if (attrs.marker_type === undefined && !isPercent) continue;
     if (deviceId) {
       if (!reg[id] || reg[id].device_id !== deviceId) continue;
     } else if (!id.startsWith(prefix)) continue;
@@ -559,8 +657,8 @@ function autoCartridgeIds(hass, printerEntity) {
 }
 
 // Normalizes both spellings of the option: a plain entity id, or an object
-// overriding the label and the colour for printers whose sensors are named
-// after the part number and nothing else.
+// overriding the label, the colour or the kind for printers whose sensors are
+// named after the part number and nothing else.
 function readCartridges(hass, cfg) {
   const raw = Array.isArray(cfg.cartridges) && cfg.cartridges.length
     ? cfg.cartridges
@@ -572,23 +670,120 @@ function readCartridges(hass, cfg) {
     if (!st) continue;
     const attrs = st.attributes || {};
     const level = toNumber(st.state);
+    const kind = entry.kind || (attrs.marker_type !== undefined && /toner|ink/i.test(attrs.marker_type)
+      ? "ink"
+      : classifyKind(entry.entity, attrs.friendly_name));
     const color = entry.color || detectColor(entry.entity, attrs.friendly_name);
     const attrLow = toNumber(attrs.marker_low_level);
     const low = toNumber(cfg.low_threshold);
     const threshold = low !== null ? low : Math.max(20, attrLow !== null ? attrLow : 0);
+    const full = toNumber(cfg.full_threshold);
     out.push({
       entity: entry.entity,
       level,
+      kind,
       color,
       swatch: COLOR_SWATCH[color] || (entry.color && /^#|^rgb|^var\(/.test(entry.color) ? entry.color : COLOR_SWATCH.other),
       name: entry.name || null,
       title: attrs.friendly_name || entry.entity,
       type: attrs.marker_type || null,
-      low: level !== null && level <= threshold,
+      // A receptacle declared as filling up is in trouble when it runs high,
+      // everything else when it runs low.
+      low: level !== null && (kind === "waste_fill"
+        ? level >= (full !== null ? full : 90)
+        : level <= threshold),
     });
   }
   out.sort((a, b) => COLOR_ORDER.indexOf(a.color) - COLOR_ORDER.indexOf(b.color));
+  // A mono printer has one cartridge and rarely says which colour it is: a
+  // Brother HL-L2350DW just calls it "Toner remaining". One nameless ink and
+  // nothing else means black, and drawing it grey would be plain wrong.
+  const inks = out.filter((c) => c.kind === "ink");
+  if (inks.length === 1 && inks[0].color === "other" && !inks[0].name) {
+    inks[0].color = "black";
+    inks[0].swatch = COLOR_SWATCH.black;
+  }
   return out;
+}
+
+// Integrations name a part "<printer> Fuser remaining lifetime". The printer's
+// own name and the trailing qualifier are noise on a card that already says
+// which printer this is.
+const PART_SUFFIX = /[\s-]*(remaining\s*(life\s*time|lifetime|life|pages)?|level|niveau|restant(e|s)?|verbleibend\w*|kvar|resterende|pozostaly)\s*$/i;
+
+// Home Assistant composes a friendly name as "<device> <entity>", so the
+// printer's own sensor reads "HL-L8360 Status" while its fuser reads
+// "HL-L8360 Fuser remaining lifetime". Matching on the card's title would
+// therefore never strip anything: what the two share is a run of leading
+// words, and that run is the device name.
+function stripPrinterName(title, printerName) {
+  const words = String(title || "").split(/\s+/).filter(Boolean);
+  const ref = String(printerName || "").split(/\s+/).filter(Boolean);
+  let i = 0;
+  while (i < ref.length && i < words.length - 1 && ref[i].toLowerCase() === words[i].toLowerCase()) i++;
+  return words.slice(i).join(" ") || String(title || "");
+}
+
+function supplyLabel(hass, c, printerName) {
+  if (c.name) return c.name;
+  if (c.kind === "ink") return cartridgeLabel(hass, c);
+  const label = stripPrinterName(c.title, printerName).replace(PART_SUFFIX, "").trim();
+  if (!label) return c.title;
+  return label.charAt(0).toUpperCase() + label.slice(1);
+}
+
+// Page counters: Brother, Epson, HP, Dell and the SNMP integrations all expose
+// them, each with its own wording. Scans, copies, faxes and jams are counters
+// too, and none of them belongs on a line about what the printer has printed.
+const COUNTER_NAME = /page|pages|counter|compteur|volume|impressions|zaehler|seiten/i;
+const COUNTER_DENY = /scan|copy|copie|kopi|fax|jam|bourrage|mispick|miss.?pick|remaining|restant|duplex|simplex/i;
+const COUNTER_BW = /\bb\s*(&|and|\/)?\s*w\b|black.?and.?white|monochrome|\bmono\b|noir et blanc|\bn&b\b|schwarz.?weiss|blanco y negro/i;
+const COUNTER_COLOR = /colou?r|couleur|farb|kleur|colore|kolor/i;
+
+function readCounters(hass, cfg) {
+  const reg = hass.entities || null;
+  const deviceId = reg && reg[cfg.entity] ? reg[cfg.entity].device_id : null;
+  const prefix = `${cfg.entity}_`;
+  const found = { total: null, bw: null, color: null };
+  for (const [id, st] of Object.entries(hass.states)) {
+    if (id === cfg.entity || !id.startsWith("sensor.")) continue;
+    const attrs = (st && st.attributes) || {};
+    const unit = attrs.unit_of_measurement;
+    if (unit !== undefined && unit !== null && !/^page/i.test(String(unit))) continue;
+    const hay = `${attrs.friendly_name || ""} ${id}`;
+    if (!COUNTER_NAME.test(hay) || COUNTER_DENY.test(hay)) continue;
+    if (deviceId) {
+      if (!reg[id] || reg[id].device_id !== deviceId) continue;
+    } else if (!id.startsWith(prefix)) continue;
+    const value = toNumber(st.state);
+    if (value === null) continue;
+    const slot = COUNTER_BW.test(hay) ? "bw" : COUNTER_COLOR.test(hay) ? "color" : "total";
+    if (found[slot] === null) found[slot] = value;
+  }
+  // On a mono printer every page is a black page: showing the same number
+  // twice under two labels is noise.
+  if (found.color === null && found.bw !== null && found.bw === found.total) found.bw = null;
+  return found.total === null && found.bw === null && found.color === null ? null : found;
+}
+
+// An explicit paper sensor, for the printers whose status text says nothing.
+// A binary_sensor is read the way its device_class says: `problem` means on is
+// the trouble, anything else means on is paper present.
+function paperEntityEmpty(hass, cfg) {
+  const id = cfg.paper_entity;
+  if (!id) return false;
+  const st = hass.states[id];
+  if (!st) return false;
+  const raw = String(st.state).trim().toLowerCase();
+  if (["unknown", "unavailable", ""].includes(raw)) return false;
+  if (domainOf(id) === "binary_sensor") {
+    const dc = st.attributes && st.attributes.device_class;
+    return dc === "problem" ? raw === "on" : raw === "off";
+  }
+  const n = toNumber(raw);
+  if (n !== null) return n <= 0;
+  if (["empty", "vide", "leer", "vacio", "vuoto", "leeg", "vazio", "tom", "pusty"].includes(raw)) return true;
+  return PAPER_OUT_PATTERNS.some((re) => re.test(stripAccents(raw)));
 }
 
 function cartridgeLabel(hass, c) {
@@ -605,6 +800,18 @@ function cartridgeLabel(hass, c) {
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
+
+// The status entity of a Brother is called "HL-L8360CDW Status", which makes
+// a poor card title. The device registry knows the machine's actual name, and
+// the name the user gave it wins over the one the integration invented.
+function deviceName(hass, entityId) {
+  const reg = hass.entities;
+  const devices = hass.devices;
+  if (!reg || !devices) return null;
+  const entry = reg[entityId];
+  const device = entry && entry.device_id ? devices[entry.device_id] : null;
+  return device ? (device.name_by_user || device.name || null) : null;
+}
 
 function stateObj(hass, entityId) {
   return entityId && hass.states[entityId] ? hass.states[entityId] : null;
@@ -979,13 +1186,17 @@ class PrinterCard extends HTMLElement {
     }
 
     const color = STATE_COLORS[norm];
-    const name = cfg.name || (st && st.attributes.friendly_name) || "Printer";
+    const name = cfg.name || deviceName(hass, cfg.entity) || (st && st.attributes.friendly_name) || "Printer";
     const msg = cfg.show_message === false ? null : statusMessage(st);
-    const carts = cfg.show_supplies === false ? [] : readCartridges(hass, cfg);
-    carts.forEach((c) => { c.label = cartridgeLabel(hass, c); });
+    const supplies = cfg.show_supplies === false ? [] : readCartridges(hass, cfg);
+    supplies.forEach((c) => { c.label = supplyLabel(hass, c, name); });
+    const carts = supplies.filter((c) => c.kind === "ink");
+    const parts = cfg.show_parts === false ? [] : supplies.filter((c) => c.kind !== "ink");
     const lows = carts.filter((c) => c.low);
+    const lowParts = parts.filter((c) => c.low);
+    const counters = cfg.show_counters === false ? null : readCounters(hass, cfg);
     const url = webUrl(cfg, st);
-    const noPaper = isPaperOut(st);
+    const noPaper = isPaperOut(st) || paperEntityEmpty(hass, cfg);
     // "inside" draws the cartridges in the machine and drops the row below it,
     // which is the shortest the card gets while keeping the illustration. It
     // needs that illustration, so compact mode falls back to bars.
@@ -999,7 +1210,8 @@ class PrinterCard extends HTMLElement {
     const signature = JSON.stringify([
       norm, name, msg, url, lang(hass), cfg.compact, cfg.printer_type,
       cfg.cartridge_style, showPower, plugOn, watts, !!cfg.print_entity,
-      inside, noPaper, carts.map((c) => [c.entity, c.level, c.low, c.color]),
+      inside, noPaper, counters,
+      supplies.map((c) => [c.entity, c.level, c.low, c.color, c.kind]),
     ]);
     if (signature === this._signature) return;
     this._signature = signature;
@@ -1022,6 +1234,20 @@ class PrinterCard extends HTMLElement {
           ${plugOn !== null ? `<ha-icon icon="${plugOn ? "mdi:power-plug" : "mdi:power-plug-off"}"></ha-icon>` : ""}
           ${watts !== null ? `${watts.toFixed(watts >= 100 ? 0 : 1)} W` : ""}
         </div>` : "";
+
+    const nf = new Intl.NumberFormat(lang(hass));
+    const partsMarkup = parts.length === 0 ? "" : `<div class="parts">${parts.map((c) => `
+          <span class="part ${c.low ? "low" : ""}" title="${escapeHtml(c.title)}">
+            <span class="pname">${escapeHtml(c.label)}</span>
+            <span class="pval">${c.level === null ? "?" : Math.round(c.level)}%</span>
+            <i style="width:${Math.max(0, Math.min(100, c.level === null ? 0 : c.level)) * 0.42}px"></i>
+          </span>`).join("")}</div>`;
+
+    const countersMarkup = !counters ? "" : `<div class="counters">
+          ${counters.total !== null ? `<span><b>${nf.format(counters.total)}</b> ${t(hass, "pages")}</span>` : ""}
+          ${counters.bw !== null ? `<span><b>${nf.format(counters.bw)}</b> ${t(hass, "pages_bw")}</span>` : ""}
+          ${counters.color !== null ? `<span><b>${nf.format(counters.color)}</b> ${t(hass, "pages_color")}</span>` : ""}
+        </div>`;
 
     const buttons = [
       cfg.plug_entity && plugOn !== null
@@ -1114,6 +1340,15 @@ button ha-icon, .btn ha-icon { --mdc-icon-size:18px; }
 .pct { font-size:12.5px; font-weight:600; color:var(--primary-text-color); }
 .lbl { font-size:11px; color:var(--secondary-text-color); text-align:center; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:100%; }
 .low .pct { color:var(--error-color, #f44336); }
+.parts { display:flex; flex-wrap:wrap; gap:6px; }
+.part { position:relative; display:flex; align-items:baseline; gap:5px; padding:4px 8px 7px; border-radius:8px; background:var(--secondary-background-color); font-size:11.5px; color:var(--secondary-text-color); }
+.part .pval { font-weight:600; color:var(--primary-text-color); }
+.part i { position:absolute; left:8px; bottom:3px; height:2px; border-radius:1px; background:var(--secondary-text-color); opacity:.55; }
+.part.low { color:var(--error-color, #f44336); }
+.part.low .pval { color:var(--error-color, #f44336); }
+.part.low i { background:var(--error-color, #f44336); opacity:1; }
+.counters { display:flex; flex-wrap:wrap; gap:4px 14px; font-size:12px; color:var(--secondary-text-color); }
+.counters b { color:var(--primary-text-color); font-weight:600; }
 .supplies.bars { flex-direction:column; gap:6px; }
 .row-b { display:flex; align-items:center; gap:8px; }
 .row-b .lbl { flex:none; width:88px; text-align:left; }
@@ -1151,7 +1386,11 @@ button ha-icon, .btn ha-icon { --mdc-icon-size:18px; }
         </div>`}
         ${lows.length ? `<div class="alert"><ha-icon icon="mdi:alert-outline"></ha-icon><span>${t(hass, "alert_low")} : ${lows
             .map((c) => `${escapeHtml(c.label)} ${Math.round(c.level)}%`).join(", ")}</span></div>` : ""}
+        ${lowParts.length ? `<div class="alert"><ha-icon icon="mdi:wrench-outline"></ha-icon><span>${t(hass, "alert_part")} : ${lowParts
+            .map((c) => `${escapeHtml(c.label)} ${Math.round(c.level)}%`).join(", ")}</span></div>` : ""}
         ${cartMarkup}
+        ${partsMarkup}
+        ${countersMarkup}
       </ha-card>`;
 
     this._root.querySelectorAll("button[data-action]").forEach((b) => {
@@ -1173,6 +1412,7 @@ const EDITOR_PICKERS = [
   { field: "plug_entity", domains: ["switch", "input_boolean"] },
   { field: "power_entity", domains: ["sensor"] },
   { field: "print_entity", domains: ["button", "input_button", "script", "switch"] },
+  { field: "paper_entity", domains: ["binary_sensor", "sensor"] },
 ];
 
 class PrinterCardEditor extends HTMLElement {
@@ -1284,6 +1524,12 @@ details .form { padding-top:10px; }
           <label><input type="checkbox" data-field="show_message" ${cfg.show_message !== false ? "checked" : ""}/> ${t(hass, "show_message")}</label>
         </div>
         <div class="row row-inline">
+          <label><input type="checkbox" data-field="show_parts" ${cfg.show_parts !== false ? "checked" : ""}/> ${t(hass, "show_parts")}</label>
+        </div>
+        <div class="row row-inline">
+          <label><input type="checkbox" data-field="show_counters" ${cfg.show_counters !== false ? "checked" : ""}/> ${t(hass, "show_counters")}</label>
+        </div>
+        <div class="row row-inline">
           <label><input type="checkbox" data-field="show_power" ${cfg.show_power !== false ? "checked" : ""}/> ${t(hass, "show_power")}</label>
         </div>
         <details open>
@@ -1319,10 +1565,11 @@ details .form { padding-top:10px; }
             </div>
           </div>
         </details>
-        <details ${cfg.print_entity || cfg.web_url || cfg.cartridges || cfg.printing_watts || cfg.low_threshold ? "open" : ""}>
+        <details ${cfg.print_entity || cfg.paper_entity || cfg.web_url || cfg.cartridges || cfg.printing_watts || cfg.low_threshold ? "open" : ""}>
           <summary>${t(hass, "section_advanced")}</summary>
           <div class="form">
             <div class="row" data-picker="print_entity"></div>
+            <div class="row" data-picker="paper_entity"></div>
             <div class="row">
               <label>${t(hass, "web_url")}</label>
               <input type="text" data-field="web_url" placeholder="auto" value="${escapeHtml(cfg.web_url || "")}" />
@@ -1369,7 +1616,7 @@ details .form { padding-top:10px; }
     this._root.querySelectorAll('input[type="checkbox"][data-field]').forEach((cb) => {
       cb.addEventListener("change", () => {
         const field = cb.dataset.field;
-        if (["show_supplies", "show_message", "show_power"].includes(field)) {
+        if (["show_supplies", "show_message", "show_power", "show_parts", "show_counters"].includes(field)) {
           // defaults to true -- only store the key when disabled
           this._set(field, cb.checked ? undefined : false);
         } else {
