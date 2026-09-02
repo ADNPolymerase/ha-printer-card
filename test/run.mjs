@@ -538,6 +538,33 @@ check('le suffixe -error arrete',
   reason('media-low-error', 'fr')[1], 'Arr\u00eat\u00e9e');
 check('un -report n\'change rien a l\'etat',
   reason('marker-supply-low-report', 'fr')[1], 'Pr\u00eate');
+// printer-state-reasons is a set: an IPP printer sends several, comma
+// separated. Read as one token, a low supply hid behind whatever came last.
+check('plusieurs motifs: le plus grave decide',
+  reason('media-empty,marker-supply-low-warning', 'fr')[1], 'Arr\u00eat\u00e9e');
+check('et tous sont nommes',
+  reason('media-empty,marker-supply-low-warning', 'fr')[0], 'Plus de papier, Encre faible');
+// A report is informational and is noise next to something that needs doing.
+check('un -report est ecarte quand autre chose parle',
+  reason('marker-supply-low-warning,spool-area-full-report', 'fr')[0], 'Encre faible');
+// The apostrophe is escaped in the markup, as any device-supplied text is.
+check('mais garde quand il est tout ce que dit l\'imprimante',
+  reason('spool-area-full-report', 'fr')[0], 'File d&#39;impression pleine');
+check('un -report noye dans la liste ne masque plus l\'avertissement',
+  reason('marker-supply-low-warning,spool-area-full-report', 'fr')[1], 'Attention requise');
+
+// An ink warning must not erase the fact that the machine is working.
+const printingWith = (rs) => {
+  const html = render('printing', { language: 'fr' }, {}, { state_reason: rs });
+  return label(html);
+};
+check('un avertissement ne masque pas une impression en cours',
+  printingWith('marker-supply-low-warning'), 'Impression\u2026');
+check('un bourrage arrete quand meme une impression en cours',
+  printingWith('media-jam'), 'Arr\u00eat\u00e9e');
+check('un avertissement promeut toujours depuis prete',
+  reason('marker-supply-low-warning', 'fr')[1], 'Attention requise');
+
 check('shutdown met hors ligne', reason('shutdown', 'fr')[1], 'Hors ligne');
 check('et il leve bien un avertissement',
   label(render('idle', {}, {}, { state_reason: 'marker-supply-low-warning' })), 'Attention needed');
@@ -924,8 +951,12 @@ const enTokens = tokensOf(reasonTables[0][2]);
 check('aucun motif ne manque dans une langue',
   reasonTables.filter(([, , body]) => [...enTokens].some(k => !tokensOf(body).has(k))).map(t => t[1]).join(',') || 'aucune',
   'aucune');
-check('chaque motif traduit a une severite ou est neutre',
-  [...enTokens].every(tok => cardSource.includes(`"${tok}": "`)), true);
+// The gap that shipped in 0.6.1: spool-area-full had a severity and no
+// wording, so it came out as a raw token in every language.
+const severityBody = cardSource.slice(cardSource.indexOf('const REASON_SEVERITY = {'), cardSource.indexOf('function splitReasons'));
+const severityTokens = [...severityBody.matchAll(/"([a-z-]+)":\s*"/g)].map(m => m[1]);
+check('chaque motif ayant une severite a aussi un libelle',
+  severityTokens.filter(tok => !enTokens.has(tok)).join(',') || 'aucun', 'aucun');
 
 check('les libelles de fonction sont bien traduits',
   /class="cfn">Impression</.test(renderHp({ language: 'fr' })), true);
