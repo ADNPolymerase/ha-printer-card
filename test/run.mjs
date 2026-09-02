@@ -564,6 +564,24 @@ check('Canon PRO-100: chacune est nommee',
 check('Canon PRO-100: en francais aussi',
   labelsOf(renderInks(CANON, { language: 'fr' })).join(' | '),
   'Noir | Gris | Gris clair | Cyan | Cyan photo | Magenta | Magenta photo | Jaune');
+// Inside the machine, eight inks side by side in a thirty unit bay would be
+// slivers a pixel and a half wide. Past five they stack in two rows.
+const inkGeom = html => [...String(html).matchAll(/<rect class="ink-track" x="([\d.]+)" y="([\d.]+)" width="([\d.]+)"/g)]
+  .map(m => ({ x: +m[1], y: +m[2], w: +m[3] }));
+const canonInside = renderInks(CANON, { cartridge_style: 'inside' });
+check('les 8 encres sont dans la machine',
+  (canonInside.match(/<g class="ink[ "]/g) || []).length, 8);
+check('sur deux rangees', new Set(inkGeom(canonInside).map(g => g.y)).size, 2);
+check('aucune encre en dessous de 4 px de large',
+  Math.min(...inkGeom(canonInside).map(g => g.w)) >= 4, true);
+const cmykInside = renderInks(['black', 'cyan', 'magenta', 'yellow'], { cartridge_style: 'inside' });
+check('quatre encres restent sur une seule rangee',
+  new Set(inkGeom(cmykInside).map(g => g.y)).size, 1);
+check('et gardent leur largeur',
+  Math.min(...inkGeom(cmykInside).map(g => g.w)) >= 5, true);
+check('la baie reste dans ses limites',
+  inkGeom(canonInside).every(g => g.x >= 26 && g.x + g.w <= 58), true);
+
 // Eight columns do not fit across a card: the row wraps instead of squeezing
 // every label into an ellipsis.
 contains('la rangee de cartouches peut passer a la ligne', canon, '.supplies { display:flex; flex-wrap:wrap;');

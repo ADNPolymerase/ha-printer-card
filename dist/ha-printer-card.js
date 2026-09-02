@@ -1,4 +1,4 @@
-const CARD_VERSION = "0.5.1";
+const CARD_VERSION = "0.5.2";
 
 console.info(
   "%c HA-PRINTER-CARD %c v" + CARD_VERSION + " ",
@@ -1173,25 +1173,34 @@ function panelBlock(x, y, w = 38, h = 21) {
 // the page, the control panel, the jam warning -- so nothing ever overlaps.
 function inkBay(carts, bay, tappable) {
   if (!carts.length) return "";
-  const gap = 2.5;
-  const w = Math.min(9, (bay.w - gap * (carts.length - 1)) / carts.length);
-  const span = w * carts.length + gap * (carts.length - 1);
+  // A photo printer's eight inks laid side by side in a thirty unit bay would
+  // be slivers a pixel and a half wide. Past five they stack in two rows,
+  // which is also how they sit in the machine.
+  const cols = carts.length <= 5 ? carts.length : Math.ceil(carts.length / 2);
+  const rows = Math.ceil(carts.length / cols);
+  const gap = rows > 1 ? 1.8 : 2.5;
+  const rowGap = 3;
+  const capH = rows > 1 ? 2 : 3;
+  const w = Math.min(9, (bay.w - gap * (cols - 1)) / cols);
+  const span = w * cols + gap * (cols - 1);
   const x0 = bay.x + (bay.w - span) / 2;
-  const capH = 3;
-  const top = bay.y + capH;
-  const inner = bay.h - capH;
+  const rowH = (bay.h - rowGap * (rows - 1)) / rows;
   return carts.map((c, i) => {
-    const x = +(x0 + i * (w + gap)).toFixed(1);
+    const x = +(x0 + (i % cols) * (w + gap)).toFixed(1);
+    const rowTop = bay.y + Math.floor(i / cols) * (rowH + rowGap);
+    const top = +(rowTop + capH).toFixed(1);
+    const inner = +(rowH - capH).toFixed(1);
     const pct = Math.max(0, Math.min(100, c.level === null ? 0 : c.level));
     const fh = +((inner - 2) * pct / 100).toFixed(1);
     const fy = +(top + inner - 1 - fh).toFixed(1);
+    const ww = +w.toFixed(1);
     return `
     <g class="ink${tappable ? " clickable" : ""}${c.low ? " low" : ""}"${tappable && c.entity ? ` data-entity="${escapeHtml(c.entity)}"` : ""}>
       <title>${escapeHtml(c.label || c.title)} ${c.level === null ? "?" : Math.round(c.level)}%</title>
-      <rect class="ink-cap" x="${+(x + w * 0.3).toFixed(1)}" y="${bay.y}" width="${+(w * 0.4).toFixed(1)}" height="${capH}" rx="1"/>
-      <rect class="ink-track" x="${x}" y="${top}" width="${+w.toFixed(1)}" height="${inner}" rx="2"/>
-      ${fh > 0 ? `<rect x="${x}" y="${fy}" width="${+w.toFixed(1)}" height="${fh}" rx="${Math.min(2, fh / 2)}" fill="${c.swatch}"/>` : ""}
-      <rect class="ink-outline" x="${x}" y="${top}" width="${+w.toFixed(1)}" height="${inner}" rx="2"/>
+      <rect class="ink-cap" x="${+(x + w * 0.3).toFixed(1)}" y="${+rowTop.toFixed(1)}" width="${+(w * 0.4).toFixed(1)}" height="${capH}" rx="1"/>
+      <rect class="ink-track" x="${x}" y="${top}" width="${ww}" height="${inner}" rx="2"/>
+      ${fh > 0 ? `<rect x="${x}" y="${fy}" width="${ww}" height="${fh}" rx="${Math.min(2, fh / 2)}" fill="${c.swatch}"/>` : ""}
+      <rect class="ink-outline" x="${x}" y="${top}" width="${ww}" height="${inner}" rx="2"/>
     </g>`;
   }).join("");
 }
