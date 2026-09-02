@@ -504,7 +504,8 @@ check('un bourrage est en rouge',
 // RFC 3805 error bits arrive as bare tokens. A sentence is left alone.
 contains('un token d\'erreur est rendu lisible', withErrors('jammed', ''), '>Jammed<');
 contains('le camelCase est separe', withErrors('doorOpen', ''), '>Door open<');
-contains('le snake_case aussi', withErrors('media_empty', ''), '>Media empty<');
+contains('le snake_case rejoint le motif a tirets', withErrors('media_empty', ''), '>Out of paper<');
+contains('un jeton hors liste reste rendu lisible', withErrors('some_other_state', ''), '>Some other state<');
 contains('une phrase du panneau reste intacte',
   withErrors('none', 'Mode veille active'), '>Mode veille active<');
 // A "no paper" error empties the tray, like a state_reason would.
@@ -514,9 +515,30 @@ check('un bourrage ne vide pas le bac',
   /class="paper-stack"/.test(withErrors('jammed', '', { printer_type: 'inkjet' })), true);
 // An IPP state_reason is a token too, and it reaches the card through the
 // attributes rather than through a sensor of its own.
-contains('un state_reason IPP est rendu lisible',
-  render('stopped', {}, {}, { state_reason: 'marker-supply-low-warning' }),
-  '>Marker supply low warning<');
+// ── The printer's reasons, in the card's language ────────────────────────────
+// RFC 8011 state reasons are a closed list, and leaving them in English under
+// a translated state label made no sense in a card that speaks thirteen.
+
+const reason = (rs, lang) => {
+  const html = render('idle', lang ? { language: lang } : {}, {}, { state_reason: rs });
+  return [(html.match(/<div class="msg[^"]*">([^<]*)</) || [])[1], label(html)];
+};
+check('marker-supply-low-warning en anglais', reason('marker-supply-low-warning')[0], 'Ink low');
+check('et en francais', reason('marker-supply-low-warning', 'fr')[0], 'Encre faible');
+check('et en allemand', reason('toner-low', 'de')[0], 'Wenig Toner');
+check('et en espagnol', reason('media-empty', 'es')[0], 'Sin papel');
+check('un motif inconnu retombe sur la forme lisible',
+  reason('some-vendor-thing', 'fr')[0], 'Some vendor thing');
+// Severity comes from the token, so it works in every language at once.
+check('media-empty arrete l\'imprimante', reason('media-empty', 'fr')[1], 'Arr\u00eat\u00e9e');
+check('cover-open aussi', reason('cover-open', 'fr')[1], 'Arr\u00eat\u00e9e');
+check('le suffixe -warning ne l\'arrete pas',
+  reason('marker-supply-low-warning', 'fr')[1], 'Attention requise');
+check('le suffixe -error arrete',
+  reason('media-low-error', 'fr')[1], 'Arr\u00eat\u00e9e');
+check('un -report n\'change rien a l\'etat',
+  reason('marker-supply-low-report', 'fr')[1], 'Pr\u00eate');
+check('shutdown met hors ligne', reason('shutdown', 'fr')[1], 'Hors ligne');
 check('et il leve bien un avertissement',
   label(render('idle', {}, {}, { state_reason: 'marker-supply-low-warning' })), 'Attention needed');
 contains('une phrase en attribut reste intacte',
@@ -892,6 +914,19 @@ const duplicated = tables.filter(([, , body]) => {
   return all.length !== new Set(all).size;
 }).map(t => t[1]);
 check('aucune cle en double dans une table', duplicated.join(',') || 'aucune', 'aucune');
+// The reason table is looked up by token, so a missing language silently
+// falls back to English instead of failing loudly.
+const reasonsBody = cardSource.slice(cardSource.indexOf('const REASONS = {'), cardSource.indexOf('const REASON_SEVERITY'));
+const reasonTables = [...reasonsBody.matchAll(/^  ([a-z]{2}): \{(.*)\},$/gm)];
+check('13 langues pour les motifs', reasonTables.length, 13);
+const tokensOf = body => new Set([...body.matchAll(/"([a-z-]+)":\s*"/g)].map(m => m[1]));
+const enTokens = tokensOf(reasonTables[0][2]);
+check('aucun motif ne manque dans une langue',
+  reasonTables.filter(([, , body]) => [...enTokens].some(k => !tokensOf(body).has(k))).map(t => t[1]).join(',') || 'aucune',
+  'aucune');
+check('chaque motif traduit a une severite ou est neutre',
+  [...enTokens].every(tok => cardSource.includes(`"${tok}": "`)), true);
+
 check('les libelles de fonction sont bien traduits',
   /class="cfn">Impression</.test(renderHp({ language: 'fr' })), true);
 

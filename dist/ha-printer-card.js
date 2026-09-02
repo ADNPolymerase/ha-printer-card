@@ -1,4 +1,4 @@
-const CARD_VERSION = "0.6.0";
+const CARD_VERSION = "0.6.1";
 
 console.info(
   "%c HA-PRINTER-CARD %c v" + CARD_VERSION + " ",
@@ -535,6 +535,71 @@ const STATE_KEYWORD_PATTERNS = Object.fromEntries(
   ])
 );
 
+// The reasons a printer gives for its state are a closed list (RFC 8011),
+// and the card speaks thirteen languages, so leaving them in English under a
+// translated state label made no sense. Kept as its own table rather than
+// folded into T: it is looked up by token, not by key, and anything not
+// listed still falls through to the readable form of whatever was sent.
+const REASONS = {
+  en: { "media-empty": "Out of paper", "media-low": "Paper low", "media-needed": "Load paper", "media-jam": "Paper jam", "cover-open": "Cover open", "door-open": "Door open", "input-tray-missing": "Input tray missing", "output-area-full": "Output tray full", "marker-supply-low": "Ink low", "marker-supply-empty": "Ink empty", "marker-waste-full": "Waste container full", "toner-low": "Toner low", "toner-empty": "Toner empty", "opc-life-over": "Drum worn out", "developer-low": "Developer low", "paused": "Paused", "shutdown": "Shutting down", "connecting-to-device": "Connecting", "timed-out": "Timed out" },
+  fr: { "media-empty": "Plus de papier", "media-low": "Papier bas", "media-needed": "Charger du papier", "media-jam": "Bourrage papier", "cover-open": "Capot ouvert", "door-open": "Porte ouverte", "input-tray-missing": "Bac d'alimentation absent", "output-area-full": "Bac de sortie plein", "marker-supply-low": "Encre faible", "marker-supply-empty": "Encre \u00e9puis\u00e9e", "marker-waste-full": "R\u00e9cup\u00e9rateur plein", "toner-low": "Toner faible", "toner-empty": "Toner \u00e9puis\u00e9", "opc-life-over": "Tambour en fin de vie", "developer-low": "D\u00e9veloppeur faible", "paused": "En pause", "shutdown": "Extinction", "connecting-to-device": "Connexion en cours", "timed-out": "D\u00e9lai d\u00e9pass\u00e9" },
+  de: { "media-empty": "Kein Papier", "media-low": "Wenig Papier", "media-needed": "Papier einlegen", "media-jam": "Papierstau", "cover-open": "Abdeckung offen", "door-open": "T\u00fcr offen", "input-tray-missing": "Papierfach fehlt", "output-area-full": "Ausgabefach voll", "marker-supply-low": "Wenig Tinte", "marker-supply-empty": "Tinte leer", "marker-waste-full": "Resttonerbeh\u00e4lter voll", "toner-low": "Wenig Toner", "toner-empty": "Toner leer", "opc-life-over": "Bildtrommel verbraucht", "developer-low": "Wenig Entwickler", "paused": "Angehalten", "shutdown": "Wird ausgeschaltet", "connecting-to-device": "Verbindung wird hergestellt", "timed-out": "Zeit\u00fcberschreitung" },
+  es: { "media-empty": "Sin papel", "media-low": "Poco papel", "media-needed": "Cargar papel", "media-jam": "Atasco de papel", "cover-open": "Cubierta abierta", "door-open": "Puerta abierta", "input-tray-missing": "Falta la bandeja de entrada", "output-area-full": "Bandeja de salida llena", "marker-supply-low": "Poca tinta", "marker-supply-empty": "Tinta agotada", "marker-waste-full": "Dep\u00f3sito de residuos lleno", "toner-low": "Poco t\u00f3ner", "toner-empty": "T\u00f3ner agotado", "opc-life-over": "Tambor agotado", "developer-low": "Poco revelador", "paused": "En pausa", "shutdown": "Apag\u00e1ndose", "connecting-to-device": "Conectando", "timed-out": "Tiempo agotado" },
+  it: { "media-empty": "Carta esaurita", "media-low": "Carta in esaurimento", "media-needed": "Caricare carta", "media-jam": "Inceppamento carta", "cover-open": "Coperchio aperto", "door-open": "Sportello aperto", "input-tray-missing": "Vassoio di alimentazione assente", "output-area-full": "Vassoio di uscita pieno", "marker-supply-low": "Inchiostro in esaurimento", "marker-supply-empty": "Inchiostro esaurito", "marker-waste-full": "Contenitore di scarto pieno", "toner-low": "Toner in esaurimento", "toner-empty": "Toner esaurito", "opc-life-over": "Tamburo esaurito", "developer-low": "Sviluppatore in esaurimento", "paused": "In pausa", "shutdown": "In spegnimento", "connecting-to-device": "Connessione in corso", "timed-out": "Timeout" },
+  nl: { "media-empty": "Papier op", "media-low": "Weinig papier", "media-needed": "Papier bijvullen", "media-jam": "Papierstoring", "cover-open": "Klep open", "door-open": "Deur open", "input-tray-missing": "Invoerlade ontbreekt", "output-area-full": "Uitvoerlade vol", "marker-supply-low": "Weinig inkt", "marker-supply-empty": "Inkt op", "marker-waste-full": "Afvalreservoir vol", "toner-low": "Weinig toner", "toner-empty": "Toner op", "opc-life-over": "Drum versleten", "developer-low": "Weinig ontwikkelaar", "paused": "Gepauzeerd", "shutdown": "Wordt afgesloten", "connecting-to-device": "Verbinden", "timed-out": "Time-out" },
+  pt: { "media-empty": "Sem papel", "media-low": "Pouco papel", "media-needed": "Colocar papel", "media-jam": "Encravamento de papel", "cover-open": "Tampa aberta", "door-open": "Porta aberta", "input-tray-missing": "Falta o tabuleiro de entrada", "output-area-full": "Tabuleiro de sa\u00edda cheio", "marker-supply-low": "Pouca tinta", "marker-supply-empty": "Tinta esgotada", "marker-waste-full": "Recipiente de res\u00edduos cheio", "toner-low": "Pouco toner", "toner-empty": "Toner esgotado", "opc-life-over": "Tambor gasto", "developer-low": "Pouco revelador", "paused": "Em pausa", "shutdown": "A desligar", "connecting-to-device": "A ligar", "timed-out": "Tempo esgotado" },
+  sv: { "media-empty": "Slut p\u00e5 papper", "media-low": "Lite papper", "media-needed": "Fyll p\u00e5 papper", "media-jam": "Pappersstopp", "cover-open": "Luckan \u00f6ppen", "door-open": "D\u00f6rren \u00f6ppen", "input-tray-missing": "Inmatningsfacket saknas", "output-area-full": "Utmatningsfacket fullt", "marker-supply-low": "Lite bl\u00e4ck", "marker-supply-empty": "Bl\u00e4cket slut", "marker-waste-full": "Spillbeh\u00e5llaren full", "toner-low": "Lite toner", "toner-empty": "Tonern slut", "opc-life-over": "Trumman utsliten", "developer-low": "Lite framkallare", "paused": "Pausad", "shutdown": "St\u00e4ngs av", "connecting-to-device": "Ansluter", "timed-out": "Tidsgr\u00e4nsen \u00f6verskreds" },
+  no: { "media-empty": "Tom for papir", "media-low": "Lite papir", "media-needed": "Legg i papir", "media-jam": "Papirstopp", "cover-open": "Dekselet er \u00e5pent", "door-open": "D\u00f8ren er \u00e5pen", "input-tray-missing": "Innskuffen mangler", "output-area-full": "Utskuffen er full", "marker-supply-low": "Lite blekk", "marker-supply-empty": "Tom for blekk", "marker-waste-full": "Avfallsbeholderen er full", "toner-low": "Lite toner", "toner-empty": "Tom for toner", "opc-life-over": "Trommelen er utslitt", "developer-low": "Lite fremkaller", "paused": "Satt p\u00e5 pause", "shutdown": "Sl\u00e5r seg av", "connecting-to-device": "Kobler til", "timed-out": "Tidsavbrudd" },
+  da: { "media-empty": "L\u00f8bet t\u00f8r for papir", "media-low": "Lidt papir", "media-needed": "L\u00e6g papir i", "media-jam": "Papirstop", "cover-open": "D\u00e6kslet er \u00e5bent", "door-open": "D\u00f8ren er \u00e5ben", "input-tray-missing": "Indbakken mangler", "output-area-full": "Udbakken er fuld", "marker-supply-low": "Lidt bl\u00e6k", "marker-supply-empty": "Bl\u00e6kket er tomt", "marker-waste-full": "Spildbeholderen er fuld", "toner-low": "Lidt toner", "toner-empty": "Toneren er tom", "opc-life-over": "Tromlen er slidt op", "developer-low": "Lidt fremkalder", "paused": "Sat p\u00e5 pause", "shutdown": "Lukker ned", "connecting-to-device": "Opretter forbindelse", "timed-out": "Timeout" },
+  pl: { "media-empty": "Brak papieru", "media-low": "Ma\u0142o papieru", "media-needed": "Za\u0142aduj papier", "media-jam": "Zaci\u0119cie papieru", "cover-open": "Otwarta pokrywa", "door-open": "Otwarte drzwiczki", "input-tray-missing": "Brak podajnika", "output-area-full": "Odbiornik papieru pe\u0142ny", "marker-supply-low": "Ma\u0142o tuszu", "marker-supply-empty": "Brak tuszu", "marker-waste-full": "Pojemnik na zu\u017cyty toner pe\u0142ny", "toner-low": "Ma\u0142o tonera", "toner-empty": "Brak tonera", "opc-life-over": "B\u0119ben zu\u017cyty", "developer-low": "Ma\u0142o developera", "paused": "Wstrzymana", "shutdown": "Wy\u0142\u0105czanie", "connecting-to-device": "\u0141\u0105czenie", "timed-out": "Przekroczono limit czasu" },
+  ru: { "media-empty": "\u041d\u0435\u0442 \u0431\u0443\u043c\u0430\u0433\u0438", "media-low": "\u041c\u0430\u043b\u043e \u0431\u0443\u043c\u0430\u0433\u0438", "media-needed": "\u0417\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u0435 \u0431\u0443\u043c\u0430\u0433\u0443", "media-jam": "\u0417\u0430\u043c\u044f\u0442\u0438\u0435 \u0431\u0443\u043c\u0430\u0433\u0438", "cover-open": "\u041e\u0442\u043a\u0440\u044b\u0442\u0430 \u043a\u0440\u044b\u0448\u043a\u0430", "door-open": "\u041e\u0442\u043a\u0440\u044b\u0442\u0430 \u0434\u0432\u0435\u0440\u0446\u0430", "input-tray-missing": "\u041e\u0442\u0441\u0443\u0442\u0441\u0442\u0432\u0443\u0435\u0442 \u0432\u0445\u043e\u0434\u043d\u043e\u0439 \u043b\u043e\u0442\u043e\u043a", "output-area-full": "\u0412\u044b\u0445\u043e\u0434\u043d\u043e\u0439 \u043b\u043e\u0442\u043e\u043a \u0437\u0430\u043f\u043e\u043b\u043d\u0435\u043d", "marker-supply-low": "\u041c\u0430\u043b\u043e \u0447\u0435\u0440\u043d\u0438\u043b", "marker-supply-empty": "\u0427\u0435\u0440\u043d\u0438\u043b\u0430 \u0437\u0430\u043a\u043e\u043d\u0447\u0438\u043b\u0438\u0441\u044c", "marker-waste-full": "\u0415\u043c\u043a\u043e\u0441\u0442\u044c \u0434\u043b\u044f \u043e\u0442\u0445\u043e\u0434\u043e\u0432 \u0437\u0430\u043f\u043e\u043b\u043d\u0435\u043d\u0430", "toner-low": "\u041c\u0430\u043b\u043e \u0442\u043e\u043d\u0435\u0440\u0430", "toner-empty": "\u0422\u043e\u043d\u0435\u0440 \u0437\u0430\u043a\u043e\u043d\u0447\u0438\u043b\u0441\u044f", "opc-life-over": "\u0411\u0430\u0440\u0430\u0431\u0430\u043d \u0438\u0437\u043d\u043e\u0448\u0435\u043d", "developer-low": "\u041c\u0430\u043b\u043e \u0434\u0435\u0432\u0435\u043b\u043e\u043f\u0435\u0440\u0430", "paused": "\u041f\u0440\u0438\u043e\u0441\u0442\u0430\u043d\u043e\u0432\u043b\u0435\u043d\u043e", "shutdown": "\u0412\u044b\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u0435", "connecting-to-device": "\u041f\u043e\u0434\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u0435", "timed-out": "\u0412\u0440\u0435\u043c\u044f \u043e\u0436\u0438\u0434\u0430\u043d\u0438\u044f \u0438\u0441\u0442\u0435\u043a\u043b\u043e" },
+  zh: { "media-empty": "\u7f3a\u7eb8", "media-low": "\u7eb8\u91cf\u4e0d\u8db3", "media-needed": "\u8bf7\u88c5\u5165\u7eb8\u5f20", "media-jam": "\u5361\u7eb8", "cover-open": "\u673a\u76d6\u6253\u5f00", "door-open": "\u95e8\u76d6\u6253\u5f00", "input-tray-missing": "\u7f3a\u5c11\u8fdb\u7eb8\u76d2", "output-area-full": "\u51fa\u7eb8\u76d2\u5df2\u6ee1", "marker-supply-low": "\u58a8\u6c34\u4e0d\u8db3", "marker-supply-empty": "\u58a8\u6c34\u8017\u5c3d", "marker-waste-full": "\u5e9f\u7c89\u76d2\u5df2\u6ee1", "toner-low": "\u78b3\u7c89\u4e0d\u8db3", "toner-empty": "\u78b3\u7c89\u8017\u5c3d", "opc-life-over": "\u7852\u9f13\u5df2\u8017\u5c3d", "developer-low": "\u663e\u5f71\u5242\u4e0d\u8db3", "paused": "\u5df2\u6682\u505c", "shutdown": "\u6b63\u5728\u5173\u673a", "connecting-to-device": "\u6b63\u5728\u8fde\u63a5", "timed-out": "\u5df2\u8d85\u65f6" },
+};
+
+// Severity comes from the token, not from the translated words: matching
+// prose would need every keyword table to carry every language's wording.
+// The IPP suffixes decide it when present, a report being informational.
+const REASON_SEVERITY = {
+  "media-empty": "stopped", "media-needed": "stopped", "media-jam": "stopped",
+  "cover-open": "stopped", "door-open": "stopped", "interlock-open": "stopped",
+  "input-tray-missing": "stopped", "output-tray-missing": "stopped",
+  "output-area-full": "stopped", "marker-supply-empty": "stopped",
+  "toner-empty": "stopped", "opc-life-over": "stopped", "paused": "stopped",
+  "shutdown": "offline", "offline": "offline", "timed-out": "offline",
+  "media-low": "warning", "marker-supply-low": "warning", "toner-low": "warning",
+  "marker-waste-almost-full": "warning", "marker-waste-full": "warning",
+  "output-area-almost-full": "warning", "opc-near-eol": "warning",
+  "developer-low": "warning", "spool-area-full": "warning",
+  "connecting-to-device": "printing",
+};
+
+function reasonParts(text) {
+  const raw = String(text || "").trim().toLowerCase().replace(/_/g, "-");
+  const m = raw.match(/^(.*?)-(warning|error|report)$/);
+  return { base: m ? m[1] : raw, suffix: m ? m[2] : null };
+}
+
+// The translated wording if we have it, in the user's language, falling back
+// to English before falling back to the token made readable.
+function reasonLabel(hass, text) {
+  const { base } = reasonParts(text);
+  const table = REASONS[lang(hass)];
+  const label = (table && table[base]) || REASONS.en[base];
+  return label || prettyMessage(text);
+}
+
+function reasonSeverity(text) {
+  const { base, suffix } = reasonParts(text);
+  const mapped = REASON_SEVERITY[base];
+  // "none" is not the same as not knowing: a report is informational by
+  // definition, so it must not fall through to matching its own wording.
+  if (suffix === "report") return "none";
+  if (mapped === "offline") return "offline";
+  if (suffix === "warning") return "warning";
+  if (suffix === "error") return "stopped";
+  return mapped || null;
+}
+
 // Freeform text (friendly_name and the printer's own status message are
 // device-supplied) must never reach innerHTML or an attribute unescaped.
 function escapeHtml(v) {
@@ -991,8 +1056,8 @@ function deviceMessage(hass, cfg) {
     const text = String(st.state || "").trim();
     if (!text || ["none", "unknown", "unavailable", "0", "ok", "idle"].includes(text.toLowerCase())) continue;
     const hay = `${attrs.friendly_name || ""} ${id}`;
-    if (MESSAGE_NAME.test(hay)) return prettyMessage(text);
-    if (display === null && DISPLAY_NAME.test(hay)) display = prettyMessage(text);
+    if (MESSAGE_NAME.test(hay)) return text;
+    if (display === null && DISPLAY_NAME.test(hay)) display = text;
   }
   return display;
 }
@@ -1059,7 +1124,7 @@ function statusMessage(st) {
     if (v === null || v === undefined) continue;
     const s = String(v).trim();
     if (!s || ["none", "0", "null", "unknown", "idle"].includes(s.toLowerCase())) continue;
-    return prettyMessage(s);
+    return s;
   }
   return null;
 }
@@ -1455,16 +1520,21 @@ class PrinterCard extends HTMLElement {
     }
 
     const name = cfg.name || deviceName(hass, cfg.entity) || (st && st.attributes.friendly_name) || "Printer";
-    const msg = cfg.show_message === false ? null : (statusMessage(st) || deviceMessage(hass, cfg));
+    const rawMsg = cfg.show_message === false ? null : (statusMessage(st) || deviceMessage(hass, cfg));
+    const msg = rawMsg ? reasonLabel(hass, rawMsg) : null;
     // A panel that says "paper jam" outranks a poll that still says idle, but
-    // a chatty display must never talk the printer out of a worse state.
+    // a chatty display must never talk the printer out of a worse state. The
+    // severity of a known reason comes from its token, since matching the
+    // translated wording would need every keyword table in every language.
     let msgSevere = false;
-    if (msg) {
-      const fromMsg = normalizeState(msg, cfg.state_map);
+    if (rawMsg) {
+      const declared = reasonSeverity(rawMsg);
+      const fromMsg = declared === "none" ? null : (declared || normalizeState(msg, cfg.state_map));
       if ((fromMsg === "stopped" && norm !== "offline")
+          || (fromMsg === "offline" && norm !== "offline")
           || (fromMsg === "warning" && ["idle", "sleep", "printing", "unknown"].includes(norm))) {
         norm = fromMsg;
-        msgSevere = true;
+        msgSevere = fromMsg !== "offline";
       }
     }
     const supplies = cfg.show_supplies === false ? [] : readCartridges(hass, cfg);
@@ -1477,7 +1547,7 @@ class PrinterCard extends HTMLElement {
     const counters = cfg.show_counters === false ? null : readCounters(hass, cfg);
     const url = webUrl(cfg, st, hass);
     const noPaper = isPaperOut(st) || paperEntityEmpty(hass, cfg)
-      || (!!msg && PAPER_OUT_PATTERNS.some((re) => re.test(stripAccents(msg))));
+      || ([rawMsg, msg].some((v) => !!v && PAPER_OUT_PATTERNS.some((re) => re.test(stripAccents(v)))));
     // "inside" draws the cartridges in the machine and drops the row below it,
     // which is the shortest the card gets while keeping the illustration. It
     // needs that illustration, so compact mode falls back to bars.
