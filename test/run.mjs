@@ -530,6 +530,62 @@ const foreign = (() => {
 })();
 check('le message d\'un autre appareil est ignore', label(foreign), 'Ready');
 
+// ── A photo printer's eight inks (Canon PRO-100) ─────────────────────────────
+// Reported from the forum: eight cartridges, five drawn. Two causes. The card
+// could not tell photo cyan from cyan or light gray from gray, and the
+// de-duplication built for "two integrations, one printer" then treated the
+// collision as a duplicate and hid one of each pair.
+
+function renderInks(names, cfg = {}, model = 'Canon PRO-100 series') {
+  const c = new Card();
+  c.setConfig({ entity: 'sensor.printer', ...cfg });
+  const states = {};
+  const reg = { 'sensor.printer': { device_id: 'dev1' } };
+  names.forEach((n, i) => {
+    const id = `sensor.printer_${n}`;
+    states[id] = { state: String(40 + i * 5), attributes: { unit_of_measurement: '%', friendly_name: `${model} ${n.replace(/_/g, ' ')}` } };
+    reg[id] = { device_id: 'dev1' };
+  });
+  const hass = makeHass('idle', states, { friendly_name: model });
+  hass.entities = reg;
+  hass.devices = { dev1: { name: model, via_device_id: null } };
+  c.hass = hass;
+  return markup(c);
+}
+const labelsOf = html => [...String(html).matchAll(/<span class="lbl">([^<]*)</g)].map(m => m[1]);
+
+const CANON = ['cyan', 'photo_cyan', 'gray', 'light_gray', 'yellow', 'magenta', 'photo_magenta', 'black_bk'];
+const canon = renderInks(CANON);
+check('Canon PRO-100: les 8 encres sont dessinees',
+  (canon.match(/class="cart /g) || []).length, 8);
+check('Canon PRO-100: chacune est nommee',
+  labelsOf(canon).join(' | '),
+  'Black | Grey | Light grey | Cyan | Photo cyan | Magenta | Photo magenta | Yellow');
+check('Canon PRO-100: en francais aussi',
+  labelsOf(renderInks(CANON, { language: 'fr' })).join(' | '),
+  'Noir | Gris | Gris clair | Cyan | Cyan photo | Magenta | Magenta photo | Jaune');
+// Eight columns do not fit across a card: the row wraps instead of squeezing
+// every label into an ellipsis.
+contains('la rangee de cartouches peut passer a la ligne', canon, '.supplies { display:flex; flex-wrap:wrap;');
+contains('et chaque cartouche garde une largeur lisible', canon, '.cart { flex:1 1 62px; min-width:56px;');
+check('chaque encre a sa propre teinte',
+  new Set([...canon.matchAll(/fill="(#[0-9a-f]{6})"/g)].map(m => m[1])).size, 8);
+
+// The short codes the makers print on the cartridge, on a wide format Epson.
+check('les codes courts sont reconnus',
+  labelsOf(renderInks(['pk', 'mk', 'lk', 'llk', 'c', 'vm', 'vlm', 'y'], {}, 'Epson SC-P900')).join(' | '),
+  'Photo black | Matte black | Light black | Light light black | Cyan | Magenta | Light magenta | Yellow');
+
+// The heart of it: two supplies on one device are two supplies, even when the
+// card ends up calling them the same thing.
+const twins = renderInks(['ink_a', 'ink_b']);
+check('deux consommables du meme appareil ne se dedupliquent pas',
+  (twins.match(/class="cart /g) || []).length, 2);
+check('un libelle de repli perd le nom de la machine',
+  labelsOf(twins).some(l => l.includes('Canon')), false);
+check('et garde ce que l\'imprimante appelle la cartouche',
+  labelsOf(twins).join(','), 'ink a,ink b');
+
 // ── Wear parts and waste receptacles ─────────────────────────────────────────
 
 check('show_parts: false masque les pieces',

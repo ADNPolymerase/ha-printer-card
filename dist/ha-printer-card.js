@@ -1,4 +1,4 @@
-const CARD_VERSION = "0.5.0";
+const CARD_VERSION = "0.5.1";
 
 console.info(
   "%c HA-PRINTER-CARD %c v" + CARD_VERSION + " ",
@@ -26,6 +26,8 @@ const T = {
     c_black: "Black", c_cyan: "Cyan", c_magenta: "Magenta", c_yellow: "Yellow",
     c_grey: "Grey", c_photo: "Photo black", c_light_cyan: "Light cyan",
     c_light_magenta: "Light magenta", c_color: "Colour",
+    c_photo_cyan: "Photo cyan", c_photo_magenta: "Photo magenta", c_light_grey: "Light grey",
+    c_matte_black: "Matte black", c_light_black: "Light black", c_light_light_black: "Light light black",
     entity: "Printer entity (required)",
     power_entity: "Power sensor (W)",
     plug_entity: "Printer socket (switch)",
@@ -57,6 +59,8 @@ const T = {
     c_black: "Noir", c_cyan: "Cyan", c_magenta: "Magenta", c_yellow: "Jaune",
     c_grey: "Gris", c_photo: "Noir photo", c_light_cyan: "Cyan clair",
     c_light_magenta: "Magenta clair", c_color: "Couleur",
+    c_photo_cyan: "Cyan photo", c_photo_magenta: "Magenta photo", c_light_grey: "Gris clair",
+    c_matte_black: "Noir mat", c_light_black: "Noir clair", c_light_light_black: "Noir tr\u00e8s clair",
     entity: "Entit\u00e9 de l'imprimante (obligatoire)",
     power_entity: "Capteur de puissance (W)",
     plug_entity: "Prise de l'imprimante (switch)",
@@ -88,6 +92,8 @@ const T = {
     c_black: "Schwarz", c_cyan: "Cyan", c_magenta: "Magenta", c_yellow: "Gelb",
     c_grey: "Grau", c_photo: "Fotoschwarz", c_light_cyan: "Hellcyan",
     c_light_magenta: "Hellmagenta", c_color: "Farbe",
+    c_photo_cyan: "Fotocyan", c_photo_magenta: "Fotomagenta", c_light_grey: "Hellgrau",
+    c_matte_black: "Mattschwarz", c_light_black: "Hellschwarz", c_light_light_black: "Sehr helles Schwarz",
     entity: "Drucker-Entit\u00e4t (erforderlich)",
     power_entity: "Leistungssensor (W)",
     plug_entity: "Steckdose des Druckers (Switch)",
@@ -119,6 +125,8 @@ const T = {
     c_black: "Negro", c_cyan: "Cian", c_magenta: "Magenta", c_yellow: "Amarillo",
     c_grey: "Gris", c_photo: "Negro foto", c_light_cyan: "Cian claro",
     c_light_magenta: "Magenta claro", c_color: "Color",
+    c_photo_cyan: "Cian foto", c_photo_magenta: "Magenta foto", c_light_grey: "Gris claro",
+    c_matte_black: "Negro mate", c_light_black: "Negro claro", c_light_light_black: "Negro muy claro",
     entity: "Entidad de la impresora (obligatoria)",
     power_entity: "Sensor de potencia (W)",
     plug_entity: "Enchufe de la impresora (switch)",
@@ -150,6 +158,8 @@ const T = {
     c_black: "Nero", c_cyan: "Ciano", c_magenta: "Magenta", c_yellow: "Giallo",
     c_grey: "Grigio", c_photo: "Nero foto", c_light_cyan: "Ciano chiaro",
     c_light_magenta: "Magenta chiaro", c_color: "Colore",
+    c_photo_cyan: "Ciano foto", c_photo_magenta: "Magenta foto", c_light_grey: "Grigio chiaro",
+    c_matte_black: "Nero opaco", c_light_black: "Nero chiaro", c_light_light_black: "Nero molto chiaro",
     entity: "Entit\u00e0 della stampante (obbligatoria)",
     power_entity: "Sensore di potenza (W)",
     plug_entity: "Presa della stampante (switch)",
@@ -181,6 +191,8 @@ const T = {
     c_black: "Zwart", c_cyan: "Cyaan", c_magenta: "Magenta", c_yellow: "Geel",
     c_grey: "Grijs", c_photo: "Fotozwart", c_light_cyan: "Lichtcyaan",
     c_light_magenta: "Lichtmagenta", c_color: "Kleur",
+    c_photo_cyan: "Fotocyaan", c_photo_magenta: "Fotomagenta", c_light_grey: "Lichtgrijs",
+    c_matte_black: "Matzwart", c_light_black: "Lichtzwart", c_light_light_black: "Zeer lichtzwart",
     entity: "Printerentiteit (verplicht)",
     power_entity: "Vermogenssensor (W)",
     plug_entity: "Stopcontact van de printer (switch)",
@@ -212,6 +224,8 @@ const T = {
     c_black: "Preto", c_cyan: "Ciano", c_magenta: "Magenta", c_yellow: "Amarelo",
     c_grey: "Cinzento", c_photo: "Preto foto", c_light_cyan: "Ciano claro",
     c_light_magenta: "Magenta claro", c_color: "Cor",
+    c_photo_cyan: "Ciano foto", c_photo_magenta: "Magenta foto", c_light_grey: "Cinzento claro",
+    c_matte_black: "Preto mate", c_light_black: "Preto claro", c_light_light_black: "Preto muito claro",
     entity: "Entidade da impressora (obrigat\u00f3ria)",
     power_entity: "Sensor de pot\u00eancia (W)",
     plug_entity: "Tomada da impressora (switch)",
@@ -243,6 +257,8 @@ const T = {
     c_black: "Svart", c_cyan: "Cyan", c_magenta: "Magenta", c_yellow: "Gul",
     c_grey: "Gr\u00e5", c_photo: "Fotosvart", c_light_cyan: "Ljus cyan",
     c_light_magenta: "Ljus magenta", c_color: "F\u00e4rg",
+    c_photo_cyan: "Fotocyan", c_photo_magenta: "Fotomagenta", c_light_grey: "Ljusgr\u00e5",
+    c_matte_black: "Mattsvart", c_light_black: "Ljussvart", c_light_light_black: "Mycket ljussvart",
     entity: "Skrivarens entitet (obligatorisk)",
     power_entity: "Effektsensor (W)",
     plug_entity: "Skrivarens uttag (switch)",
@@ -274,6 +290,8 @@ const T = {
     c_black: "Svart", c_cyan: "Cyan", c_magenta: "Magenta", c_yellow: "Gul",
     c_grey: "Gr\u00e5", c_photo: "Fotosvart", c_light_cyan: "Lys cyan",
     c_light_magenta: "Lys magenta", c_color: "Farge",
+    c_photo_cyan: "Fotocyan", c_photo_magenta: "Fotomagenta", c_light_grey: "Lysegr\u00e5",
+    c_matte_black: "Mattsvart", c_light_black: "Lyssvart", c_light_light_black: "Sv\u00e6rt lyssvart",
     entity: "Skriverens entitet (p\u00e5krevd)",
     power_entity: "Effektsensor (W)",
     plug_entity: "Skriverens stikkontakt (switch)",
@@ -305,6 +323,8 @@ const T = {
     c_black: "Sort", c_cyan: "Cyan", c_magenta: "Magenta", c_yellow: "Gul",
     c_grey: "Gr\u00e5", c_photo: "Fotosort", c_light_cyan: "Lys cyan",
     c_light_magenta: "Lys magenta", c_color: "Farve",
+    c_photo_cyan: "Fotocyan", c_photo_magenta: "Fotomagenta", c_light_grey: "Lysegr\u00e5",
+    c_matte_black: "Matsort", c_light_black: "Lyssort", c_light_light_black: "Meget lyssort",
     entity: "Printerens entitet (p\u00e5kr\u00e6vet)",
     power_entity: "Effektsensor (W)",
     plug_entity: "Printerens stikkontakt (switch)",
@@ -336,6 +356,8 @@ const T = {
     c_black: "Czarny", c_cyan: "Cyjan", c_magenta: "Magenta", c_yellow: "\u017b\u00f3\u0142ty",
     c_grey: "Szary", c_photo: "Czarny foto", c_light_cyan: "Jasny cyjan",
     c_light_magenta: "Jasna magenta", c_color: "Kolor",
+    c_photo_cyan: "Cyjan foto", c_photo_magenta: "Magenta foto", c_light_grey: "Jasnoszary",
+    c_matte_black: "Czarny matowy", c_light_black: "Jasny czarny", c_light_light_black: "Bardzo jasny czarny",
     entity: "Encja drukarki (wymagana)",
     power_entity: "Czujnik mocy (W)",
     plug_entity: "Gniazdko drukarki (switch)",
@@ -367,6 +389,8 @@ const T = {
     c_black: "\u0427\u0451\u0440\u043d\u044b\u0439", c_cyan: "\u0413\u043e\u043b\u0443\u0431\u043e\u0439", c_magenta: "\u041f\u0443\u0440\u043f\u0443\u0440\u043d\u044b\u0439", c_yellow: "\u0416\u0451\u043b\u0442\u044b\u0439",
     c_grey: "\u0421\u0435\u0440\u044b\u0439", c_photo: "\u0424\u043e\u0442\u043e \u0447\u0451\u0440\u043d\u044b\u0439", c_light_cyan: "\u0421\u0432\u0435\u0442\u043b\u043e-\u0433\u043e\u043b\u0443\u0431\u043e\u0439",
     c_light_magenta: "\u0421\u0432\u0435\u0442\u043b\u043e-\u043f\u0443\u0440\u043f\u0443\u0440\u043d\u044b\u0439", c_color: "\u0426\u0432\u0435\u0442\u043d\u043e\u0439",
+    c_photo_cyan: "\u0424\u043e\u0442\u043e \u0433\u043e\u043b\u0443\u0431\u043e\u0439", c_photo_magenta: "\u0424\u043e\u0442\u043e \u043f\u0443\u0440\u043f\u0443\u0440\u043d\u044b\u0439", c_light_grey: "\u0421\u0432\u0435\u0442\u043b\u043e-\u0441\u0435\u0440\u044b\u0439",
+    c_matte_black: "\u041c\u0430\u0442\u043e\u0432\u044b\u0439 \u0447\u0451\u0440\u043d\u044b\u0439", c_light_black: "\u0421\u0432\u0435\u0442\u043b\u043e-\u0447\u0451\u0440\u043d\u044b\u0439", c_light_light_black: "\u041e\u0447\u0435\u043d\u044c \u0441\u0432\u0435\u0442\u043b\u044b\u0439 \u0447\u0451\u0440\u043d\u044b\u0439",
     entity: "\u041e\u0431\u044a\u0435\u043a\u0442 \u043f\u0440\u0438\u043d\u0442\u0435\u0440\u0430 (\u043e\u0431\u044f\u0437\u0430\u0442\u0435\u043b\u044c\u043d\u043e)",
     power_entity: "\u0414\u0430\u0442\u0447\u0438\u043a \u043c\u043e\u0449\u043d\u043e\u0441\u0442\u0438 (\u0412\u0442)",
     plug_entity: "\u0420\u043e\u0437\u0435\u0442\u043a\u0430 \u043f\u0440\u0438\u043d\u0442\u0435\u0440\u0430 (switch)",
@@ -398,6 +422,8 @@ const T = {
     c_black: "\u9ed1\u8272", c_cyan: "\u9752\u8272", c_magenta: "\u54c1\u7ea2", c_yellow: "\u9ec4\u8272",
     c_grey: "\u7070\u8272", c_photo: "\u7167\u7247\u9ed1", c_light_cyan: "\u6de1\u9752\u8272",
     c_light_magenta: "\u6de1\u54c1\u7ea2", c_color: "\u5f69\u8272",
+    c_photo_cyan: "\u7167\u7247\u9752\u8272", c_photo_magenta: "\u7167\u7247\u54c1\u7ea2", c_light_grey: "\u6d45\u7070",
+    c_matte_black: "\u4e9a\u5149\u9ed1", c_light_black: "\u6de1\u9ed1", c_light_light_black: "\u6781\u6de1\u9ed1",
     entity: "\u6253\u5370\u673a\u5b9e\u4f53\uff08\u5fc5\u586b\uff09",
     power_entity: "\u529f\u7387\u4f20\u611f\u5668\uff08W\uff09",
     plug_entity: "\u6253\u5370\u673a\u63d2\u5ea7\uff08switch\uff09",
@@ -564,34 +590,56 @@ const STATE_ICONS = {
 // Order matters twice over: "light cyan" and "photo black" must be tested
 // before plain "cyan" and "black", and the resulting order is the one the
 // cartridges are drawn in (KCMY, the order they sit in the machine).
+// Order is specificity, not preference: "photo cyan" has to be tested before
+// "cyan" and "light gray" before "gray", or a photo printer's eight inks
+// collapse into four names. Short codes are the ones the makers actually
+// print on the cartridge.
 const COLOR_KEYWORDS = [
-  ["light_cyan", ["light cyan", "lightcyan", "cyan clair", "hellcyan", "ljus cyan", "lys cyan", "jasny cyjan", "\blc\b"]],
-  ["light_magenta", ["light magenta", "lightmagenta", "magenta clair", "hellmagenta", "ljus magenta", "lys magenta", "jasna magenta", "\blm\b"]],
-  ["photo", ["photo black", "photoblack", "noir photo", "fotoschwarz", "negro foto", "nero foto", "fotozwart", "preto foto", "fotosvart", "fotosort", "czarny foto", "\bpb\b"]],
+  ["light_light_black", ["light light black", "\\bllk\\b"]],
+  ["light_black", ["light black", "gris fonce", "\\blk\\b"]],
+  ["matte_black", ["matte black", "matt black", "noir mat", "mattschwarz", "\\bmk\\b"]],
+  ["photo", ["photo black", "photoblack", "noir photo", "fotoschwarz", "negro foto", "nero foto",
+    "fotozwart", "preto foto", "fotosvart", "fotosort", "czarny foto", "\\bpbk\\b", "\\bpk\\b", "\\bpb\\b"]],
+  ["photo_cyan", ["photo cyan", "photocyan", "cyan photo", "\\bpc\\b"]],
+  ["photo_magenta", ["photo magenta", "photomagenta", "magenta photo", "\\bpm\\b"]],
+  ["light_cyan", ["light cyan", "lightcyan", "cyan clair", "hellcyan", "ljus cyan", "lys cyan", "jasny cyjan", "\\blc\\b"]],
+  ["light_magenta", ["light magenta", "lightmagenta", "magenta clair", "hellmagenta", "ljus magenta", "lys magenta", "jasna magenta", "vivid light magenta", "\\bvlm\\b", "\\blm\\b"]],
+  ["light_grey", ["light grey", "light gray", "lightgray", "gris clair", "hellgrau", "grigio chiaro",
+    "lichtgrijs", "ljusgra", "lysegra", "jasnoszary", "\\blgy\\b", "\\blg\\b"]],
   ["black", ["black", "noir", "schwarz", "negro", "nero", "zwart", "preto", "svart", "sort", "czarny",
-    "\u0447\u0435\u0440\u043d", "\u9ed1", "\bk\b", "\bbk\b"]],
-  ["cyan", ["cyan", "cian", "ciano", "cyaan", "cyjan", "\u0433\u043e\u043b\u0443\u0431", "\u9752", "\bc\b"]],
-  ["magenta", ["magenta", "\u043f\u0443\u0440\u043f\u0443\u0440", "\u54c1\u7ea2", "\bm\b"]],
+    "\u0447\u0435\u0440\u043d", "\u9ed1", "\\bk\\b", "\\bbk\\b"]],
+  ["cyan", ["cyan", "cian", "ciano", "cyaan", "cyjan", "\u0433\u043e\u043b\u0443\u0431", "\u9752", "\\bc\\b"]],
+  ["magenta", ["magenta", "vivid magenta", "\u043f\u0443\u0440\u043f\u0443\u0440", "\u54c1\u7ea2", "\\bvm\\b", "\\bm\\b"]],
   ["yellow", ["yellow", "jaune", "gelb", "amarill", "giallo", "geel", "gul", "zolty",
-    "\u0436\u0435\u043b\u0442", "\u9ec4", "\by\b"]],
-  ["grey", ["grey", "gray", "gris", "grau", "grigio", "grijs", "cinzent", "\u0441\u0435\u0440", "\u7070", "\bgy\b"]],
+    "\u0436\u0435\u043b\u0442", "\u9ec4", "\\by\\b"]],
+  ["grey", ["grey", "gray", "gris", "grau", "grigio", "grijs", "cinzent", "\u0441\u0435\u0440", "\u7070", "\\bgy\\b"]],
   ["color", ["tri-color", "tricolor", "tri color", "colour", "color", "couleur", "farbe", "colore", "kleur", "\u5f69\u8272"]],
 ];
 
 const COLOR_SWATCH = {
   black: "#26292e",
   photo: "#15171a",
+  matte_black: "#2b2d30",
+  light_black: "#5a6067",
+  light_light_black: "#989ea4",
   cyan: "#00a9d4",
+  photo_cyan: "#4dbfe0",
   light_cyan: "#7fd4ea",
   magenta: "#d6006e",
+  photo_magenta: "#e06aa8",
   light_magenta: "#e88bb8",
   yellow: "#f0c000",
   grey: "#8b9096",
+  light_grey: "#b9bec4",
   color: "#7a5cc6",
   other: "#5b6470",
 };
 
-const COLOR_ORDER = ["black", "photo", "grey", "cyan", "light_cyan", "magenta", "light_magenta", "yellow", "color", "other"];
+// Drawn in the order a photo printer lays them out: the blacks, then the
+// greys, then each colour with its lighter companion beside it.
+const COLOR_ORDER = ["black", "photo", "matte_black", "light_black", "light_light_black",
+  "grey", "light_grey", "cyan", "photo_cyan", "light_cyan",
+  "magenta", "photo_magenta", "light_magenta", "yellow", "color", "other"];
 
 function detectColor(text) {
   const hay = stripAccents(String(text || "")).toLowerCase().replace(/_/g, " ");
@@ -613,7 +661,7 @@ const PART_KEYWORDS = [
   "transfer", "transfert", "ubertragung",
   "maintenance kit", "kit de maintenance", "wartungskit",
   "developer", "developpeur", "entwickler",
-  "imaging", "photoconduct", "\bopc\b",
+  "imaging", "photoconduct", "\\bopc\\b",
 ];
 // Waste receptacles: same shape, opposite meaning depending on the maker.
 const WASTE_KEYWORDS = [
@@ -777,6 +825,7 @@ function readCartridges(hass, cfg) {
       // gap to be filled by the mono-printer guess below.
       described: !!(attrs.description || (Array.isArray(attrs.rgb_color) && attrs.rgb_color.length === 3)),
       title: attrs.description || attrs.friendly_name || entry.entity,
+      shortTitle: attrs.description || stripPrinterName(attrs.friendly_name || entry.entity, printerName),
       type: attrs.marker_type || null,
       // A receptacle declared as filling up is in trouble when it runs high,
       // everything else when it runs low.
@@ -791,13 +840,17 @@ function readCartridges(hass, cfg) {
   // namesakes. Supplies with no recognizable colour are keyed by their label
   // instead, since "other" would collapse unrelated ones together.
   if (!Array.isArray(cfg.cartridges) || !cfg.cartridges.length) {
-    const seen = new Map();
+    // Only across sources. Two supplies on the same device are two supplies:
+    // a Canon PRO-100 carries eight inks, and if the card cannot tell photo
+    // cyan from cyan that is a naming gap, not a reason to hide one of them.
+    const keyOf = (c) => `${c.kind}/${c.color === "other" ? stripAccents(String(c.title)).toLowerCase() : c.color}`;
+    const nearest = new Map();
     for (const c of out) {
-      const key = `${c.kind}/${c.color === "other" ? stripAccents(String(c.title)).toLowerCase() : c.color}`;
-      const held = seen.get(key);
-      if (!held || c.rank < held.rank) seen.set(key, c);
+      const key = keyOf(c);
+      const held = nearest.get(key);
+      if (held === undefined || c.rank < held) nearest.set(key, c.rank);
     }
-    out = out.filter((c) => seen.get(`${c.kind}/${c.color === "other" ? stripAccents(String(c.title)).toLowerCase() : c.color}`) === c);
+    out = out.filter((c) => c.rank === nearest.get(keyOf(c)));
   }
   out.sort((a, b) => COLOR_ORDER.indexOf(a.color) - COLOR_ORDER.indexOf(b.color));
   // A mono printer has one cartridge and rarely says which colour it is: a
@@ -966,12 +1019,9 @@ function paperEntityEmpty(hass, cfg) {
 
 function cartridgeLabel(hass, c) {
   if (c.name) return c.name;
-  if (c.color === "other") {
-    // Nothing recognizable in the name: keep whatever the printer calls it,
-    // minus the model prefix the IPP integration prepends.
-    const parts = String(c.title).split(/\s+/);
-    return parts.slice(-2).join(" ");
-  }
+  // Nothing recognizable in the name: keep whatever the printer calls it,
+  // minus the machine's own name, which every friendly name carries.
+  if (c.color === "other") return c.shortTitle || c.title;
   return t(hass, `c_${c.color}`);
 }
 
@@ -1555,8 +1605,8 @@ ha-card.compact button span, ha-card.compact .btn span { display:none; }
 button, .btn { display:flex; align-items:center; justify-content:center; gap:6px; padding:8px 13px; border:none; border-radius:12px; cursor:pointer; font:inherit; font-size:13px; text-decoration:none; background:var(--secondary-background-color); color:var(--primary-text-color); }
 button:hover, .btn:hover { filter:brightness(.93); }
 button ha-icon, .btn ha-icon { --mdc-icon-size:18px; }
-.supplies { display:flex; gap:8px; justify-content:space-around; }
-.cart { flex:1 1 0; min-width:0; display:flex; flex-direction:column; align-items:center; gap:1px; }
+.supplies { display:flex; flex-wrap:wrap; gap:10px 8px; justify-content:space-around; }
+.cart { flex:1 1 62px; min-width:56px; max-width:110px; display:flex; flex-direction:column; align-items:center; gap:1px; }
 .wrap { position:relative; display:block; }
 .clickable { cursor:pointer; }
 .body.clickable:hover .name, .clickable:hover .pct, .clickable:hover .pval { text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:2px; }
