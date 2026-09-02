@@ -1,4 +1,4 @@
-const CARD_VERSION = "0.2.0";
+const CARD_VERSION = "0.3.0";
 
 console.info(
   "%c HA-PRINTER-CARD %c v" + CARD_VERSION + " ",
@@ -19,6 +19,7 @@ const T = {
     offline: "Offline", unknown: "Unknown state",
     low: "Low", alert_low: "Cartridge low", alert_part: "Wear part low",
     pages: "pages", pages_bw: "B&W", pages_color: "colour",
+    fn_print: "Printed", fn_scan: "Scanned", fn_copy: "Copied", fn_fax: "Faxed",
     show_parts: "Show the drum, fuser and other wear parts", show_counters: "Show the page counters",
     paper_entity: "Paper tray sensor",
     supplies: "Supplies", toner: "Toner", ink: "Ink",
@@ -49,6 +50,7 @@ const T = {
     offline: "Hors ligne", unknown: "\u00c9tat inconnu",
     low: "Bas", alert_low: "Cartouche presque vide", alert_part: "Pi\u00e8ce d'usure en fin de vie",
     pages: "pages", pages_bw: "N&B", pages_color: "couleur",
+    fn_print: "Impression", fn_scan: "Num\u00e9risation", fn_copy: "Copie", fn_fax: "Fax",
     show_parts: "Afficher le tambour, le four et les autres pi\u00e8ces d'usure", show_counters: "Afficher les compteurs de pages",
     paper_entity: "Capteur du bac \u00e0 papier",
     supplies: "Consommables", toner: "Toner", ink: "Encre",
@@ -79,6 +81,7 @@ const T = {
     offline: "Offline", unknown: "Unbekannter Zustand",
     low: "Niedrig", alert_low: "Patrone fast leer", alert_part: "Verschlei\u00dfteil fast am Ende",
     pages: "Seiten", pages_bw: "S/W", pages_color: "Farbe",
+    fn_print: "Gedruckt", fn_scan: "Gescannt", fn_copy: "Kopiert", fn_fax: "Fax",
     show_parts: "Trommel, Fixiereinheit und andere Verschlei\u00dfteile anzeigen", show_counters: "Seitenz\u00e4hler anzeigen",
     paper_entity: "Sensor des Papierfachs",
     supplies: "Verbrauchsmaterial", toner: "Toner", ink: "Tinte",
@@ -109,6 +112,7 @@ const T = {
     offline: "Sin conexi\u00f3n", unknown: "Estado desconocido",
     low: "Bajo", alert_low: "Cartucho casi vac\u00edo", alert_part: "Pieza de desgaste al l\u00edmite",
     pages: "p\u00e1ginas", pages_bw: "B/N", pages_color: "color",
+    fn_print: "Impresi\u00f3n", fn_scan: "Escaneo", fn_copy: "Copia", fn_fax: "Fax",
     show_parts: "Mostrar el tambor, el fusor y otras piezas de desgaste", show_counters: "Mostrar los contadores de p\u00e1ginas",
     paper_entity: "Sensor de la bandeja de papel",
     supplies: "Consumibles", toner: "T\u00f3ner", ink: "Tinta",
@@ -139,6 +143,7 @@ const T = {
     offline: "Non in linea", unknown: "Stato sconosciuto",
     low: "Basso", alert_low: "Cartuccia quasi esaurita", alert_part: "Parte di consumo quasi esaurita",
     pages: "pagine", pages_bw: "B/N", pages_color: "colore",
+    fn_print: "Stampa", fn_scan: "Scansione", fn_copy: "Copia", fn_fax: "Fax",
     show_parts: "Mostrare il tamburo, il fusore e le altre parti di consumo", show_counters: "Mostrare i contatori di pagine",
     paper_entity: "Sensore del vassoio carta",
     supplies: "Materiali di consumo", toner: "Toner", ink: "Inchiostro",
@@ -169,6 +174,7 @@ const T = {
     offline: "Offline", unknown: "Onbekende status",
     low: "Laag", alert_low: "Cartridge bijna leeg", alert_part: "Slijtdeel bijna op",
     pages: "pagina's", pages_bw: "Z/W", pages_color: "kleur",
+    fn_print: "Afgedrukt", fn_scan: "Gescand", fn_copy: "Gekopieerd", fn_fax: "Fax",
     show_parts: "Drum, fuser en andere slijtdelen tonen", show_counters: "Paginatellers tonen",
     paper_entity: "Sensor van de papierlade",
     supplies: "Verbruiksartikelen", toner: "Toner", ink: "Inkt",
@@ -199,6 +205,7 @@ const T = {
     offline: "Offline", unknown: "Estado desconhecido",
     low: "Baixo", alert_low: "Cartucho quase vazio", alert_part: "Pe\u00e7a de desgaste no fim",
     pages: "p\u00e1ginas", pages_bw: "P/B", pages_color: "cor",
+    fn_print: "Impress\u00e3o", fn_scan: "Digitaliza\u00e7\u00e3o", fn_copy: "C\u00f3pia", fn_fax: "Fax",
     show_parts: "Mostrar o tambor, o fusor e outras pe\u00e7as de desgaste", show_counters: "Mostrar os contadores de p\u00e1ginas",
     paper_entity: "Sensor do tabuleiro de papel",
     supplies: "Consum\u00edveis", toner: "Toner", ink: "Tinta",
@@ -229,6 +236,7 @@ const T = {
     offline: "Offline", unknown: "Ok\u00e4nt tillst\u00e5nd",
     low: "L\u00e5g", alert_low: "Patron n\u00e4stan tom", alert_part: "Slitdel n\u00e4stan slut",
     pages: "sidor", pages_bw: "S/V", pages_color: "f\u00e4rg",
+    fn_print: "Utskrift", fn_scan: "Skanning", fn_copy: "Kopiering", fn_fax: "Fax",
     show_parts: "Visa trumma, fixeringsenhet och andra slitdelar", show_counters: "Visa sidr\u00e4knarna",
     paper_entity: "Sensor f\u00f6r pappersfacket",
     supplies: "F\u00f6rbrukningsmaterial", toner: "Toner", ink: "Bl\u00e4ck",
@@ -259,6 +267,7 @@ const T = {
     offline: "Frakoblet", unknown: "Ukjent tilstand",
     low: "Lav", alert_low: "Patron nesten tom", alert_part: "Slitedel nesten oppbrukt",
     pages: "sider", pages_bw: "S/H", pages_color: "farge",
+    fn_print: "Utskrift", fn_scan: "Skanning", fn_copy: "Kopiering", fn_fax: "Faks",
     show_parts: "Vis trommel, fikseringsenhet og andre slitedeler", show_counters: "Vis sidetellerne",
     paper_entity: "Sensor for papirskuffen",
     supplies: "Forbruksmateriell", toner: "Toner", ink: "Blekk",
@@ -289,6 +298,7 @@ const T = {
     offline: "Offline", unknown: "Ukendt tilstand",
     low: "Lav", alert_low: "Patron n\u00e6sten tom", alert_part: "Sliddel n\u00e6sten opbrugt",
     pages: "sider", pages_bw: "S/H", pages_color: "farve",
+    fn_print: "Udskrift", fn_scan: "Scanning", fn_copy: "Kopiering", fn_fax: "Fax",
     show_parts: "Vis tromle, fikseringsenhed og andre sliddele", show_counters: "Vis sidet\u00e6llerne",
     paper_entity: "Sensor for papirbakken",
     supplies: "Forbrugsstoffer", toner: "Toner", ink: "Bl\u00e6k",
@@ -319,6 +329,7 @@ const T = {
     offline: "Offline", unknown: "Nieznany stan",
     low: "Niski", alert_low: "Ko\u0144czy si\u0119 tusz", alert_part: "Cz\u0119\u015b\u0107 eksploatacyjna na wyczerpaniu",
     pages: "stron", pages_bw: "Cz/B", pages_color: "kolor",
+    fn_print: "Wydruk", fn_scan: "Skanowanie", fn_copy: "Kopiowanie", fn_fax: "Faks",
     show_parts: "Poka\u017c b\u0119ben, utrwalacz i inne cz\u0119\u015bci eksploatacyjne", show_counters: "Poka\u017c liczniki stron",
     paper_entity: "Czujnik podajnika papieru",
     supplies: "Materia\u0142y eksploatacyjne", toner: "Toner", ink: "Tusz",
@@ -349,6 +360,7 @@ const T = {
     offline: "\u041d\u0435 \u0432 \u0441\u0435\u0442\u0438", unknown: "\u041d\u0435\u0438\u0437\u0432\u0435\u0441\u0442\u043d\u043e\u0435 \u0441\u043e\u0441\u0442\u043e\u044f\u043d\u0438\u0435",
     low: "\u041c\u0430\u043b\u043e", alert_low: "\u041a\u0430\u0440\u0442\u0440\u0438\u0434\u0436 \u0437\u0430\u043a\u0430\u043d\u0447\u0438\u0432\u0430\u0435\u0442\u0441\u044f", alert_part: "\u0420\u0430\u0441\u0445\u043e\u0434\u043d\u0430\u044f \u0434\u0435\u0442\u0430\u043b\u044c \u043d\u0430 \u0438\u0441\u0445\u043e\u0434\u0435",
     pages: "\u0441\u0442\u0440\u0430\u043d\u0438\u0446", pages_bw: "\u0427/\u0411", pages_color: "\u0446\u0432\u0435\u0442",
+    fn_print: "\u041f\u0435\u0447\u0430\u0442\u044c", fn_scan: "\u0421\u043a\u0430\u043d\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u0435", fn_copy: "\u041a\u043e\u043f\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u0435", fn_fax: "\u0424\u0430\u043a\u0441",
     show_parts: "\u041f\u043e\u043a\u0430\u0437\u044b\u0432\u0430\u0442\u044c \u0431\u0430\u0440\u0430\u0431\u0430\u043d, \u043f\u0435\u0447\u043a\u0443 \u0438 \u0434\u0440\u0443\u0433\u0438\u0435 \u0440\u0430\u0441\u0445\u043e\u0434\u043d\u044b\u0435 \u0434\u0435\u0442\u0430\u043b\u0438", show_counters: "\u041f\u043e\u043a\u0430\u0437\u044b\u0432\u0430\u0442\u044c \u0441\u0447\u0451\u0442\u0447\u0438\u043a\u0438 \u0441\u0442\u0440\u0430\u043d\u0438\u0446",
     paper_entity: "\u0414\u0430\u0442\u0447\u0438\u043a \u043b\u043e\u0442\u043a\u0430 \u0431\u0443\u043c\u0430\u0433\u0438",
     supplies: "\u0420\u0430\u0441\u0445\u043e\u0434\u043d\u044b\u0435 \u043c\u0430\u0442\u0435\u0440\u0438\u0430\u043b\u044b", toner: "\u0422\u043e\u043d\u0435\u0440", ink: "\u0427\u0435\u0440\u043d\u0438\u043b\u0430",
@@ -379,6 +391,7 @@ const T = {
     offline: "\u79bb\u7ebf", unknown: "\u72b6\u6001\u672a\u77e5",
     low: "\u4e0d\u8db3", alert_low: "\u58a8\u76d2\u5373\u5c06\u8017\u5c3d", alert_part: "\u8017\u6750\u90e8\u4ef6\u5373\u5c06\u8017\u5c3d",
     pages: "\u9875", pages_bw: "\u9ed1\u767d", pages_color: "\u5f69\u8272",
+    fn_print: "\u6253\u5370", fn_scan: "\u626b\u63cf", fn_copy: "\u590d\u5370", fn_fax: "\u4f20\u771f",
     show_parts: "\u663e\u793a\u7852\u9f13\u3001\u5b9a\u5f71\u5355\u5143\u7b49\u8017\u6750\u90e8\u4ef6", show_counters: "\u663e\u793a\u9875\u6570\u8ba1\u6570\u5668",
     paper_entity: "\u7eb8\u76d2\u4f20\u611f\u5668",
     supplies: "\u8017\u6750", toner: "\u78b3\u7c89", ink: "\u58a8\u6c34",
@@ -471,7 +484,7 @@ const STATE_KEYWORDS = {
     "service required", "maintenance required", "check "],
   sleep: ["sleep", "veille", "schlaf", "ruhezustand", "reposo", "sospension", "slaap",
     "suspens", "vilolage", "dvale", "hvilemodus", "uspien",
-    "\u0441\u043f\u044f\u0449", "\u7761\u7720", "power save", "eco"],
+    "\u0441\u043f\u044f\u0449", "\u7761\u7720", "power save", "powersave", "inpowersave", "eco"],
   offline: ["offline", "off line", "unavailable", "unreachable", "invalid", "hors ligne", "deconnect",
     "nicht erreichbar", "nicht verbunden", "desconect", "sin conexion", "non in linea",
     "niet beschikbaar", "frankoppl", "afkoblet", "niedostep", "wylaczona",
@@ -481,7 +494,8 @@ const STATE_KEYWORDS = {
     "\u0433\u043e\u0442\u043e\u0432", "\u5c31\u7eea", "\u7a7a\u95f2", "standby", "normal"],
   printing: ["print", "imprim", "druck", "stampa", "afdruk", "skriver ut", "utskrift",
     "udskriv", "drukowanie", "drukuje", "\u043f\u0435\u0447\u0430\u0442", "\u6253\u5370",
-    "processing", "busy", "en cours", "traitement", "job", "testing", "warming"]
+    "processing", "busy", "en cours", "traitement", "job", "testing", "warming",
+    "copying", "scanprocessing", "canceljob"]
 };
 
 function stripAccents(str) {
@@ -579,8 +593,8 @@ const COLOR_SWATCH = {
 
 const COLOR_ORDER = ["black", "photo", "grey", "cyan", "light_cyan", "magenta", "light_magenta", "yellow", "color", "other"];
 
-function detectColor(entityId, friendlyName) {
-  const hay = stripAccents(`${friendlyName || ""} ${entityId || ""}`).toLowerCase().replace(/_/g, " ");
+function detectColor(text) {
+  const hay = stripAccents(String(text || "")).toLowerCase().replace(/_/g, " ");
   for (const [color, keywords] of COLOR_KEYWORDS) {
     if (keywords.some((kw) => new RegExp(kw.startsWith("\\b") ? kw : `\\b${kw}`, "i").test(hay))) return color;
   }
@@ -595,7 +609,7 @@ const PART_KEYWORDS = [
   "drum", "tambour", "trommel", "tambor", "cilindro", "bildtrommel",
   "belt", "courroie", "riemen", "correa", "cinghia", "band",
   "fuser", "fusion", "four", "fixiereinheit", "fusor", "fusore", "fixering",
-  "laser", "pf kit", "feed kit", "kit d alimentation", "papiereinzug",
+  "laser unit", "unite laser", "lasereinheit", "pf kit", "feed kit", "kit d alimentation", "papiereinzug",
   "transfer", "transfert", "ubertragung",
   "maintenance kit", "kit de maintenance", "wartungskit",
   "developer", "developpeur", "entwickler",
@@ -618,8 +632,8 @@ function matchesAny(hay, keywords) {
 }
 
 // waste before part: a "waste toner box" carries both words.
-function classifyKind(entityId, friendlyName) {
-  const hay = stripAccents(`${friendlyName || ""} ${entityId || ""}`).toLowerCase().replace(/_/g, " ");
+function classifyKind(text) {
+  const hay = stripAccents(String(text || "")).toLowerCase().replace(/_/g, " ");
   if (matchesAny(hay, WASTE_KEYWORDS)) return "waste";
   if (matchesAny(hay, PART_KEYWORDS)) return "part";
   return "ink";
@@ -637,49 +651,112 @@ function toNumber(v) {
 // `sensor.black`, none of which say "cartridge" anywhere in their name.
 // Scoped to the printer by device when the entity registry is reachable
 // (hass.entities is only there from 2023.4 on), by entity_id prefix otherwise.
-function autoCartridgeIds(hass, printerEntity) {
+// Integrations do not agree on what a printer is. The `ipp` one puts
+// everything on a single device; the HP one splits the machine into eight,
+// one per toner plus a Printer, a Scanner and a Copy unit, and only some of
+// them are linked by via_device_id. So the scope is the seed device, whatever
+// declares itself its child, and whatever is named after it, ranked by that
+// order so the nearest source wins when two of them report the same thing.
+function deviceScope(hass, printerEntity) {
+  const reg = hass.entities;
+  const devices = hass.devices;
+  const seed = reg && reg[printerEntity] ? reg[printerEntity].device_id : null;
+  if (!seed) return null;
+  const rank = { [seed]: 0 };
+  const seedDevice = devices ? devices[seed] : null;
+  const seedName = seedDevice ? String(seedDevice.name_by_user || seedDevice.name || "") : "";
+  if (devices) {
+    for (const [id, device] of Object.entries(devices)) {
+      if (id === seed || !device) continue;
+      if (device.via_device_id === seed) { rank[id] = 1; continue; }
+      const name = String(device.name_by_user || device.name || "");
+      if (!seedName || name.length <= seedName.length) continue;
+      if (name.toLowerCase().startsWith(seedName.toLowerCase())) {
+        // "Printer" must not swallow "Printer 2", a second machine.
+        const rest = name.slice(seedName.length).trim();
+        if (rest && !/^\d+$/.test(rest)) rank[id] = 2;
+      }
+    }
+  }
+  return rank;
+}
+
+// Every friendly name starts with the machine's own name, and a model name is
+// full of words this card reads as meaning something: an "HP Color LaserJet"
+// would make every supply a laser unit and every counter a colour counter.
+// So the machine's name comes off before anything is matched, from the label
+// and from the entity id alike.
+function cleanHay(id, friendlyName, printerName, printerEntity) {
+  const name = friendlyName ? stripPrinterName(friendlyName, printerName) : "";
+  let shortId = id;
+  let i = 0;
+  while (i < id.length && i < printerEntity.length && id[i] === printerEntity[i]) i++;
+  const cut = id.lastIndexOf("_", i);
+  if (cut > 0) shortId = id.slice(cut + 1);
+  return `${name} ${shortId}`;
+}
+
+function printerLabel(hass, cfg) {
+  const st = stateObj(hass, cfg.entity);
+  return deviceName(hass, cfg.entity) || (st && st.attributes.friendly_name) || "";
+}
+
+function deviceLabel(hass, deviceId) {
+  const device = hass.devices ? hass.devices[deviceId] : null;
+  return device ? String(device.name_by_user || device.name || "") : "";
+}
+
+function autoCartridgeIds(hass, printerEntity, printerName) {
   const reg = hass.entities || null;
-  const deviceId = reg && reg[printerEntity] ? reg[printerEntity].device_id : null;
+  const scope = deviceScope(hass, printerEntity);
   const prefix = `${printerEntity}_`;
-  const ids = [];
+  const found = [];
   for (const [id, st] of Object.entries(hass.states)) {
     if (id === printerEntity || !id.startsWith("sensor.")) continue;
     const attrs = (st && st.attributes) || {};
-    const hay = `${attrs.friendly_name || ""} ${id}`;
+    const hay = cleanHay(id, attrs.friendly_name, printerName, printerEntity);
     const isPercent = attrs.unit_of_measurement === "%" && !SUPPLY_DENY.test(hay);
     if (attrs.marker_type === undefined && !isPercent) continue;
-    if (deviceId) {
-      if (!reg[id] || reg[id].device_id !== deviceId) continue;
+    let rank = 0;
+    if (scope) {
+      const device = reg[id] ? reg[id].device_id : null;
+      if (device === null || scope[device] === undefined) continue;
+      rank = scope[device];
     } else if (!id.startsWith(prefix)) continue;
-    ids.push(id);
+    found.push({ id, rank });
   }
-  return ids;
+  found.sort((a, b) => a.rank - b.rank);
+  return found.map((f) => ({ entity: f.id, rank: f.rank }));
 }
 
 // Normalizes both spellings of the option: a plain entity id, or an object
 // overriding the label, the colour or the kind for printers whose sensors are
 // named after the part number and nothing else.
 function readCartridges(hass, cfg) {
+  const printerName = printerLabel(hass, cfg);
   const raw = Array.isArray(cfg.cartridges) && cfg.cartridges.length
     ? cfg.cartridges
-    : autoCartridgeIds(hass, cfg.entity);
-  const out = [];
+    : autoCartridgeIds(hass, cfg.entity, printerName);
+  let out = [];
   for (const item of raw) {
     const entry = typeof item === "string" ? { entity: item } : (item || {});
+    const rank = entry.rank === undefined ? 0 : entry.rank;
     const st = entry.entity ? hass.states[entry.entity] : null;
     if (!st) continue;
     const attrs = st.attributes || {};
     const level = toNumber(st.state);
+    const hay = cleanHay(entry.entity, attrs.friendly_name, printerName, cfg.entity);
     const kind = entry.kind || (attrs.marker_type !== undefined && /toner|ink/i.test(attrs.marker_type)
       ? "ink"
-      : classifyKind(entry.entity, attrs.friendly_name));
-    const color = entry.color || detectColor(entry.entity, attrs.friendly_name);
+      : classifyKind(hay));
+    const color = entry.color || detectColor(hay);
     const attrLow = toNumber(attrs.marker_low_level);
     const low = toNumber(cfg.low_threshold);
     const threshold = low !== null ? low : Math.max(20, attrLow !== null ? attrLow : 0);
     const full = toNumber(cfg.full_threshold);
     out.push({
       entity: entry.entity,
+      rank,
       level,
       kind,
       color,
@@ -693,6 +770,20 @@ function readCartridges(hass, cfg) {
         ? level >= (full !== null ? full : 90)
         : level <= threshold),
     });
+  }
+  // Two integrations pointed at the same machine report the same supplies:
+  // an `ipp` black cartridge and an HP one are the same physical toner. Keep
+  // the nearest source, which is the seed device before its children and its
+  // namesakes. Supplies with no recognizable colour are keyed by their label
+  // instead, since "other" would collapse unrelated ones together.
+  if (!Array.isArray(cfg.cartridges) || !cfg.cartridges.length) {
+    const seen = new Map();
+    for (const c of out) {
+      const key = `${c.kind}/${c.color === "other" ? stripAccents(String(c.title)).toLowerCase() : c.color}`;
+      const held = seen.get(key);
+      if (!held || c.rank < held.rank) seen.set(key, c);
+    }
+    out = out.filter((c) => seen.get(`${c.kind}/${c.color === "other" ? stripAccents(String(c.title)).toLowerCase() : c.color}`) === c);
   }
   out.sort((a, b) => COLOR_ORDER.indexOf(a.color) - COLOR_ORDER.indexOf(b.color));
   // A mono printer has one cartridge and rarely says which colour it is: a
@@ -736,34 +827,69 @@ function supplyLabel(hass, c, printerName) {
 // them, each with its own wording. Scans, copies, faxes and jams are counters
 // too, and none of them belongs on a line about what the printer has printed.
 const COUNTER_NAME = /page|pages|counter|compteur|volume|impressions|zaehler|seiten/i;
-const COUNTER_DENY = /scan|copy|copie|kopi|fax|jam|bourrage|mispick|miss.?pick|remaining|restant|duplex|simplex/i;
+const COUNTER_DENY = /jam|bourrage|mispick|miss.?pick|remaining|restant|duplex|simplex/i;
 const COUNTER_BW = /\bb\s*(&|and|\/)?\s*w\b|black.?and.?white|monochrome|\bmono\b|noir et blanc|\bn&b\b|schwarz.?weiss|blanco y negro/i;
 const COUNTER_COLOR = /colou?r|couleur|farb|kleur|colore|kolor/i;
 
+// A multifunction counts four different things, and an all-in-one that split
+// itself into a Printer, a Scanner and a Copy device says so in the device
+// name. That beats the entity name, which on HP's copy unit still mentions
+// the scanner glass.
+const COUNTER_FUNCTIONS = [
+  ["scan", /\bscan|numeris|digitaliza|scansion|skann|\u626b\u63cf/i],
+  ["copy", /\bcopy|copie|kopi|copia|\u590d\u5370/i],
+  ["fax", /\bfax|telecopi|\u4f20\u771f/i],
+];
+
+function counterFunction(deviceName, hay) {
+  for (const [fn, re] of COUNTER_FUNCTIONS) if (re.test(stripAccents(deviceName || ""))) return fn;
+  for (const [fn, re] of COUNTER_FUNCTIONS) if (re.test(stripAccents(hay))) return fn;
+  return "print";
+}
+
 function readCounters(hass, cfg) {
+  const printerName = printerLabel(hass, cfg);
   const reg = hass.entities || null;
-  const deviceId = reg && reg[cfg.entity] ? reg[cfg.entity].device_id : null;
+  const scope = deviceScope(hass, cfg.entity);
   const prefix = `${cfg.entity}_`;
-  const found = { total: null, bw: null, color: null };
+  const groups = {};
+  const ranks = {};
   for (const [id, st] of Object.entries(hass.states)) {
     if (id === cfg.entity || !id.startsWith("sensor.")) continue;
     const attrs = (st && st.attributes) || {};
     const unit = attrs.unit_of_measurement;
     if (unit !== undefined && unit !== null && !/^page/i.test(String(unit))) continue;
-    const hay = `${attrs.friendly_name || ""} ${id}`;
+    const hay = cleanHay(id, attrs.friendly_name, printerName, cfg.entity);
     if (!COUNTER_NAME.test(hay) || COUNTER_DENY.test(hay)) continue;
-    if (deviceId) {
-      if (!reg[id] || reg[id].device_id !== deviceId) continue;
+    let rank = 0;
+    let deviceId = null;
+    if (scope) {
+      deviceId = reg[id] ? reg[id].device_id : null;
+      if (deviceId === null || scope[deviceId] === undefined) continue;
+      rank = scope[deviceId];
     } else if (!id.startsWith(prefix)) continue;
     const value = toNumber(st.state);
     if (value === null) continue;
+    const fn = counterFunction(deviceId ? deviceLabel(hass, deviceId) : "", hay);
     const slot = COUNTER_BW.test(hay) ? "bw" : COUNTER_COLOR.test(hay) ? "color" : "total";
-    if (found[slot] === null) found[slot] = value;
+    groups[fn] = groups[fn] || { total: null, bw: null, color: null };
+    ranks[fn] = ranks[fn] || {};
+    if (groups[fn][slot] === null || rank < ranks[fn][slot]) {
+      groups[fn][slot] = value;
+      ranks[fn][slot] = rank;
+    }
   }
-  // On a mono printer every page is a black page: showing the same number
-  // twice under two labels is noise.
-  if (found.color === null && found.bw !== null && found.bw === found.total) found.bw = null;
-  return found.total === null && found.bw === null && found.color === null ? null : found;
+  for (const fn of Object.keys(groups)) {
+    const g = groups[fn];
+    // On a mono printer every page is a black page: the same number twice
+    // under two labels is noise.
+    if (g.color === null && g.bw !== null && g.bw === g.total) g.bw = null;
+    // A "total" that is smaller than its own breakdown is not a total but
+    // another breakdown: HP's copy unit counts the glass and the feeder.
+    if (g.bw !== null && g.color !== null && g.total !== null && g.total < g.bw + g.color) g.total = null;
+    if (g.total === null && g.bw === null && g.color === null) delete groups[fn];
+  }
+  return Object.keys(groups).length ? groups : null;
 }
 
 // An explicit paper sensor, for the printers whose status text says nothing.
@@ -1243,11 +1369,20 @@ class PrinterCard extends HTMLElement {
             <i style="width:${Math.max(0, Math.min(100, c.level === null ? 0 : c.level)) * 0.42}px"></i>
           </span>`).join("")}</div>`;
 
-    const countersMarkup = !counters ? "" : `<div class="counters">
-          ${counters.total !== null ? `<span><b>${nf.format(counters.total)}</b> ${t(hass, "pages")}</span>` : ""}
-          ${counters.bw !== null ? `<span><b>${nf.format(counters.bw)}</b> ${t(hass, "pages_bw")}</span>` : ""}
-          ${counters.color !== null ? `<span><b>${nf.format(counters.color)}</b> ${t(hass, "pages_color")}</span>` : ""}
-        </div>`;
+    // A machine that only prints keeps the bare line it had; one that also
+    // scans, copies or faxes gets a row per function, because "12 223" means
+    // nothing without saying 12 223 of what.
+    const fnKeys = counters ? ["print", "scan", "copy", "fax"].filter((fn) => counters[fn]) : [];
+    const labelled = fnKeys.length > 1 || (fnKeys.length === 1 && fnKeys[0] !== "print");
+    const countersMarkup = !counters ? "" : `<div class="counters">${fnKeys.map((fn) => {
+      const g = counters[fn];
+      return `<div class="crow">
+            ${labelled ? `<span class="cfn">${t(hass, "fn_" + fn)}</span>` : ""}
+            ${g.total !== null ? `<span><b>${nf.format(g.total)}</b> ${t(hass, "pages")}</span>` : ""}
+            ${g.bw !== null ? `<span><b>${nf.format(g.bw)}</b> ${t(hass, "pages_bw")}</span>` : ""}
+            ${g.color !== null ? `<span><b>${nf.format(g.color)}</b> ${t(hass, "pages_color")}</span>` : ""}
+          </div>`;
+    }).join("")}</div>`;
 
     const buttons = [
       cfg.plug_entity && plugOn !== null
@@ -1347,7 +1482,9 @@ button ha-icon, .btn ha-icon { --mdc-icon-size:18px; }
 .part.low { color:var(--error-color, #f44336); }
 .part.low .pval { color:var(--error-color, #f44336); }
 .part.low i { background:var(--error-color, #f44336); opacity:1; }
-.counters { display:flex; flex-wrap:wrap; gap:4px 14px; font-size:12px; color:var(--secondary-text-color); }
+.counters { display:flex; flex-direction:column; gap:3px; font-size:12px; color:var(--secondary-text-color); }
+.crow { display:flex; flex-wrap:wrap; gap:2px 12px; align-items:baseline; }
+.cfn { flex:none; min-width:82px; }
 .counters b { color:var(--primary-text-color); font-weight:600; }
 .supplies.bars { flex-direction:column; gap:6px; }
 .row-b { display:flex; align-items:center; gap:8px; }

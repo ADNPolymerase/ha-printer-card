@@ -13,6 +13,7 @@
  */
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
+import { readFile } from 'node:fs/promises';
 import { loadCard, markup, check, contains, report } from './harness.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -302,6 +303,119 @@ const noReg = render('idle', {}, {
 check('sans registre: prefixe respecte', (noReg.match(/class="cart /g) || []).length, 1);
 check('sans registre: la deny list tient', /Wifi signal/.test(noReg), false);
 
+// ── A printer split across many devices (HP) ─────────────────────────────────
+// The HP integration makes eight devices out of one machine: the printer, one
+// per toner, plus Printer, Scanner and Copy sub-units. Only the sub-units are
+// linked by via_device_id; the toners are named after the machine and nothing
+// else ties them to it.
+
+const HP_SEED = 'HP Color LaserJet MFP M277dw (192.168.0.128)';
+const HP_DEVICES = {
+  main: { name: HP_SEED, via_device_id: null },
+  black: { name: `${HP_SEED} Black Toner`, via_device_id: null },
+  cyan: { name: `${HP_SEED} Cyan Toner`, via_device_id: null },
+  magenta: { name: `${HP_SEED} Magenta Toner`, via_device_id: null },
+  yellow: { name: `${HP_SEED} Yellow Toner`, via_device_id: null },
+  printer: { name: `${HP_SEED} Printer`, via_device_id: 'main' },
+  scanner: { name: `${HP_SEED} Scanner`, via_device_id: 'main' },
+  copy: { name: `${HP_SEED} Copy`, via_device_id: 'main' },
+};
+const pages = (v, n) => ({ state: String(v), attributes: { unit_of_measurement: 'pages', friendly_name: n } });
+const HP_STATES = {
+  'sensor.hp_statut': { state: 'inpowersave', attributes: { friendly_name: `${HP_SEED} Statut` }, last_changed: '2026-09-02T10:00:00Z' },
+  'sensor.hp_black_niveau': pct(30, `${HP_SEED} Black Toner Niveau`),
+  'sensor.hp_cyan_niveau': pct(90, `${HP_SEED} Cyan Toner Niveau`),
+  'sensor.hp_magenta_niveau': pct(50, `${HP_SEED} Magenta Toner Niveau`),
+  'sensor.hp_yellow_niveau': pct(60, `${HP_SEED} Yellow Toner Niveau`),
+  'sensor.hp_black_restant': pages(700, `${HP_SEED} Black Toner Restant`),
+  'sensor.hp_printer_bw': pages(2800, `${HP_SEED} Printer Total pages en noir et blanc`),
+  'sensor.hp_printer_color': pages(12223, `${HP_SEED} Printer Total pages couleur`),
+  'sensor.hp_printer_jams': pages(14, `${HP_SEED} Printer Total bourrages entrants`),
+  'sensor.hp_scanner_glass': pages(500, `${HP_SEED} Scanner Total pages de la vitre du scanner`),
+  'sensor.hp_scanner_jams': pages(0, `${HP_SEED} Scanner Total bourrages`),
+  'sensor.hp_copy_adf': pages(164, `${HP_SEED} Copy Pages totales de l'ADF`),
+  'sensor.hp_copy_glass': pages(397, `${HP_SEED} Copy Total pages de la vitre du scanner`),
+  'sensor.hp_copy_bw': pages(387, `${HP_SEED} Copy Total pages en noir et blanc`),
+  'sensor.hp_copy_color': pages(315, `${HP_SEED} Copy Total pages couleur`),
+};
+const HP_ENTITY_DEVICE = {
+  'sensor.hp_statut': 'main',
+  'sensor.hp_black_niveau': 'black', 'sensor.hp_black_restant': 'black',
+  'sensor.hp_cyan_niveau': 'cyan', 'sensor.hp_magenta_niveau': 'magenta', 'sensor.hp_yellow_niveau': 'yellow',
+  'sensor.hp_printer_bw': 'printer', 'sensor.hp_printer_color': 'printer', 'sensor.hp_printer_jams': 'printer',
+  'sensor.hp_scanner_glass': 'scanner', 'sensor.hp_scanner_jams': 'scanner',
+  'sensor.hp_copy_adf': 'copy', 'sensor.hp_copy_glass': 'copy', 'sensor.hp_copy_bw': 'copy', 'sensor.hp_copy_color': 'copy',
+};
+
+function renderHp(cfg = {}, extraStates = {}, extraDevices = {}, extraReg = {}) {
+  const c = new Card();
+  c.setConfig({ entity: 'sensor.hp_statut', language: 'en', ...cfg });
+  c.hass = {
+    language: 'en',
+    states: { ...HP_STATES, ...extraStates },
+    entities: Object.fromEntries([
+      ...Object.entries(HP_ENTITY_DEVICE).map(([id, d]) => [id, { device_id: d }]),
+      ...Object.entries(extraReg),
+    ]),
+    devices: { ...HP_DEVICES, ...extraDevices },
+    callService() {},
+  };
+  return markup(c);
+}
+
+const hp = renderHp();
+check('HP: les 4 toners sont trouves malgre 4 appareils distincts',
+  (hp.match(/class="cart /g) || []).length, 4);
+contains('HP: le noir', hp, '30%');
+contains('HP: le cyan', hp, '90%');
+check('HP: les pages restantes du toner ne sont pas une cartouche',
+  /Toner Restant/.test(hp), false);
+check('HP "inpowersave" est une mise en veille', label(hp), 'Sleep');
+check('HP "copying"', label(renderHp({}, { 'sensor.hp_statut': { state: 'copying', attributes: {}, last_changed: '2026-09-02T10:00:00Z' } })), 'Printing…');
+check('HP "scanprocessing"', label(renderHp({}, { 'sensor.hp_statut': { state: 'scanprocessing', attributes: {}, last_changed: '2026-09-02T10:00:00Z' } })), 'Printing…');
+check('HP "canceljob"', label(renderHp({}, { 'sensor.hp_statut': { state: 'canceljob', attributes: {}, last_changed: '2026-09-02T10:00:00Z' } })), 'Printing…');
+check('HP "ready"', label(renderHp({}, { 'sensor.hp_statut': { state: 'ready', attributes: {}, last_changed: '2026-09-02T10:00:00Z' } })), 'Ready');
+check('HP "off"', label(renderHp({}, { 'sensor.hp_statut': { state: 'off', attributes: {}, last_changed: '2026-09-02T10:00:00Z' } })), 'Offline');
+
+// Counters, one row per function.
+const hpRows = [...hp.matchAll(/<div class="crow">([\s\S]*?)<\/div>/g)].map(m => m[1].replace(/\s+/g, ' ').trim());
+check('HP: trois fonctions comptees', hpRows.length, 3);
+contains('HP: impression', hpRows[0], 'Printed');
+contains('HP: 2 800 pages N&B imprimees', hpRows[0], '<b>2,800</b> B&W');
+contains('HP: 12 223 pages couleur', hpRows[0], '<b>12,223</b> colour');
+contains('HP: numerisation', hpRows[1], 'Scanned');
+contains('HP: 500 pages numerisees', hpRows[1], '<b>500</b> pages');
+contains('HP: copie', hpRows[2], 'Copied');
+contains('HP: copies N&B', hpRows[2], '<b>387</b> B&W');
+// The copy unit counts the glass and the feeder separately: neither is a total.
+check('HP: un "total" plus petit que sa propre ventilation est ecarte',
+  /397|164/.test(hpRows[2]), false);
+check('HP: la copie ne montre que ses deux ventilations',
+  (hpRows[2].match(/<b>/g) || []).length, 2);
+check('les bourrages ne sont pas des pages produites',
+  hpRows.join(' ').includes('<b>14</b>') || hpRows.join(' ').includes('<b>0</b>'), false);
+
+// A second machine named after the first must not be absorbed.
+const rival = renderHp({}, { 'sensor.other_black': pct(5, `${HP_SEED} 2 Black Toner`) },
+  { rival: { name: `${HP_SEED} 2`, via_device_id: null } }, { 'sensor.other_black': { device_id: 'rival' } });
+check('un deuxieme appareil numerote n\'est pas absorbe',
+  (rival.match(/class="cart /g) || []).length, 4);
+
+// Two integrations on one printer report the same toners.
+const doubled = renderHp({}, {
+  'sensor.ipp_black': pct(34, 'HP Color LaserJet MFP M277dw Black Cartridge HP CF400X'),
+}, {}, { 'sensor.ipp_black': { device_id: 'main' } });
+check('deux integrations sur la meme imprimante: pas de doublon',
+  (doubled.match(/class="cart /g) || []).length, 4);
+contains('la source la plus proche gagne', doubled, '34%');
+check('la source la plus lointaine est ecartee', /30%/.test(doubled), false);
+// An explicit list is taken as given, doubles included: the user asked for it.
+const explicit = renderHp({ cartridges: ['sensor.hp_black_niveau', 'sensor.ipp_black'] }, {
+  'sensor.ipp_black': pct(34, 'HP Black Cartridge'),
+}, {}, { 'sensor.ipp_black': { device_id: 'main' } });
+check('une liste explicite n\'est pas dedupliquee',
+  (explicit.match(/class="cart /g) || []).length, 2);
+
 // ── Wear parts and waste receptacles ─────────────────────────────────────────
 
 check('show_parts: false masque les pieces',
@@ -345,6 +459,9 @@ check('les pages restantes d\'un tambour ne sont pas un compteur',
   /4,000/.test(countersLine(counters)), false);
 check('trois compteurs et pas un de plus',
   (countersLine(counters).match(/<b>/g) || []).length, 3);
+// A machine that only prints keeps the bare line, without a function label.
+check('une imprimante simple garde sa ligne sans libelle',
+  /class="cfn"/.test(counters), false);
 check('show_counters: false masque la ligne',
   /class="counters"/.test(renderDev('idle', { show_counters: false }, COUNTERS)), false);
 check('pas de ligne de compteurs sans compteur',
@@ -462,6 +579,28 @@ check('une langue inconnue retombe sur Home Assistant',
   label(render('printing', { language: 'xx' })), 'Printing…');
 check('cartouches traduites', /<span class="lbl">Noir</.test(
   render('idle', { language: 'fr' }, TONERS)), true);
+
+// ── The translation tables ───────────────────────────────────────────────────
+// A key added to English and forgotten elsewhere falls back silently, so the
+// card ends up half translated with nothing to show for it. This caught four
+// keys that had all landed in the English table by accident.
+
+const cardSource = await readFile(join(HERE, '..', 'dist', 'ha-printer-card.js'), 'utf8');
+const tablesBody = cardSource.slice(cardSource.indexOf('const T = {'), cardSource.indexOf('\n};\n\n// Home Assistant reports Norwegian'));
+const tables = [...tablesBody.matchAll(/^  ([a-z]{2}): \{([\s\S]*?)\n  \},/gm)];
+const keysOf = body => new Set([...body.matchAll(/(\w+):\s*"/g)].map(m => m[1]));
+check('13 langues', tables.length, 13);
+const enKeys = keysOf(tables[0][2]);
+const incomplete = tables.filter(([, , body]) => [...enKeys].some(k => !keysOf(body).has(k)))
+  .map(t => t[1]);
+check('aucune langue ne retombe sur l\'anglais faute de cle', incomplete.join(',') || 'aucune', 'aucune');
+const duplicated = tables.filter(([, , body]) => {
+  const all = [...body.matchAll(/(\w+):\s*"/g)].map(m => m[1]);
+  return all.length !== new Set(all).size;
+}).map(t => t[1]);
+check('aucune cle en double dans une table', duplicated.join(',') || 'aucune', 'aucune');
+check('les libelles de fonction sont bien traduits',
+  /class="cfn">Impression</.test(renderHp({ language: 'fr' })), true);
 
 // ── Compact mode ─────────────────────────────────────────────────────────────
 
