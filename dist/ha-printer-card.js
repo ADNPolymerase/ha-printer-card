@@ -635,6 +635,32 @@ function statusMessage(st) {
   return null;
 }
 
+// An empty tray, in the printer's own words. IPP puts "media-empty" or
+// "media-needed" in state_reason, panels spell it out in the user's language.
+// Kept away from the jam keywords: "media-jam" must not read as an empty tray.
+const PAPER_OUT_KEYWORDS = [
+  "media-empty", "media_empty", "media-needed", "media_needed", "input-tray-missing",
+  "out of paper", "no paper", "paper out", "paper empty", "load paper", "add paper",
+  "plus de papier", "papier epuise", "bac vide", "manque de papier", "charger du papier",
+  "kein papier", "papier leer", "papierfach leer",
+  "sin papel", "falta papel", "carta esaurita", "manca carta",
+  "geen papier", "papier op", "sem papel", "falta de papel",
+  "slut pa papper", "papperet slut", "tom for papir", "ikke mer papir",
+  "brak papieru", "\u043d\u0435\u0442 \u0431\u0443\u043c\u0430\u0433\u0438", "\u7f3a\u7eb8", "\u65e0\u7eb8",
+];
+const PAPER_OUT_PATTERNS = PAPER_OUT_KEYWORDS.map((kw) => new RegExp(kw.replace(/[-_]/g, "[-_ ]"), "i"));
+
+// Scans everything the printer says, not just the first field that has words
+// in it: an empty tray often sits in state_reason while state_message carries
+// something else entirely.
+function isPaperOut(st) {
+  if (!st) return false;
+  const attrs = st.attributes || {};
+  const hay = stripAccents([st.state, attrs.state_message, attrs.state_reason, attrs.status, attrs.message]
+    .filter((v) => v !== null && v !== undefined).join(" "));
+  return PAPER_OUT_PATTERNS.some((re) => re.test(hay));
+}
+
 // `web_url: auto` reads the address the printer advertises itself, rather
 // than asking the user to retype an IP that DHCP may move.
 function webUrl(cfg, st) {
@@ -786,11 +812,13 @@ function svgLaser(jam, ink) {
 
 // Inkjet: paper stands in a tray leaning off the back, the printed page comes
 // out of the front slot and lands on the output tray.
-function svgInkjet(jam, ink) {
+function svgInkjet(jam, ink, noPaper) {
   return `
   <g class="shell">
-    <rect class="paper-stack" x="72" y="8" width="56" height="12" rx="1.5"/>
     <path class="fill" d="M60 52 L140 52 L132 18 L68 18 Z"/>
+    ${noPaper ? "" : `
+    <rect class="paper-stack" x="77" y="11" width="46" height="43" rx="1.5"/>
+    <rect class="paper-stack" x="73" y="8" width="54" height="46" rx="1.5"/>`}
     <rect class="fill" x="20" y="50" width="160" height="52" rx="6"/>
     <rect class="recess" x="56" y="97" width="88" height="6" rx="3"/>
     <path class="fill" d="M30 102 L170 102 L178 122 L22 122 Z"/>
@@ -834,12 +862,12 @@ const MODELS = {
   office: { draw: svgOffice, bay: { x: 132, y: 60, w: 30, h: 44 } },
 };
 
-function printerSvg(norm, cfg, carts) {
+function printerSvg(norm, cfg, carts, noPaper) {
   const model = MODELS[cfg.printer_type] || MODELS.mfp;
   const ink = carts && carts.length ? inkBay(carts, model.bay) : "";
   return `
 <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" role="img">
-  ${model.draw(norm === "stopped", ink)}
+  ${model.draw(norm === "stopped", ink, noPaper)}
 </svg>`;
 }
 
@@ -964,6 +992,7 @@ class PrinterCard extends HTMLElement {
     carts.forEach((c) => { c.label = cartridgeLabel(hass, c); });
     const lows = carts.filter((c) => c.low);
     const url = webUrl(cfg, st);
+    const noPaper = isPaperOut(st);
     // "inside" draws the cartridges in the machine and drops the row below it,
     // which is the shortest the card gets while keeping the illustration. It
     // needs that illustration, so compact mode falls back to bars.
@@ -977,7 +1006,7 @@ class PrinterCard extends HTMLElement {
     const signature = JSON.stringify([
       norm, name, since, msg, url, lang(hass), cfg.compact, cfg.printer_type,
       cfg.cartridge_style, showPower, plugOn, watts, !!cfg.print_entity,
-      inside, carts.map((c) => [c.entity, c.level, c.low, c.color]),
+      inside, noPaper, carts.map((c) => [c.entity, c.level, c.low, c.color]),
     ]);
     if (signature === this._signature) return;
     this._signature = signature;
@@ -1097,7 +1126,7 @@ button ha-icon, .btn ha-icon { --mdc-icon-size:18px; }
         <div class="top">
           ${cfg.compact
             ? `<div class="badge"><ha-icon icon="${STATE_ICONS[norm]}"></ha-icon></div>`
-            : `<div class="illu">${printerSvg(norm, cfg, inside ? carts : null)}</div>`}
+            : `<div class="illu">${printerSvg(norm, cfg, inside ? carts : null, noPaper)}</div>`}
           ${cfg.compact ? `<div class="bottom">
             <div class="body">
               <div class="name">${escapeHtml(name)}</div>

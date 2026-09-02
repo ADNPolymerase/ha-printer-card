@@ -332,6 +332,46 @@ for (const m of ['mfp', 'inkjet', 'laser', 'office']) {
   check(`${m}: le triangle de bourrage ne recouvre pas les cartouches`, overlaps, false);
 }
 
+// ── The rear paper tray (inkjet) ─────────────────────────────────────────────
+// The stack stands in front of the support that holds it up, and goes away
+// when the printer says the tray is empty.
+
+const inkjetPaper = html => {
+  const plate = html.indexOf('d="M60 52 L140 52 L132 18 L68 18 Z"');
+  const stack = html.indexOf('class="paper-stack"');
+  return { plate, stack };
+};
+const withPaper = inkjetPaper(render('idle', { printer_type: 'inkjet' }));
+check('la pile de papier est dessinee', withPaper.stack > -1, true);
+check('la pile est devant son support, pas derriere',
+  withPaper.stack > withPaper.plate, true);
+check('bac vide (state_reason IPP): plus de pile',
+  /class="paper-stack"/.test(
+    render('stopped', { printer_type: 'inkjet' }, {}, { state_reason: 'media-empty' })), false);
+check('bac vide (message du panneau): plus de pile',
+  /class="paper-stack"/.test(
+    render('stopped', { printer_type: 'inkjet' }, {}, { state_message: 'Plus de papier dans le bac 1' })), false);
+check('bac vide en anglais',
+  /class="paper-stack"/.test(
+    render('stopped', { printer_type: 'inkjet' }, {}, { state_message: 'Out of paper' })), false);
+// media-jam is not media-empty: a jammed printer still has paper in the tray.
+check('un bourrage ne vide pas le bac',
+  /class="paper-stack"/.test(
+    render('stopped', { printer_type: 'inkjet' }, {}, { state_reason: 'media-jam' })), true);
+check('le support reste dessine quand le bac est vide',
+  /d="M60 52 L140 52 L132 18 L68 18 Z"/.test(
+    render('stopped', { printer_type: 'inkjet' }, {}, { state_reason: 'media-empty' })), true);
+check('les autres modeles ne dessinent pas de pile arriere',
+  /class="paper-stack"/.test(render('idle', { printer_type: 'laser' })), false);
+// The tray emptying must survive the render guard, it is not part of the state.
+const trayGuard = new Card();
+trayGuard.setConfig({ entity: 'sensor.printer', printer_type: 'inkjet' });
+trayGuard.hass = makeHass('stopped', {}, { state_message: 'Cover open' });
+check('bac plein au depart', /class="paper-stack"/.test(markup(trayGuard)), true);
+trayGuard.hass = makeHass('stopped', {}, { state_message: 'Out of paper' });
+check('le bac qui se vide declenche bien un nouveau rendu',
+  /class="paper-stack"/.test(markup(trayGuard)), false);
+
 // ── Rendering guard ──────────────────────────────────────────────────────────
 // The card skips a re-render when nothing it shows has changed. A guard that
 // is too coarse freezes the levels on screen.
