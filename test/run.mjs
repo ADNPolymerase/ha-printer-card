@@ -240,7 +240,7 @@ check('le nom de l\'imprimante est retire du libelle',
 check('le qualificatif de fin est retire',
   partNames(brother).some(n => /remaining/i.test(n)), false);
 check('les libelles de pieces sont propres',
-  partNames(brother).join(','), 'Drum,Fuser,Belt unit,PF Kit 1');
+  partNames(brother).join(','), 'Drum,Fuser,Belt unit,Feed kit 1');
 // The tooltip keeps the full name the integration gave it.
 contains('le nom complet reste en infobulle', brother, 'title="HL-L8360 Drum remaining lifetime"');
 
@@ -729,9 +729,9 @@ check('les pages restantes d\'un tambour ne sont pas un compteur',
   /4,000/.test(countersLine(counters)), false);
 check('trois compteurs et pas un de plus',
   (countersLine(counters).match(/<b>/g) || []).length, 3);
-// A machine that only prints keeps the bare line, without a function label.
-check('une imprimante simple garde sa ligne sans libelle',
-  /class="cfn"/.test(counters), false);
+check('meme seule, la ligne dit ce qu\'elle compte',
+  /class="cfn"/.test(counters), true);
+contains('et elle le dit dans la langue de la carte', counters, '>Printed<');
 check('show_counters: false masque la ligne',
   /class="counters"/.test(renderDev('idle', { show_counters: false }, COUNTERS)), false);
 check('pas de ligne de compteurs sans compteur',
@@ -1312,6 +1312,55 @@ contains('comme sa ventilation couleur', avecListe, 'sensor.ailleurs_couleur');
   fr.setConfig({ entity: 'sensor.printer', language: 'de', name: 'X' });
   check('un reglage sans rapport ne reconstruit pas', fr._built, builds);
 }
+
+// ── Wear-part labels, written by the card ──────────────────────────────
+
+// English hangs its boilerplate behind the part, French in front of it, so
+// stripping a suffix left every translated name three words too long. Seven
+// chips reading "Durée de vie restante du tambour noir" is what a Brother
+// owner reported. The card knows which part it is, so it writes the label.
+const BROTHER_FR = {
+  'sensor.printer_black_drum_remaining_life': pct(80, 'HL-L8360 Durée de vie restante du tambour noir'),
+  'sensor.printer_belt_unit_remaining_life': pct(90, "HL-L8360 Durée de vie restante de l'unité de courroie"),
+  'sensor.printer_fuser_remaining_life': pct(94, "HL-L8360 Durée de vie restante de l'unité de fusion"),
+  'sensor.printer_pf_kit_1_remaining_life': pct(95, 'HL-L8360 Durée de vie restante du kit PF 1'),
+};
+const partLabels = (html) => [...String(html).matchAll(/class="pname">([^<]*)</g)]
+  .map((m) => m[1].replace(/&#39;/g, "'").replace(/&amp;/g, '&'));
+const fr = renderDev('idle', { language: 'fr' }, BROTHER_FR, { friendly_name: 'HL-L8360 Statut' });
+check('les pieces francaises ne recopient plus la phrase entiere',
+  partLabels(fr).join(','), 'Tambour noir,Courroie,Four,Kit d\'alimentation 1');
+const en = renderDev('idle', { language: 'en' }, BROTHER_FR, { friendly_name: 'HL-L8360 Statut' });
+check('et la meme machine se lit en anglais sans rien changer d\'autre',
+  partLabels(en).join(','), 'Black drum,Belt unit,Fuser,Feed kit 1');
+
+// Le nom du constructeur porte parfois un indice : Brother livre un PF Kit 1
+// et un PF Kit MP, et deux pastilles homonymes ne servent a rien.
+const TWO_KITS = {
+  'sensor.printer_pf_kit_1_remaining_life': pct(95, 'HL-L8360 PF Kit 1 remaining lifetime'),
+  'sensor.printer_pf_kit_mp_remaining_life': pct(60, 'HL-L8360 PF Kit MP remaining lifetime'),
+};
+check('deux kits d\'alimentation restent distincts',
+  partLabels(renderDev('idle', {}, TWO_KITS, { friendly_name: 'HL-L8360 Status' })).join(','), 'Feed kit 1,Feed kit MP');
+
+// Une piece que la carte ne reconnait pas garde son nom, ampute du seul
+// qualificatif qu'elle sache retirer.
+const ODD = { 'sensor.printer_drum_life': pct(42, 'HL-L8360 Widget remaining lifetime') };
+check('une piece nommee autrement que son identifiant garde son nom',
+  partLabels(renderDev('idle', {}, ODD, { friendly_name: 'HL-L8360 Status' })).join(','), 'Widget');
+
+// ── Counters, left or centred ──────────────────────────────────────────
+
+// Demandé sur le forum par une carte a une seule fonction, dont la ligne
+// flottait a gauche sous des cartouches centrees. Par defaut rien ne bouge :
+// a plusieurs fonctions les compteurs forment un tableau avec sa colonne de
+// libelles, et le centrage le desaligne.
+const withCounters = (cfg) => renderDev('idle', cfg, {
+  'sensor.printer_page_counter': { state: '3145', attributes: { friendly_name: 'HL-L8360 Page counter' } },
+}, { friendly_name: 'HL-L8360 Status' });
+check('par defaut les compteurs restent a gauche', / class="counters"/.test(withCounters({})), true);
+check('l\'option les centre', /class="counters mid"/.test(withCounters({ counters_align: 'center' })), true);
+contains('et la regle de centrage existe', withCounters({ counters_align: 'center' }), '.counters.mid { align-items:center; }');
 
 // ── Editor contract ──────────────────────────────────────────────────────────
 // CustomEvent.detail is a readonly accessor: assigning it after construction

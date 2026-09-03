@@ -1,4 +1,4 @@
-const CARD_VERSION = "0.7.1";
+const CARD_VERSION = "0.8.0";
 
 console.info(
   "%c HA-PRINTER-CARD %c v" + CARD_VERSION + " ",
@@ -34,8 +34,11 @@ const T = {
     print_entity: "Test-print button or script",
     web_url: "Web interface URL (auto = from the printer)",
     cartridges_hint: "Cartridges, one entity per line (empty = auto-detect)",
+    p_waste: "Waste container", p_drum: "Drum", p_belt: "Belt unit", p_fuser: "Fuser", p_laser: "Laser unit",
+    p_feed_kit: "Feed kit", p_transfer: "Transfer unit", p_maintenance: "Maintenance kit", p_developer: "Developer", p_imaging: "Imaging unit",
     cartridge_order: "Cartridge order", order_color: "By colour", order_level: "Emptiest first",
     counters_hint: "Counters, one entity per line (empty = automatic)",
+    counters_align: "Counter alignment", align_left: "Left", align_center: "Centred",
     name: "Name", compact: "Compact mode (icon instead of illustration)",
     language: "Language", language_auto: "Follow Home Assistant",
     image: "Photo of your printer (URL or /local/... path)", printer_type: "Printer type", type_mfp: "All-in-one (with scanner)", type_inkjet: "Inkjet (rear feed)",
@@ -69,8 +72,11 @@ const T = {
     print_entity: "Bouton ou script d'impression de test",
     web_url: "URL de l'interface web (auto = depuis l'imprimante)",
     cartridges_hint: "Cartouches, une entit\u00e9 par ligne (vide = d\u00e9tection auto)",
+    p_waste: "R\u00e9cup\u00e9rateur", p_drum: "Tambour", p_belt: "Courroie", p_fuser: "Four", p_laser: "Unit\u00e9 laser",
+    p_feed_kit: "Kit d'alimentation", p_transfer: "Unit\u00e9 de transfert", p_maintenance: "Kit de maintenance", p_developer: "D\u00e9veloppeur", p_imaging: "Unit\u00e9 d'imagerie",
     cartridge_order: "Ordre des cartouches", order_color: "Par couleur", order_level: "Les plus vides d'abord",
     counters_hint: "Compteurs, une entit\u00e9 par ligne (vide = automatique)",
+    counters_align: "Alignement des compteurs", align_left: "\u00c0 gauche", align_center: "Centr\u00e9s",
     name: "Nom", compact: "Mode compact (ic\u00f4ne au lieu de l'illustration)",
     language: "Langue", language_auto: "Suivre Home Assistant",
     image: "Photo de votre imprimante (URL ou chemin /local/...)", printer_type: "Type d'imprimante", type_mfp: "Multifonction (avec scanner)", type_inkjet: "Jet d'encre (bac arri\u00e8re)",
@@ -104,8 +110,11 @@ const T = {
     print_entity: "Taste oder Skript f\u00fcr Testdruck",
     web_url: "URL der Weboberfl\u00e4che (auto = vom Drucker)",
     cartridges_hint: "Patronen, eine Entit\u00e4t pro Zeile (leer = automatisch)",
+    p_waste: "Resttonerbeh\u00e4lter", p_drum: "Trommel", p_belt: "Transferband", p_fuser: "Fixiereinheit", p_laser: "Lasereinheit",
+    p_feed_kit: "Einzugskit", p_transfer: "Transfereinheit", p_maintenance: "Wartungskit", p_developer: "Entwickler", p_imaging: "Bildeinheit",
     cartridge_order: "Patronen-Reihenfolge", order_color: "Nach Farbe", order_level: "Leerste zuerst",
     counters_hint: "Z\u00e4hler, eine Entit\u00e4t pro Zeile (leer = automatisch)",
+    counters_align: "Ausrichtung der Z\u00e4hler", align_left: "Links", align_center: "Zentriert",
     name: "Name", compact: "Kompaktmodus (Symbol statt Illustration)",
     language: "Sprache", language_auto: "Home Assistant folgen",
     image: "Foto Ihres Druckers (URL oder /local/... Pfad)", printer_type: "Druckertyp", type_mfp: "Multifunktionsger\u00e4t (mit Scanner)", type_inkjet: "Tintenstrahl (hintere Zufuhr)",
@@ -139,8 +148,11 @@ const T = {
     print_entity: "Bot\u00f3n o script de impresi\u00f3n de prueba",
     web_url: "URL de la interfaz web (auto = desde la impresora)",
     cartridges_hint: "Cartuchos, una entidad por l\u00ednea (vac\u00edo = autom\u00e1tico)",
+    p_waste: "Dep\u00f3sito de residuos", p_drum: "Tambor", p_belt: "Correa", p_fuser: "Fusor", p_laser: "Unidad l\u00e1ser",
+    p_feed_kit: "Kit de alimentaci\u00f3n", p_transfer: "Unidad de transferencia", p_maintenance: "Kit de mantenimiento", p_developer: "Revelador", p_imaging: "Unidad de imagen",
     cartridge_order: "Orden de cartuchos", order_color: "Por color", order_level: "Los m\u00e1s vac\u00edos primero",
     counters_hint: "Contadores, una entidad por l\u00ednea (vac\u00edo = autom\u00e1tico)",
+    counters_align: "Alineaci\u00f3n de los contadores", align_left: "A la izquierda", align_center: "Centrados",
     name: "Nombre", compact: "Modo compacto (icono en vez de ilustraci\u00f3n)",
     language: "Idioma", language_auto: "Seguir a Home Assistant",
     image: "Foto de su impresora (URL o ruta /local/...)", printer_type: "Tipo de impresora", type_mfp: "Multifunci\u00f3n (con esc\u00e1ner)", type_inkjet: "Inyecci\u00f3n de tinta (bandeja trasera)",
@@ -174,8 +186,11 @@ const T = {
     print_entity: "Pulsante o script di stampa di prova",
     web_url: "URL dell'interfaccia web (auto = dalla stampante)",
     cartridges_hint: "Cartucce, una entit\u00e0 per riga (vuoto = automatico)",
+    p_waste: "Contenitore di scarto", p_drum: "Tamburo", p_belt: "Cinghia", p_fuser: "Fusore", p_laser: "Unit\u00e0 laser",
+    p_feed_kit: "Kit di alimentazione", p_transfer: "Unit\u00e0 di trasferimento", p_maintenance: "Kit di manutenzione", p_developer: "Sviluppatore", p_imaging: "Unit\u00e0 immagine",
     cartridge_order: "Ordine delle cartucce", order_color: "Per colore", order_level: "I pi\u00f9 vuoti prima",
     counters_hint: "Contatori, una entit\u00e0 per riga (vuoto = automatico)",
+    counters_align: "Allineamento dei contatori", align_left: "A sinistra", align_center: "Centrati",
     name: "Nome", compact: "Modalit\u00e0 compatta (icona invece dell'illustrazione)",
     language: "Lingua", language_auto: "Segui Home Assistant",
     image: "Foto della vostra stampante (URL o percorso /local/...)", printer_type: "Tipo di stampante", type_mfp: "Multifunzione (con scanner)", type_inkjet: "Getto d'inchiostro (vassoio posteriore)",
@@ -209,8 +224,11 @@ const T = {
     print_entity: "Knop of script voor testafdruk",
     web_url: "URL van de webinterface (auto = van de printer)",
     cartridges_hint: "Cartridges, \u00e9\u00e9n entiteit per regel (leeg = automatisch)",
+    p_waste: "Resttonerbak", p_drum: "Drum", p_belt: "Riem", p_fuser: "Fuser", p_laser: "Lasereenheid",
+    p_feed_kit: "Invoerkit", p_transfer: "Transfereenheid", p_maintenance: "Onderhoudskit", p_developer: "Ontwikkelaar", p_imaging: "Beeldeenheid",
     cartridge_order: "Volgorde cartridges", order_color: "Op kleur", order_level: "Leegste eerst",
     counters_hint: "Tellers, \u00e9\u00e9n entiteit per regel (leeg = automatisch)",
+    counters_align: "Uitlijning van de tellers", align_left: "Links", align_center: "Gecentreerd",
     name: "Naam", compact: "Compacte modus (pictogram in plaats van illustratie)",
     language: "Taal", language_auto: "Home Assistant volgen",
     image: "Foto van uw printer (URL of /local/... pad)", printer_type: "Type printer", type_mfp: "All-in-one (met scanner)", type_inkjet: "Inkjet (invoer achter)",
@@ -244,8 +262,11 @@ const T = {
     print_entity: "Bot\u00e3o ou script de impress\u00e3o de teste",
     web_url: "URL da interface web (auto = a partir da impressora)",
     cartridges_hint: "Cartuchos, uma entidade por linha (vazio = autom\u00e1tico)",
+    p_waste: "Dep\u00f3sito de res\u00edduos", p_drum: "Tambor", p_belt: "Correia", p_fuser: "Fusor", p_laser: "Unidade laser",
+    p_feed_kit: "Kit de alimenta\u00e7\u00e3o", p_transfer: "Unidade de transfer\u00eancia", p_maintenance: "Kit de manuten\u00e7\u00e3o", p_developer: "Revelador", p_imaging: "Unidade de imagem",
     cartridge_order: "Ordem dos cartuchos", order_color: "Por cor", order_level: "Os mais vazios primeiro",
     counters_hint: "Contadores, uma entidade por linha (vazio = autom\u00e1tico)",
+    counters_align: "Alinhamento dos contadores", align_left: "\u00c0 esquerda", align_center: "Centrados",
     name: "Nome", compact: "Modo compacto (\u00edcone em vez da ilustra\u00e7\u00e3o)",
     language: "Idioma", language_auto: "Seguir o Home Assistant",
     image: "Foto da sua impressora (URL ou caminho /local/...)", printer_type: "Tipo de impressora", type_mfp: "Multifun\u00e7\u00f5es (com scanner)", type_inkjet: "Jato de tinta (alimenta\u00e7\u00e3o traseira)",
@@ -279,8 +300,11 @@ const T = {
     print_entity: "Knapp eller skript f\u00f6r testutskrift",
     web_url: "Webbgr\u00e4nssnittets URL (auto = fr\u00e5n skrivaren)",
     cartridges_hint: "Patroner, en entitet per rad (tomt = automatiskt)",
+    p_waste: "Spilltonerbeh\u00e5llare", p_drum: "Trumma", p_belt: "Band", p_fuser: "Fixeringsenhet", p_laser: "Laserenhet",
+    p_feed_kit: "Matarsats", p_transfer: "\u00d6verf\u00f6ringsenhet", p_maintenance: "Underh\u00e5llssats", p_developer: "Framkallare", p_imaging: "Bildenhet",
     cartridge_order: "Patronordning", order_color: "Efter f\u00e4rg", order_level: "Tommast f\u00f6rst",
     counters_hint: "R\u00e4knare, en entitet per rad (tomt = automatiskt)",
+    counters_align: "R\u00e4knarnas justering", align_left: "V\u00e4nster", align_center: "Centrerade",
     name: "Namn", compact: "Kompakt l\u00e4ge (ikon i st\u00e4llet f\u00f6r illustration)",
     language: "Spr\u00e5k", language_auto: "F\u00f6lj Home Assistant",
     image: "Foto p\u00e5 din skrivare (URL eller /local/... s\u00f6kv\u00e4g)", printer_type: "Skrivartyp", type_mfp: "Allt-i-ett (med skanner)", type_inkjet: "Bl\u00e4ckstr\u00e5le (bakre inmatning)",
@@ -314,8 +338,11 @@ const T = {
     print_entity: "Knapp eller skript for testutskrift",
     web_url: "URL til nettgrensesnittet (auto = fra skriveren)",
     cartridges_hint: "Patroner, \u00e9n entitet per linje (tom = automatisk)",
+    p_waste: "Spilltonerbeholder", p_drum: "Trommel", p_belt: "Belte", p_fuser: "Fikseringsenhet", p_laser: "Laserenhet",
+    p_feed_kit: "Matesett", p_transfer: "Overf\u00f8ringsenhet", p_maintenance: "Vedlikeholdssett", p_developer: "Fremkaller", p_imaging: "Bildeenhet",
     cartridge_order: "Patronrekkef\u00f8lge", order_color: "Etter farge", order_level: "Tommest f\u00f8rst",
     counters_hint: "Tellere, \u00e9n entitet per linje (tom = automatisk)",
+    counters_align: "Justering av tellere", align_left: "Venstre", align_center: "Sentrert",
     name: "Navn", compact: "Kompakt modus (ikon i stedet for illustrasjon)",
     language: "Spr\u00e5k", language_auto: "F\u00f8lg Home Assistant",
     image: "Bilde av skriveren din (URL eller /local/... bane)", printer_type: "Skrivertype", type_mfp: "Alt-i-ett (med skanner)", type_inkjet: "Blekk (bakre mating)",
@@ -349,8 +376,11 @@ const T = {
     print_entity: "Knap eller script til testudskrift",
     web_url: "URL til webgr\u00e6nsefladen (auto = fra printeren)",
     cartridges_hint: "Patroner, \u00e9n entitet pr. linje (tom = automatisk)",
+    p_waste: "Spildtonerbeholder", p_drum: "Tromle", p_belt: "B\u00e6lte", p_fuser: "Fikseringsenhed", p_laser: "Laserenhed",
+    p_feed_kit: "Fremf\u00f8ringss\u00e6t", p_transfer: "Overf\u00f8ringsenhed", p_maintenance: "Vedligeholdelsess\u00e6t", p_developer: "Fremkalder", p_imaging: "Billedenhed",
     cartridge_order: "Patronr\u00e6kkef\u00f8lge", order_color: "Efter farve", order_level: "Tommest f\u00f8rst",
     counters_hint: "T\u00e6llere, \u00e9n entitet pr. linje (tom = automatisk)",
+    counters_align: "Justering af t\u00e6llere", align_left: "Venstre", align_center: "Centreret",
     name: "Navn", compact: "Kompakt tilstand (ikon i stedet for illustration)",
     language: "Sprog", language_auto: "F\u00f8lg Home Assistant",
     image: "Foto af din printer (URL eller /local/... sti)", printer_type: "Printertype", type_mfp: "Alt-i-en (med scanner)", type_inkjet: "Bl\u00e6k (bagerste indf\u00f8ring)",
@@ -384,8 +414,11 @@ const T = {
     print_entity: "Przycisk lub skrypt wydruku testowego",
     web_url: "Adres URL interfejsu WWW (auto = z drukarki)",
     cartridges_hint: "Kartrid\u017ce, jedna encja na wiersz (puste = automatycznie)",
+    p_waste: "Pojemnik na zu\u017cyty toner", p_drum: "B\u0119ben", p_belt: "Pas transferowy", p_fuser: "Utrwalacz", p_laser: "Modu\u0142 lasera",
+    p_feed_kit: "Zestaw podajnika", p_transfer: "Modu\u0142 transferu", p_maintenance: "Zestaw konserwacyjny", p_developer: "Wywo\u0142ywacz", p_imaging: "Modu\u0142 obrazowania",
     cartridge_order: "Kolejno\u015b\u0107 kartrid\u017cy", order_color: "Wed\u0142ug koloru", order_level: "Najpierw najbardziej puste",
     counters_hint: "Liczniki, jedna encja na wiersz (puste = automatycznie)",
+    counters_align: "Wyr\u00f3wnanie licznik\u00f3w", align_left: "Do lewej", align_center: "Wy\u015brodkowane",
     name: "Nazwa", compact: "Tryb kompaktowy (ikona zamiast ilustracji)",
     language: "J\u0119zyk", language_auto: "Zgodnie z Home Assistant",
     image: "Zdj\u0119cie drukarki (URL lub \u015bcie\u017cka /local/...)", printer_type: "Typ drukarki", type_mfp: "Urz\u0105dzenie wielofunkcyjne (ze skanerem)", type_inkjet: "Atramentowa (podajnik z ty\u0142u)",
@@ -419,8 +452,11 @@ const T = {
     print_entity: "\u041a\u043d\u043e\u043f\u043a\u0430 \u0438\u043b\u0438 \u0441\u043a\u0440\u0438\u043f\u0442 \u0442\u0435\u0441\u0442\u043e\u0432\u043e\u0439 \u043f\u0435\u0447\u0430\u0442\u0438",
     web_url: "URL \u0432\u0435\u0431-\u0438\u043d\u0442\u0435\u0440\u0444\u0435\u0439\u0441\u0430 (auto = \u043e\u0442 \u043f\u0440\u0438\u043d\u0442\u0435\u0440\u0430)",
     cartridges_hint: "\u041a\u0430\u0440\u0442\u0440\u0438\u0434\u0436\u0438, \u043f\u043e \u043e\u0434\u043d\u043e\u043c\u0443 \u043e\u0431\u044a\u0435\u043a\u0442\u0443 \u0432 \u0441\u0442\u0440\u043e\u043a\u0435 (\u043f\u0443\u0441\u0442\u043e = \u0430\u0432\u0442\u043e\u043c\u0430\u0442\u0438\u0447\u0435\u0441\u043a\u0438)",
+    p_waste: "\u0411\u0443\u043d\u043a\u0435\u0440 \u043e\u0442\u0440\u0430\u0431\u043e\u0442\u0430\u043d\u043d\u043e\u0433\u043e \u0442\u043e\u043d\u0435\u0440\u0430", p_drum: "\u0411\u0430\u0440\u0430\u0431\u0430\u043d", p_belt: "\u0420\u0435\u043c\u0435\u043d\u044c \u043f\u0435\u0440\u0435\u043d\u043e\u0441\u0430", p_fuser: "\u0422\u0435\u0440\u043c\u043e\u0431\u043b\u043e\u043a", p_laser: "\u041b\u0430\u0437\u0435\u0440\u043d\u044b\u0439 \u0431\u043b\u043e\u043a",
+    p_feed_kit: "\u041a\u043e\u043c\u043f\u043b\u0435\u043a\u0442 \u043f\u043e\u0434\u0430\u0447\u0438", p_transfer: "\u0411\u043b\u043e\u043a \u043f\u0435\u0440\u0435\u043d\u043e\u0441\u0430", p_maintenance: "\u041a\u043e\u043c\u043f\u043b\u0435\u043a\u0442 \u043e\u0431\u0441\u043b\u0443\u0436\u0438\u0432\u0430\u043d\u0438\u044f", p_developer: "\u0414\u0435\u0432\u0435\u043b\u043e\u043f\u0435\u0440", p_imaging: "\u0411\u043b\u043e\u043a \u0438\u0437\u043e\u0431\u0440\u0430\u0436\u0435\u043d\u0438\u044f",
     cartridge_order: "\u041f\u043e\u0440\u044f\u0434\u043e\u043a \u043a\u0430\u0440\u0442\u0440\u0438\u0434\u0436\u0435\u0439", order_color: "\u041f\u043e \u0446\u0432\u0435\u0442\u0443", order_level: "\u0421\u043d\u0430\u0447\u0430\u043b\u0430 \u0441\u0430\u043c\u044b\u0435 \u043f\u0443\u0441\u0442\u044b\u0435",
     counters_hint: "\u0421\u0447\u0451\u0442\u0447\u0438\u043a\u0438, \u043e\u0434\u043d\u0430 \u0441\u0443\u0449\u043d\u043e\u0441\u0442\u044c \u043d\u0430 \u0441\u0442\u0440\u043e\u043a\u0443 (\u043f\u0443\u0441\u0442\u043e = \u0430\u0432\u0442\u043e\u043c\u0430\u0442\u0438\u0447\u0435\u0441\u043a\u0438)",
+    counters_align: "\u0412\u044b\u0440\u0430\u0432\u043d\u0438\u0432\u0430\u043d\u0438\u0435 \u0441\u0447\u0451\u0442\u0447\u0438\u043a\u043e\u0432", align_left: "\u041f\u043e \u043b\u0435\u0432\u043e\u043c\u0443 \u043a\u0440\u0430\u044e", align_center: "\u041f\u043e \u0446\u0435\u043d\u0442\u0440\u0443",
     name: "\u041d\u0430\u0437\u0432\u0430\u043d\u0438\u0435", compact: "\u041a\u043e\u043c\u043f\u0430\u043a\u0442\u043d\u044b\u0439 \u0440\u0435\u0436\u0438\u043c (\u0437\u043d\u0430\u0447\u043e\u043a \u0432\u043c\u0435\u0441\u0442\u043e \u0438\u043b\u043b\u044e\u0441\u0442\u0440\u0430\u0446\u0438\u0438)",
     language: "\u042f\u0437\u044b\u043a", language_auto: "\u0421\u043b\u0435\u0434\u043e\u0432\u0430\u0442\u044c Home Assistant",
     image: "\u0424\u043e\u0442\u043e \u0432\u0430\u0448\u0435\u0433\u043e \u043f\u0440\u0438\u043d\u0442\u0435\u0440\u0430 (URL \u0438\u043b\u0438 \u043f\u0443\u0442\u044c /local/...)", printer_type: "\u0422\u0438\u043f \u043f\u0440\u0438\u043d\u0442\u0435\u0440\u0430", type_mfp: "\u041c\u0424\u0423 (\u0441\u043e \u0441\u043a\u0430\u043d\u0435\u0440\u043e\u043c)", type_inkjet: "\u0421\u0442\u0440\u0443\u0439\u043d\u044b\u0439 (\u0437\u0430\u0434\u043d\u044f\u044f \u043f\u043e\u0434\u0430\u0447\u0430)",
@@ -454,8 +490,11 @@ const T = {
     print_entity: "\u6d4b\u8bd5\u6253\u5370\u6309\u94ae\u6216\u811a\u672c",
     web_url: "\u7f51\u9875\u754c\u9762\u5730\u5740\uff08auto = \u53d6\u81ea\u6253\u5370\u673a\uff09",
     cartridges_hint: "\u58a8\u76d2\uff0c\u6bcf\u884c\u4e00\u4e2a\u5b9e\u4f53\uff08\u7559\u7a7a = \u81ea\u52a8\u8bc6\u522b\uff09",
+    p_waste: "\u5e9f\u7c89\u4ed3", p_drum: "\u7852\u9f13", p_belt: "\u8f6c\u5370\u5e26", p_fuser: "\u5b9a\u5f71\u5668", p_laser: "\u6fc0\u5149\u7ec4\u4ef6",
+    p_feed_kit: "\u8fdb\u7eb8\u7ec4\u4ef6", p_transfer: "\u8f6c\u5370\u7ec4\u4ef6", p_maintenance: "\u7ef4\u62a4\u7ec4\u4ef6", p_developer: "\u663e\u5f71\u5242", p_imaging: "\u6210\u50cf\u7ec4\u4ef6",
     cartridge_order: "\u58a8\u76d2\u987a\u5e8f", order_color: "\u6309\u989c\u8272", order_level: "\u6700\u5c11\u7684\u6392\u5728\u524d\u9762",
     counters_hint: "\u8ba1\u6570\u5668\uff0c\u6bcf\u884c\u4e00\u4e2a\u5b9e\u4f53\uff08\u7559\u7a7a\u4e3a\u81ea\u52a8\uff09",
+    counters_align: "\u8ba1\u6570\u5668\u5bf9\u9f50", align_left: "\u5de6\u5bf9\u9f50", align_center: "\u5c45\u4e2d",
     name: "\u540d\u79f0", compact: "\u7d27\u51d1\u6a21\u5f0f\uff08\u7528\u56fe\u6807\u4ee3\u66ff\u63d2\u56fe\uff09",
     language: "\u8bed\u8a00", language_auto: "\u8ddf\u968f Home Assistant",
     image: "\u6253\u5370\u673a\u7167\u7247\uff08URL \u6216 /local/... \u8def\u5f84\uff09", printer_type: "\u6253\u5370\u673a\u7c7b\u578b", type_mfp: "\u4e00\u4f53\u673a\uff08\u542b\u626b\u63cf\u4eea\uff09", type_inkjet: "\u55b7\u58a8\uff08\u540e\u8fdb\u7eb8\uff09",
@@ -768,23 +807,40 @@ function detectColor(text) {
 // belt, a fuser, a laser unit and paper-feed kits; Samsung a drum per colour;
 // Epson a maintenance box. They are all percentages that run down, they all
 // need replacing, and none of them is an ink to be drawn in its own colour.
-const PART_KEYWORDS = [
-  "drum", "tambour", "trommel", "tambor", "cilindro", "bildtrommel",
-  "belt", "courroie", "riemen", "correa", "cinghia", "band",
-  "fuser", "fusion", "four", "fixiereinheit", "fusor", "fusore", "fixering",
-  "laser unit", "unite laser", "lasereinheit", "pf kit", "feed kit", "kit d alimentation", "papiereinzug",
-  "transfer", "transfert", "ubertragung",
-  "maintenance kit", "kit de maintenance", "wartungskit",
-  "developer", "developpeur", "entwickler",
-  "imaging", "photoconduct", "\\bopc\\b",
+// One list, two jobs: it sorts a supply into ink / wear part / waste, and it
+// says which part it is, so the card can write the label itself. Ordered by
+// specificity, since "maintenance box" is waste and "maintenance kit" is not.
+const PART_TYPES = [
+  ["waste", [
+    "waste", "residu", "recuperateur", "resttoner", "abfall", "afval", "spild",
+    "maintenance box", "boite de maintenance", "wartungsbox", "caja de mantenimiento",
+    "cleaning", "nettoyage", "reinigung", "limpieza",
+    "ink pad", "tampon", "flushing",
+  ]],
+  ["drum", ["drum", "tambour", "trommel", "tambor", "cilindro", "bildtrommel"]],
+  ["belt", ["belt", "courroie", "riemen", "correa", "cinghia", "band"]],
+  ["fuser", ["fuser", "fusion", "four", "fixiereinheit", "fusor", "fusore", "fixering"]],
+  ["laser", ["laser unit", "unite laser", "lasereinheit"]],
+  ["feed_kit", ["pf kit", "kit pf", "feed kit", "kit d alimentation", "papiereinzug"]],
+  ["transfer", ["transfer", "transfert", "ubertragung"]],
+  ["maintenance", ["maintenance kit", "kit de maintenance", "wartungskit"]],
+  ["developer", ["developer", "developpeur", "entwickler"]],
+  ["imaging", ["imaging", "photoconduct", "\\bopc\\b"]],
 ];
+const PART_KEYWORDS = PART_TYPES.filter(([k]) => k !== "waste").flatMap(([, w]) => w);
+
+// English hangs the colour in front of the part, French and the Romance
+// languages behind it. Nothing else here needs grammar, so a set of codes
+// beats a translated template.
+const COLOR_FIRST = new Set(["en", "de", "nl", "sv", "no", "da", "zh"]);
+
+function partType(text) {
+  const hay = stripAccents(String(text || "")).toLowerCase().replace(/_/g, " ");
+  for (const [type, words] of PART_TYPES) if (matchesAny(hay, words)) return type;
+  return null;
+}
 // Waste receptacles: same shape, opposite meaning depending on the maker.
-const WASTE_KEYWORDS = [
-  "waste", "residu", "recuperateur", "resttoner", "abfall", "afval", "spild",
-  "maintenance box", "boite de maintenance", "wartungsbox", "caja de mantenimiento",
-  "cleaning", "nettoyage", "reinigung", "limpieza",
-  "ink pad", "tampon", "flushing",
-];
+const WASTE_KEYWORDS = PART_TYPES.find(([k]) => k === "waste")[1];
 // Percentages on a printer's device that are not supplies at all: Epson
 // exposes Wi-Fi metrics, and integrations happily hang diagnostics off the
 // same device.
@@ -1012,7 +1068,29 @@ function stripPrinterName(title, printerName) {
 function supplyLabel(hass, c, printerName) {
   if (c.name) return c.name;
   if (c.kind === "ink") return cartridgeLabel(hass, c);
-  const label = stripPrinterName(c.title, printerName).replace(PART_SUFFIX, "").trim();
+  const own = stripPrinterName(c.title, printerName);
+  // The card already knows which part this is, and its own vocabulary reads
+  // the same in every language. The entity name does not: English hangs its
+  // boilerplate behind the part ("Fuser remaining lifetime") and French in
+  // front of it ("Durée de vie restante de l'unité de fusion"), so stripping
+  // a suffix left every translated name untouched and three words too long.
+  const type = partType(own);
+  if (type) {
+    const part = t(hass, "p_" + type);
+    const color = c.color && c.color !== "other" ? t(hass, "c_" + c.color) : "";
+    // Brother ships a PF Kit 1 alongside a PF Kit MP. Writing the label from
+    // the card's own words drops the vendor's index, and two wear parts would
+    // then sit side by side under the same name.
+    const idx = own.match(/\b(\d{1,2}|mp)\b/i);
+    const tail = idx ? ` ${/^mp$/i.test(idx[1]) ? "MP" : idx[1]}` : "";
+    if (!color) return part + tail;
+    // The colour names are capitalised because they stand alone under the
+    // cartridges. Composed into a phrase, only the first word keeps it, and
+    // German is the exception since it capitalises its nouns wherever they sit.
+    const lc = (w) => (lang(hass) === "de" ? w : w.charAt(0).toLowerCase() + w.slice(1));
+    return (COLOR_FIRST.has(lang(hass)) ? `${color} ${lc(part)}` : `${part} ${lc(color)}`) + tail;
+  }
+  const label = own.replace(PART_SUFFIX, "").trim();
   if (!label) return c.title;
   return label.charAt(0).toUpperCase() + label.slice(1);
 }
@@ -1647,7 +1725,7 @@ class PrinterCard extends HTMLElement {
     const signature = JSON.stringify([
       norm, name, msg, url, lang(hass), cfg.compact, cfg.printer_type,
       cfg.cartridge_style, showPower, plugOn, watts, !!cfg.print_entity,
-      inside, noPaper, counters, cfg.cartridge_rows, photo,
+      inside, noPaper, counters, cfg.cartridge_rows, photo, cfg.counters_align,
       supplies.map((c) => [c.entity, c.level, c.low, c.color, c.kind]),
     ]);
     if (signature === this._signature) return;
@@ -1687,15 +1765,15 @@ class PrinterCard extends HTMLElement {
             <i style="width:${Math.max(0, Math.min(100, c.level === null ? 0 : c.level)) * 0.42}px"></i>
           </span>`).join("")}</div>`;
 
-    // A machine that only prints keeps the bare line it had; one that also
-    // scans, copies or faxes gets a row per function, because "12 223" means
-    // nothing without saying 12 223 of what.
+    // Every row says what it counts. The label used to be dropped on a machine
+    // that only prints, on the grounds that a printer obviously prints, but
+    // the numbers then float with nothing to hang on and the row reads worse
+    // than the table it belongs to.
     const fnKeys = counters ? ["print", "scan", "copy", "fax"].filter((fn) => counters[fn]) : [];
-    const labelled = fnKeys.length > 1 || (fnKeys.length === 1 && fnKeys[0] !== "print");
-    const countersMarkup = !counters ? "" : `<div class="counters">${fnKeys.map((fn) => {
+    const countersMarkup = !counters ? "" : `<div class="counters${cfg.counters_align === "center" ? " mid" : ""}">${fnKeys.map((fn) => {
       const g = counters[fn];
       return `<div class="crow">
-            ${labelled ? `<span class="cfn">${t(hass, "fn_" + fn)}</span>` : ""}
+            <span class="cfn">${t(hass, "fn_" + fn)}</span>
             ${g.total !== null ? `<span class="${tappable ? "clickable" : ""}"${ent(g.ids.total)}><b>${nf.format(g.total)}</b> ${t(hass, "pages")}</span>` : ""}
             ${g.bw !== null ? `<span class="${tappable ? "clickable" : ""}"${ent(g.ids.bw)}><b>${nf.format(g.bw)}</b> ${t(hass, "pages_bw")}</span>` : ""}
             ${g.color !== null ? `<span class="${tappable ? "clickable" : ""}"${ent(g.ids.color)}><b>${nf.format(g.color)}</b> ${t(hass, "pages_color")}</span>` : ""}
@@ -1812,6 +1890,8 @@ svg .clickable { cursor:pointer; }
 .part.low .pval { color:var(--error-color, #f44336); }
 .part.low i { background:var(--error-color, #f44336); opacity:1; }
 .counters { display:flex; flex-direction:column; gap:3px; font-size:12px; color:var(--secondary-text-color); }
+.counters.mid { align-items:center; }
+.counters.mid .crow { justify-content:center; }
 .crow { display:flex; flex-wrap:wrap; gap:2px 12px; align-items:baseline; }
 .cfn { flex:none; min-width:82px; }
 .counters b { color:var(--primary-text-color); font-weight:600; }
@@ -2080,6 +2160,14 @@ details .form { padding-top:10px; }
               </select>
             </div>
             <div class="row">
+              <label>${t(hass, "counters_align")}</label>
+              <select data-field="counters_align">
+                ${["left", "center"]
+                  .map((v) => `<option value="${v}" ${(cfg.counters_align || "left") === v ? "selected" : ""}>${t(hass, "align_" + v)}</option>`)
+                  .join("")}
+              </select>
+            </div>
+            <div class="row">
               <label>${t(hass, "cartridge_rows")}</label>
               <select data-field="cartridge_rows">
                 <option value="auto" ${!cfg.cartridge_rows || cfg.cartridge_rows === "auto" ? "selected" : ""}>${t(hass, "rows_auto")}</option>
@@ -2148,7 +2236,7 @@ details .form { padding-top:10px; }
         const field = el.dataset.field;
         // Every select has a default -- only store the key when it differs,
         // so the YAML stays as short as what the user actually chose.
-        const dflt = { printer_type: "mfp", cartridge_style: "cartridges", language: "auto", cartridge_rows: "auto" }[field];
+        const dflt = { printer_type: "mfp", cartridge_style: "cartridges", language: "auto", cartridge_rows: "auto", cartridge_order: "color", counters_align: "left" }[field];
         this._set(field, el.value === dflt ? undefined : el.value);
       });
     });
