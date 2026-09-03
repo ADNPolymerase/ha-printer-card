@@ -1,4 +1,4 @@
-const CARD_VERSION = "0.8.0";
+const CARD_VERSION = "0.8.1";
 
 console.info(
   "%c HA-PRINTER-CARD %c v" + CARD_VERSION + " ",
@@ -1774,9 +1774,11 @@ class PrinterCard extends HTMLElement {
       const g = counters[fn];
       return `<div class="crow">
             <span class="cfn">${t(hass, "fn_" + fn)}</span>
-            ${g.total !== null ? `<span class="${tappable ? "clickable" : ""}"${ent(g.ids.total)}><b>${nf.format(g.total)}</b> ${t(hass, "pages")}</span>` : ""}
-            ${g.bw !== null ? `<span class="${tappable ? "clickable" : ""}"${ent(g.ids.bw)}><b>${nf.format(g.bw)}</b> ${t(hass, "pages_bw")}</span>` : ""}
-            ${g.color !== null ? `<span class="${tappable ? "clickable" : ""}"${ent(g.ids.color)}><b>${nf.format(g.color)}</b> ${t(hass, "pages_color")}</span>` : ""}
+            <span class="cvals">
+              ${g.total !== null ? `<span class="${tappable ? "clickable" : ""}"${ent(g.ids.total)}><b>${nf.format(g.total)}</b> ${t(hass, "pages")}</span>` : ""}
+              ${g.bw !== null ? `<span class="${tappable ? "clickable" : ""}"${ent(g.ids.bw)}><b>${nf.format(g.bw)}</b> ${t(hass, "pages_bw")}</span>` : ""}
+              ${g.color !== null ? `<span class="${tappable ? "clickable" : ""}"${ent(g.ids.color)}><b>${nf.format(g.color)}</b> ${t(hass, "pages_color")}</span>` : ""}
+            </span>
           </div>`;
     }).join("")}</div>`;
 
@@ -1890,8 +1892,8 @@ svg .clickable { cursor:pointer; }
 .part.low .pval { color:var(--error-color, #f44336); }
 .part.low i { background:var(--error-color, #f44336); opacity:1; }
 .counters { display:flex; flex-direction:column; gap:3px; font-size:12px; color:var(--secondary-text-color); }
-.counters.mid { align-items:center; }
-.counters.mid .crow { justify-content:center; }
+.cvals { display:flex; flex-wrap:wrap; gap:2px 12px; align-items:baseline; }
+.counters.mid .cvals { flex:1; justify-content:center; }
 .crow { display:flex; flex-wrap:wrap; gap:2px 12px; align-items:baseline; }
 .cfn { flex:none; min-width:82px; }
 .counters b { color:var(--primary-text-color); font-weight:600; }

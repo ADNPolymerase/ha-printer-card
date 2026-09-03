@@ -1360,7 +1360,9 @@ const withCounters = (cfg) => renderDev('idle', cfg, {
 }, { friendly_name: 'HL-L8360 Status' });
 check('par defaut les compteurs restent a gauche', / class="counters"/.test(withCounters({})), true);
 check('l\'option les centre', /class="counters mid"/.test(withCounters({ counters_align: 'center' })), true);
-contains('et la regle de centrage existe', withCounters({ counters_align: 'center' }), '.counters.mid { align-items:center; }');
+contains('et seuls les chiffres se centrent', withCounters({ counters_align: 'center' }),
+  '.counters.mid .cvals { flex:1; justify-content:center; }');
+contains('la colonne de libelles reste hors du centrage', withCounters({ counters_align: 'center' }), '<span class="cfn">');
 
 // ── Editor contract ──────────────────────────────────────────────────────────
 // CustomEvent.detail is a readonly accessor: assigning it after construction
