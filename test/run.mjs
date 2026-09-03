@@ -978,7 +978,9 @@ check('une imprimante prete n\'a pas de triangle',
 contains('une impression fait pulser un anneau', withPhoto({}), '.printing .photo .frame::after { animation:');
 // The slot is fixed so the card keeps its height whatever shape the picture
 // is, and the picture is capped inside it rather than stretched to fill it.
-contains('la photo tient dans une case de proportions fixes', withPhoto({}), 'aspect-ratio:3/2');
+contains('la photo tient dans une case carree', withPhoto({}), 'aspect-ratio:1;');
+contains('le triangle est au centre, pas dans un coin', withPhoto({}, 'stopped'),
+  'transform:translate(-50%,-50%)');
 contains('elle est contrainte, jamais deformee', withPhoto({}),
   'max-width:100%; max-height:100%; width:auto; height:auto');
 // Pinned to the slot, the badge would float in the empty band a square shot
@@ -1183,6 +1185,45 @@ guard.hass = makeHass('idle', { 'sensor.printer_black_cartridge_hp_cf400x': tone
 contains('un niveau qui bouge est bien re-rendu', markup(guard), '33%');
 guard.hass = makeHass('printing', { 'sensor.printer_black_cartridge_hp_cf400x': toner(33) });
 check("un etat qui change est bien re-rendu", label(markup(guard)), 'Printing…');
+
+// ── Cartridge order and an explicit counter list ───────────────────────
+
+// Asked for on the forum: the emptiest first, which is what you want when the
+// card is there to tell you what to buy.
+const ORDER_INKS = {
+  'sensor.printer_black_cartridge': toner(80, 'Black Cartridge'),
+  'sensor.printer_cyan_cartridge': toner(12, 'Cyan Cartridge'),
+  'sensor.printer_magenta_cartridge': toner(55, 'Magenta Cartridge'),
+  'sensor.printer_yellow_cartridge': toner(34, 'Yellow Cartridge'),
+};
+const orderOf = (html) => (html.match(/data-entity="sensor\.printer_(\w+?)_cartridge"/g) || [])
+  .map((m) => m.replace(/.*printer_(\w+?)_cartridge.*/, '$1'));
+check('par defaut les cartouches restent dans l\'ordre des couleurs',
+  orderOf(renderDev('idle', {}, ORDER_INKS)).join(','), 'black,cyan,magenta,yellow');
+check('en mode "level" la plus vide passe en premier',
+  orderOf(renderDev('idle', { cartridge_order: 'level' }, ORDER_INKS)).join(','), 'cyan,yellow,magenta,black');
+
+// Une cartouche sans relevé n'a rien sur quoi trier : elle finit derriere les
+// autres plutot que de se retrouver en tete comme un consommable vide.
+const WITH_UNKNOWN = { ...ORDER_INKS, 'sensor.printer_grey_cartridge': toner('unknown', 'Grey Cartridge') };
+check('une cartouche sans valeur passe en dernier',
+  orderOf(renderDev('idle', { cartridge_order: 'level' }, WITH_UNKNOWN)).at(-1), 'grey');
+
+// Signalé sur le forum : des compteurs présents dans HA que la carte ne
+// trouve pas. Les nommer doit suffire, sans unite ni appareil.
+const OFF_DEVICE = {
+  'sensor.ailleurs_total': { state: '3145', attributes: { friendly_name: 'Compteur de pages', unit_of_measurement: 'x' } },
+  'sensor.ailleurs_nb': { state: '699', attributes: { friendly_name: 'Pages N&B', unit_of_measurement: 'x' } },
+  'sensor.ailleurs_couleur': { state: '2446', attributes: { friendly_name: 'Pages couleur', unit_of_measurement: 'x' } },
+};
+const sansListe = renderDev('idle', {}, OFF_DEVICE);
+check('sans liste, un compteur a l\'unite inconnue reste ignore',
+  /sensor\.ailleurs_total/.test(sansListe), false);
+const avecListe = renderDev('idle', { counters: Object.keys(OFF_DEVICE) }, OFF_DEVICE);
+check('nomme explicitement, il est pris malgre son unite',
+  /data-entity="sensor\.ailleurs_total"/.test(avecListe), true);
+contains('et sa ventilation N&B est reconnue', avecListe, 'sensor.ailleurs_nb');
+contains('comme sa ventilation couleur', avecListe, 'sensor.ailleurs_couleur');
 
 // ── Editor contract ──────────────────────────────────────────────────────────
 // CustomEvent.detail is a readonly accessor: assigning it after construction

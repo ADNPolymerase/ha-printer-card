@@ -34,6 +34,8 @@ const T = {
     print_entity: "Test-print button or script",
     web_url: "Web interface URL (auto = from the printer)",
     cartridges_hint: "Cartridges, one entity per line (empty = auto-detect)",
+    cartridge_order: "Cartridge order", order_color: "By colour", order_level: "Emptiest first",
+    counters_hint: "Counters, one entity per line (empty = automatic)",
     name: "Name", compact: "Compact mode (icon instead of illustration)",
     language: "Language", language_auto: "Follow Home Assistant",
     image: "\u6253\u5370\u673a\u7167\u7247\uff08URL \u6216 /local/... \u8def\u5f84\uff09", printer_type: "Printer type", type_mfp: "All-in-one (with scanner)", type_inkjet: "Inkjet (rear feed)",
@@ -67,6 +69,8 @@ const T = {
     print_entity: "Bouton ou script d'impression de test",
     web_url: "URL de l'interface web (auto = depuis l'imprimante)",
     cartridges_hint: "Cartouches, une entit\u00e9 par ligne (vide = d\u00e9tection auto)",
+    cartridge_order: "Ordre des cartouches", order_color: "Par couleur", order_level: "Les plus vides d'abord",
+    counters_hint: "Compteurs, une entit\u00e9 par ligne (vide = automatique)",
     name: "Nom", compact: "Mode compact (ic\u00f4ne au lieu de l'illustration)",
     language: "Langue", language_auto: "Suivre Home Assistant",
     image: "\u0424\u043e\u0442\u043e \u0432\u0430\u0448\u0435\u0433\u043e \u043f\u0440\u0438\u043d\u0442\u0435\u0440\u0430 (URL \u0438\u043b\u0438 \u043f\u0443\u0442\u044c /local/...)", printer_type: "Type d'imprimante", type_mfp: "Multifonction (avec scanner)", type_inkjet: "Jet d'encre (bac arri\u00e8re)",
@@ -100,6 +104,8 @@ const T = {
     print_entity: "Taste oder Skript f\u00fcr Testdruck",
     web_url: "URL der Weboberfl\u00e4che (auto = vom Drucker)",
     cartridges_hint: "Patronen, eine Entit\u00e4t pro Zeile (leer = automatisch)",
+    cartridge_order: "Patronen-Reihenfolge", order_color: "Nach Farbe", order_level: "Leerste zuerst",
+    counters_hint: "Z\u00e4hler, eine Entit\u00e4t pro Zeile (leer = automatisch)",
     name: "Name", compact: "Kompaktmodus (Symbol statt Illustration)",
     language: "Sprache", language_auto: "Home Assistant folgen",
     image: "Zdj\u0119cie drukarki (URL lub \u015bcie\u017cka /local/...)", printer_type: "Druckertyp", type_mfp: "Multifunktionsger\u00e4t (mit Scanner)", type_inkjet: "Tintenstrahl (hintere Zufuhr)",
@@ -133,6 +139,8 @@ const T = {
     print_entity: "Bot\u00f3n o script de impresi\u00f3n de prueba",
     web_url: "URL de la interfaz web (auto = desde la impresora)",
     cartridges_hint: "Cartuchos, una entidad por l\u00ednea (vac\u00edo = autom\u00e1tico)",
+    cartridge_order: "Orden de cartuchos", order_color: "Por color", order_level: "Los m\u00e1s vac\u00edos primero",
+    counters_hint: "Contadores, una entidad por l\u00ednea (vac\u00edo = autom\u00e1tico)",
     name: "Nombre", compact: "Modo compacto (icono en vez de ilustraci\u00f3n)",
     language: "Idioma", language_auto: "Seguir a Home Assistant",
     image: "Foto af din printer (URL eller /local/... sti)", printer_type: "Tipo de impresora", type_mfp: "Multifunci\u00f3n (con esc\u00e1ner)", type_inkjet: "Inyecci\u00f3n de tinta (bandeja trasera)",
@@ -166,6 +174,8 @@ const T = {
     print_entity: "Pulsante o script di stampa di prova",
     web_url: "URL dell'interfaccia web (auto = dalla stampante)",
     cartridges_hint: "Cartucce, una entit\u00e0 per riga (vuoto = automatico)",
+    cartridge_order: "Ordine delle cartucce", order_color: "Per colore", order_level: "I pi\u00f9 vuoti prima",
+    counters_hint: "Contatori, una entit\u00e0 per riga (vuoto = automatico)",
     name: "Nome", compact: "Modalit\u00e0 compatta (icona invece dell'illustrazione)",
     language: "Lingua", language_auto: "Segui Home Assistant",
     image: "Bilde av skriveren din (URL eller /local/... bane)", printer_type: "Tipo di stampante", type_mfp: "Multifunzione (con scanner)", type_inkjet: "Getto d'inchiostro (vassoio posteriore)",
@@ -199,6 +209,8 @@ const T = {
     print_entity: "Knop of script voor testafdruk",
     web_url: "URL van de webinterface (auto = van de printer)",
     cartridges_hint: "Cartridges, \u00e9\u00e9n entiteit per regel (leeg = automatisch)",
+    cartridge_order: "Volgorde cartridges", order_color: "Op kleur", order_level: "Leegste eerst",
+    counters_hint: "Tellers, \u00e9\u00e9n entiteit per regel (leeg = automatisch)",
     name: "Naam", compact: "Compacte modus (pictogram in plaats van illustratie)",
     language: "Taal", language_auto: "Home Assistant volgen",
     image: "Foto p\u00e5 din skrivare (URL eller /local/... s\u00f6kv\u00e4g)", printer_type: "Type printer", type_mfp: "All-in-one (met scanner)", type_inkjet: "Inkjet (invoer achter)",
@@ -232,6 +244,8 @@ const T = {
     print_entity: "Bot\u00e3o ou script de impress\u00e3o de teste",
     web_url: "URL da interface web (auto = a partir da impressora)",
     cartridges_hint: "Cartuchos, uma entidade por linha (vazio = autom\u00e1tico)",
+    cartridge_order: "Ordem dos cartuchos", order_color: "Por cor", order_level: "Os mais vazios primeiro",
+    counters_hint: "Contadores, uma entidade por linha (vazio = autom\u00e1tico)",
     name: "Nome", compact: "Modo compacto (\u00edcone em vez da ilustra\u00e7\u00e3o)",
     language: "Idioma", language_auto: "Seguir o Home Assistant",
     image: "Foto da sua impressora (URL ou caminho /local/...)", printer_type: "Tipo de impressora", type_mfp: "Multifun\u00e7\u00f5es (com scanner)", type_inkjet: "Jato de tinta (alimenta\u00e7\u00e3o traseira)",
@@ -265,6 +279,8 @@ const T = {
     print_entity: "Knapp eller skript f\u00f6r testutskrift",
     web_url: "Webbgr\u00e4nssnittets URL (auto = fr\u00e5n skrivaren)",
     cartridges_hint: "Patroner, en entitet per rad (tomt = automatiskt)",
+    cartridge_order: "Patronordning", order_color: "Efter f\u00e4rg", order_level: "Tommast f\u00f6rst",
+    counters_hint: "R\u00e4knare, en entitet per rad (tomt = automatiskt)",
     name: "Namn", compact: "Kompakt l\u00e4ge (ikon i st\u00e4llet f\u00f6r illustration)",
     language: "Spr\u00e5k", language_auto: "F\u00f6lj Home Assistant",
     image: "Foto van uw printer (URL of /local/... pad)", printer_type: "Skrivartyp", type_mfp: "Allt-i-ett (med skanner)", type_inkjet: "Bl\u00e4ckstr\u00e5le (bakre inmatning)",
@@ -298,6 +314,8 @@ const T = {
     print_entity: "Knapp eller skript for testutskrift",
     web_url: "URL til nettgrensesnittet (auto = fra skriveren)",
     cartridges_hint: "Patroner, \u00e9n entitet per linje (tom = automatisk)",
+    cartridge_order: "Patronrekkef\u00f8lge", order_color: "Etter farge", order_level: "Tommest f\u00f8rst",
+    counters_hint: "Tellere, \u00e9n entitet per linje (tom = automatisk)",
     name: "Navn", compact: "Kompakt modus (ikon i stedet for illustrasjon)",
     language: "Spr\u00e5k", language_auto: "F\u00f8lg Home Assistant",
     image: "Foto della vostra stampante (URL o percorso /local/...)", printer_type: "Skrivertype", type_mfp: "Alt-i-ett (med skanner)", type_inkjet: "Blekk (bakre mating)",
@@ -331,6 +349,8 @@ const T = {
     print_entity: "Knap eller script til testudskrift",
     web_url: "URL til webgr\u00e6nsefladen (auto = fra printeren)",
     cartridges_hint: "Patroner, \u00e9n entitet pr. linje (tom = automatisk)",
+    cartridge_order: "Patronr\u00e6kkef\u00f8lge", order_color: "Efter farve", order_level: "Tommest f\u00f8rst",
+    counters_hint: "T\u00e6llere, \u00e9n entitet pr. linje (tom = automatisk)",
     name: "Navn", compact: "Kompakt tilstand (ikon i stedet for illustration)",
     language: "Sprog", language_auto: "F\u00f8lg Home Assistant",
     image: "Foto de su impresora (URL o ruta /local/...)", printer_type: "Printertype", type_mfp: "Alt-i-en (med scanner)", type_inkjet: "Bl\u00e6k (bagerste indf\u00f8ring)",
@@ -364,6 +384,8 @@ const T = {
     print_entity: "Przycisk lub skrypt wydruku testowego",
     web_url: "Adres URL interfejsu WWW (auto = z drukarki)",
     cartridges_hint: "Kartrid\u017ce, jedna encja na wiersz (puste = automatycznie)",
+    cartridge_order: "Kolejno\u015b\u0107 kartrid\u017cy", order_color: "Wed\u0142ug koloru", order_level: "Najpierw najbardziej puste",
+    counters_hint: "Liczniki, jedna encja na wiersz (puste = automatycznie)",
     name: "Nazwa", compact: "Tryb kompaktowy (ikona zamiast ilustracji)",
     language: "J\u0119zyk", language_auto: "Zgodnie z Home Assistant",
     image: "Foto Ihres Druckers (URL oder /local/... Pfad)", printer_type: "Typ drukarki", type_mfp: "Urz\u0105dzenie wielofunkcyjne (ze skanerem)", type_inkjet: "Atramentowa (podajnik z ty\u0142u)",
@@ -397,6 +419,8 @@ const T = {
     print_entity: "\u041a\u043d\u043e\u043f\u043a\u0430 \u0438\u043b\u0438 \u0441\u043a\u0440\u0438\u043f\u0442 \u0442\u0435\u0441\u0442\u043e\u0432\u043e\u0439 \u043f\u0435\u0447\u0430\u0442\u0438",
     web_url: "URL \u0432\u0435\u0431-\u0438\u043d\u0442\u0435\u0440\u0444\u0435\u0439\u0441\u0430 (auto = \u043e\u0442 \u043f\u0440\u0438\u043d\u0442\u0435\u0440\u0430)",
     cartridges_hint: "\u041a\u0430\u0440\u0442\u0440\u0438\u0434\u0436\u0438, \u043f\u043e \u043e\u0434\u043d\u043e\u043c\u0443 \u043e\u0431\u044a\u0435\u043a\u0442\u0443 \u0432 \u0441\u0442\u0440\u043e\u043a\u0435 (\u043f\u0443\u0441\u0442\u043e = \u0430\u0432\u0442\u043e\u043c\u0430\u0442\u0438\u0447\u0435\u0441\u043a\u0438)",
+    cartridge_order: "\u041f\u043e\u0440\u044f\u0434\u043e\u043a \u043a\u0430\u0440\u0442\u0440\u0438\u0434\u0436\u0435\u0439", order_color: "\u041f\u043e \u0446\u0432\u0435\u0442\u0443", order_level: "\u0421\u043d\u0430\u0447\u0430\u043b\u0430 \u0441\u0430\u043c\u044b\u0435 \u043f\u0443\u0441\u0442\u044b\u0435",
+    counters_hint: "\u0421\u0447\u0451\u0442\u0447\u0438\u043a\u0438, \u043e\u0434\u043d\u0430 \u0441\u0443\u0449\u043d\u043e\u0441\u0442\u044c \u043d\u0430 \u0441\u0442\u0440\u043e\u043a\u0443 (\u043f\u0443\u0441\u0442\u043e = \u0430\u0432\u0442\u043e\u043c\u0430\u0442\u0438\u0447\u0435\u0441\u043a\u0438)",
     name: "\u041d\u0430\u0437\u0432\u0430\u043d\u0438\u0435", compact: "\u041a\u043e\u043c\u043f\u0430\u043a\u0442\u043d\u044b\u0439 \u0440\u0435\u0436\u0438\u043c (\u0437\u043d\u0430\u0447\u043e\u043a \u0432\u043c\u0435\u0441\u0442\u043e \u0438\u043b\u043b\u044e\u0441\u0442\u0440\u0430\u0446\u0438\u0438)",
     language: "\u042f\u0437\u044b\u043a", language_auto: "\u0421\u043b\u0435\u0434\u043e\u0432\u0430\u0442\u044c Home Assistant",
     image: "Photo de votre imprimante (URL ou chemin /local/...)", printer_type: "\u0422\u0438\u043f \u043f\u0440\u0438\u043d\u0442\u0435\u0440\u0430", type_mfp: "\u041c\u0424\u0423 (\u0441\u043e \u0441\u043a\u0430\u043d\u0435\u0440\u043e\u043c)", type_inkjet: "\u0421\u0442\u0440\u0443\u0439\u043d\u044b\u0439 (\u0437\u0430\u0434\u043d\u044f\u044f \u043f\u043e\u0434\u0430\u0447\u0430)",
@@ -430,6 +454,8 @@ const T = {
     print_entity: "\u6d4b\u8bd5\u6253\u5370\u6309\u94ae\u6216\u811a\u672c",
     web_url: "\u7f51\u9875\u754c\u9762\u5730\u5740\uff08auto = \u53d6\u81ea\u6253\u5370\u673a\uff09",
     cartridges_hint: "\u58a8\u76d2\uff0c\u6bcf\u884c\u4e00\u4e2a\u5b9e\u4f53\uff08\u7559\u7a7a = \u81ea\u52a8\u8bc6\u522b\uff09",
+    cartridge_order: "\u58a8\u76d2\u987a\u5e8f", order_color: "\u6309\u989c\u8272", order_level: "\u6700\u5c11\u7684\u6392\u5728\u524d\u9762",
+    counters_hint: "\u8ba1\u6570\u5668\uff0c\u6bcf\u884c\u4e00\u4e2a\u5b9e\u4f53\uff08\u7559\u7a7a\u4e3a\u81ea\u52a8\uff09",
     name: "\u540d\u79f0", compact: "\u7d27\u51d1\u6a21\u5f0f\uff08\u7528\u56fe\u6807\u4ee3\u66ff\u63d2\u56fe\uff09",
     language: "\u8bed\u8a00", language_auto: "\u8ddf\u968f Home Assistant",
     image: "Photo of your printer (URL or /local/... path)", printer_type: "\u6253\u5370\u673a\u7c7b\u578b", type_mfp: "\u4e00\u4f53\u673a\uff08\u542b\u626b\u63cf\u4eea\uff09", type_inkjet: "\u55b7\u58a8\uff08\u540e\u8fdb\u7eb8\uff09",
@@ -941,7 +967,19 @@ function readCartridges(hass, cfg) {
     }
     out = out.filter((c) => c.rank === nearest.get(keyOf(c)));
   }
-  out.sort((a, b) => COLOR_ORDER.indexOf(a.color) - COLOR_ORDER.indexOf(b.color));
+  // By colour by default, since that is the order printed on the machine and
+  // it does not move under you. "level" puts the emptiest first, which is what
+  // you want when the card is there to tell you what to buy. A supply with no
+  // reading has nothing to sort on and goes last rather than to the front.
+  const byLevel = String(cfg.cartridge_order || "") === "level";
+  out.sort((a, b) => {
+    if (byLevel && a.level !== b.level) {
+      if (a.level === null) return 1;
+      if (b.level === null) return -1;
+      return a.level - b.level;
+    }
+    return COLOR_ORDER.indexOf(a.color) - COLOR_ORDER.indexOf(b.color);
+  });
   // A mono printer has one cartridge and rarely says which colour it is: a
   // Brother HL-L2350DW just calls it "Toner remaining". One nameless ink and
   // nothing else means black, and drawing it grey would be plain wrong.
@@ -1008,18 +1046,29 @@ function readCounters(hass, cfg) {
   const reg = hass.entities || null;
   const scope = deviceScope(hass, cfg.entity);
   const prefix = `${cfg.entity}_`;
+  // Named outright, a counter is taken at its word: no unit test, no keyword
+  // test, no device test. Those three exist to keep the automatic sweep from
+  // dragging in the rest of the house, and none of them should be able to
+  // overrule someone who has pointed at the entity themselves. The name is
+  // still read, since that is what says whether it counts colour or black.
+  const listed = Array.isArray(cfg.counters) && cfg.counters.length ? cfg.counters : null;
   const groups = {};
   const ranks = {};
-  for (const [id, st] of Object.entries(hass.states)) {
+  const candidates = listed
+    ? listed.map((id) => [id, hass.states[id]]).filter(([, st]) => st)
+    : Object.entries(hass.states);
+  for (const [id, st] of candidates) {
     if (id === cfg.entity || !id.startsWith("sensor.")) continue;
     const attrs = (st && st.attributes) || {};
     const unit = attrs.unit_of_measurement;
-    if (unit !== undefined && unit !== null && !/^page/i.test(String(unit))) continue;
+    if (!listed && unit !== undefined && unit !== null && !/^page/i.test(String(unit))) continue;
     const hay = cleanHay(id, attrs.friendly_name, printerName, cfg.entity);
-    if (!COUNTER_NAME.test(hay) || COUNTER_DENY.test(hay)) continue;
+    if (!listed && (!COUNTER_NAME.test(hay) || COUNTER_DENY.test(hay))) continue;
     let rank = 0;
     let deviceId = null;
-    if (scope) {
+    if (listed) {
+      deviceId = reg && reg[id] ? reg[id].device_id : null;
+    } else if (scope) {
       deviceId = reg[id] ? reg[id].device_id : null;
       if (deviceId === null || scope[deviceId] === undefined) continue;
       rank = scope[deviceId];
@@ -1572,11 +1621,13 @@ class PrinterCard extends HTMLElement {
     const url = webUrl(cfg, st, hass);
     const noPaper = isPaperOut(st) || paperEntityEmpty(hass, cfg)
       || ([rawMsg, msg].some((v) => !!v && PAPER_OUT_PATTERNS.some((re) => re.test(stripAccents(v)))));
-    // A photo of the actual machine, for people who want their own. It cannot
-    // animate: nothing here knows where that printer's output slot is. What it
-    // can still carry is the state, so a jam puts a triangle on it, an offline
-    // printer is dimmed, and a printing one gets a slow ring in the state
-    // colour. A path that does not load falls back to the drawing.
+    // A photo of the actual machine, for people who want their own. The slot is
+    // square, which is the shape product shots come in, so one fills it edge to
+    // edge instead of sitting small between two empty bands. It cannot animate:
+    // nothing here knows where that printer's output slot is. What it can still
+    // carry is the state, so a jam puts a triangle across it, an offline printer
+    // is dimmed, and a printing one gets a slow ring in the state colour. A path
+    // that does not load falls back to the drawing.
     const photo = cfg.image && this._imageFailed !== cfg.image
       && !/^\s*(javascript|vbscript|data:text)/i.test(String(cfg.image))
       ? String(cfg.image) : null;
@@ -1671,11 +1722,11 @@ ha-card.compact { padding:12px 16px; gap:10px; }
 .top { display:flex; align-items:center; gap:16px; }
 .illu { width:190px; max-width:64%; margin:0 auto; }
 .illu svg { display:block; width:100%; }
-.photo { width:200px; max-width:70%; aspect-ratio:3/2; display:flex; align-items:center; justify-content:center; }
+.photo { width:190px; max-width:64%; aspect-ratio:1; display:flex; align-items:center; justify-content:center; }
 .photo .frame { position:relative; display:flex; max-width:100%; max-height:100%; }
 .photo img { display:block; max-width:100%; max-height:100%; width:auto; height:auto; border-radius:8px; }
-.photo .overlay { position:absolute; right:6px; bottom:6px; width:26px; height:26px; border-radius:50%; background:var(--pc-color); color:#fff; display:flex; align-items:center; justify-content:center; }
-.photo .overlay ha-icon { --mdc-icon-size:17px; }
+.photo .overlay { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:46px; height:46px; border-radius:50%; background:var(--pc-color); color:#fff; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 10px rgba(0,0,0,.35); }
+.photo .overlay ha-icon { --mdc-icon-size:30px; }
 .photo .frame::after { content:""; position:absolute; inset:0; border-radius:8px; border:2px solid var(--pc-color); opacity:0; pointer-events:none; }
 .printing .photo .frame::after { animation:pc-photo-ring 2.2s ease-in-out infinite; }
 @keyframes pc-photo-ring { 0%, 100% { opacity:0; } 50% { opacity:.9; } }
@@ -1931,9 +1982,11 @@ class PrinterCardEditor extends HTMLElement {
     }
     const hass = this._hass;
     const cfg = this._config;
-    const cartLines = (cfg.cartridges || [])
+    const lineList = (v) => (v || [])
       .map((c) => (typeof c === "string" ? c : c && c.entity) || "")
       .filter(Boolean).join("\n");
+    const cartLines = lineList(cfg.cartridges);
+    const countLines = lineList(cfg.counters);
 
     this._root.innerHTML = `
       <style>
@@ -1996,6 +2049,14 @@ details .form { padding-top:10px; }
               <input type="text" data-field="image" placeholder="/local/mon_imprimante.jpg" value="${escapeHtml(cfg.image || "")}" />
             </div>
             <div class="row">
+              <label>${t(hass, "cartridge_order")}</label>
+              <select data-field="cartridge_order">
+                ${["color", "level"]
+                  .map((v) => `<option value="${v}" ${(cfg.cartridge_order || "color") === v ? "selected" : ""}>${t(hass, "order_" + v)}</option>`)
+                  .join("")}
+              </select>
+            </div>
+            <div class="row">
               <label>${t(hass, "cartridge_rows")}</label>
               <select data-field="cartridge_rows">
                 <option value="auto" ${!cfg.cartridge_rows || cfg.cartridge_rows === "auto" ? "selected" : ""}>${t(hass, "rows_auto")}</option>
@@ -2016,7 +2077,7 @@ details .form { padding-top:10px; }
             </div>
           </div>
         </details>
-        <details ${cfg.print_entity || cfg.paper_entity || cfg.web_url || cfg.cartridges || cfg.printing_watts || cfg.low_threshold ? "open" : ""}>
+        <details ${cfg.print_entity || cfg.paper_entity || cfg.web_url || cfg.cartridges || cfg.counters || cfg.printing_watts || cfg.low_threshold ? "open" : ""}>
           <summary>${t(hass, "section_advanced")}</summary>
           <div class="form">
             <div class="row" data-picker="print_entity"></div>
@@ -2036,6 +2097,10 @@ details .form { padding-top:10px; }
             <div class="row">
               <label>${t(hass, "cartridges_hint")}</label>
               <textarea data-field="cartridges" spellcheck="false">${escapeHtml(cartLines)}</textarea>
+            </div>
+            <div class="row">
+              <label>${t(hass, "counters_hint")}</label>
+              <textarea data-field="counters" spellcheck="false">${escapeHtml(countLines)}</textarea>
             </div>
           </div>
         </details>
@@ -2075,10 +2140,11 @@ details .form { padding-top:10px; }
         }
       });
     });
-    const ta = this._root.querySelector("textarea[data-field]");
-    if (ta) ta.addEventListener("change", () => {
-      const list = ta.value.split("\n").map((s) => s.trim()).filter(Boolean);
-      this._set("cartridges", list.length ? list : undefined);
+    this._root.querySelectorAll("textarea[data-field]").forEach((ta) => {
+      ta.addEventListener("change", () => {
+        const list = ta.value.split("\n").map((s) => s.trim()).filter(Boolean);
+        this._set(ta.dataset.field, list.length ? list : undefined);
+      });
     });
   }
 }
