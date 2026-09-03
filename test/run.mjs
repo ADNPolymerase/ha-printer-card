@@ -1225,6 +1225,94 @@ check('nomme explicitement, il est pris malgre son unite',
 contains('et sa ventilation N&B est reconnue', avecListe, 'sensor.ailleurs_nb');
 contains('comme sa ventilation couleur', avecListe, 'sensor.ailleurs_couleur');
 
+// ── Language tables: right keys is not the same as right values ────────
+
+// The key guard added in 0.6.2 compares each table's key set to English, so
+// it cannot see a value that landed in the wrong table. Thirteen `image`
+// labels shipped in 0.7.0 in exactly reversed order, French reading Russian,
+// and every existing test passed. These two look at the values themselves.
+{
+  const tblSrc = cardSource.slice(cardSource.indexOf('const T = {'), cardSource.indexOf('\nT.nb = T.no;'));
+  const tables = {};
+  let cur = null;
+  for (const line of tblSrc.split('\n')) {
+    const m = line.match(/^ {2}([a-z]{2}): \{$/);
+    if (m) { cur = m[1]; tables[cur] = {}; }
+    if (!cur) continue;
+    for (const [, k, v] of line.matchAll(/(\w+): "((?:[^"\\]|\\.)*)"/g)) {
+      tables[cur][k] = JSON.parse('"' + v + '"');
+    }
+  }
+  check('les treize tables sont lues', Object.keys(tables).length, 13);
+
+  // Une valeur cyrillique hors de `ru`, ou chinoise hors de `zh`, ne peut
+  // etre qu'une valeur posee dans la mauvaise table.
+  const CYR = /[\u0400-\u04ff]/, CJK = /[\u4e00-\u9fff\u3000-\u303f\uff00-\uffef]/;
+  const foreign = [];
+  for (const [l, tb] of Object.entries(tables)) {
+    for (const [k, v] of Object.entries(tb)) {
+      if (l !== 'ru' && CYR.test(v)) foreign.push(`${l}.${k} en cyrillique`);
+      if (l !== 'zh' && CJK.test(v)) foreign.push(`${l}.${k} en chinois`);
+      if (l === 'ru' && !CYR.test(v) && v !== tables.en[k] && /[A-Za-z]{4}/.test(v)) foreign.push(`ru.${k} en latin`);
+    }
+  }
+  check('aucune valeur dans l\'ecriture d\'une autre langue', foreign.join(', '), '');
+
+  // Et pour les langues qui partagent l'alphabet latin, ou la premiere garde
+  // ne voit rien : un libelle qui nomme l'imprimante doit la nommer avec le
+  // radical de sa propre langue. Sur le decalage de 0.7.0, onze des treize
+  // tables tombent la-dessus. On ne retient que le NOM (\bprinter\b) : les
+  // formes verbales divergent trop d'une langue a l'autre pour servir d'appui.
+  const STEM = { en: /print/i, fr: /imprim/i, de: /druck/i, es: /impri|impre/i, it: /stamp/i,
+    nl: /print/i, pt: /impres|imprim/i, sv: /skrivar/i, no: /skriver/i,
+    da: /print/i, pl: /druk/i, ru: /печат|принтер/i, zh: /打印/ };
+  const scope = ['entity', 'plug_entity', 'web_url', 'image', 'printer_type',
+    'style_inside', 'show_message'];
+  const wrong = [];
+  for (const k of scope) {
+    for (const [l, tb] of Object.entries(tables)) {
+      if (tb[k] && !STEM[l].test(tb[k])) wrong.push(`${l}.${k}`);
+    }
+  }
+  check('chaque libelle nomme l\'imprimante dans sa langue', wrong.join(', '), '');
+  check('et la garde porte sur assez de cles pour voir un decalage', scope.length >= 6, true);
+
+  // Un libelle qui n'existe dans aucune table retombe silencieusement sur son
+  // propre nom de cle, et se lit comme une traduction manquante.
+  const called = new Set([...cardSource.matchAll(/t\(hass, "(\w+)"\)/g)].map((m) => m[1]));
+  check('chaque cle demandee existe en anglais',
+    [...called].filter((k) => !(k in tables.en)).join(', '), '');
+}
+
+// ── The editor follows the card's language ─────────────────────────────
+
+// It read Home Assistant's language and never the card's own option, and it
+// writes its labels once, so pinning the card to another language left the
+// whole form in the old one until it was closed and reopened.
+{
+  const mk = (cfg) => { const e = new Editor(); e.setConfig({ entity: 'sensor.printer', ...cfg }); e.hass = makeHass('idle'); return e; };
+  contains('sans option, l\'editeur suit Home Assistant', mk({})._root.innerHTML, 'Printer type');
+  const fr = mk({ language: 'fr' });
+  contains('avec l\'option, il suit la carte', fr._root.innerHTML, "Type d'imprimante");
+  check('et pas la langue de Home Assistant', /Printer type/.test(fr._root.innerHTML), false);
+
+  // Le vrai symptome signale : on change la langue, les menus ne bougent pas.
+  fr.setConfig({ entity: 'sensor.printer', language: 'de' });
+  contains('changer de langue reecrit le formulaire', fr._root.innerHTML, 'Druckertyp');
+  check('et l\'ancienne langue a disparu', /Type d'imprimante/.test(fr._root.innerHTML), false);
+
+  // Une reconstruction remet des selecteurs neufs sur la page, et un
+  // selecteur neuf annonce une valeur vide avant de connaitre la sienne.
+  check('apres reconstruction, un pick vide est de nouveau ignore',
+    fr._acceptsPick('sensor.printer', ''), false);
+
+  // Et sans changement de langue, rien n'est reconstruit : c'est la garde qui
+  // empeche l'echo de setConfig d'effacer une entite configuree.
+  const builds = fr._built;
+  fr.setConfig({ entity: 'sensor.printer', language: 'de', name: 'X' });
+  check('un reglage sans rapport ne reconstruit pas', fr._built, builds);
+}
+
 // ── Editor contract ──────────────────────────────────────────────────────────
 // CustomEvent.detail is a readonly accessor: assigning it after construction
 // silently drops the payload and every edit made in the editor is discarded.
