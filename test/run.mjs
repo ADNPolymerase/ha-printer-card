@@ -961,6 +961,66 @@ check('chaque motif ayant une severite a aussi un libelle',
 check('les libelles de fonction sont bien traduits',
   /class="cfn">Impression</.test(renderHp({ language: 'fr' })), true);
 
+// ── A photo instead of the drawing ───────────────────────────────────────────
+// Asked for on the forum: some people want their own printer, not a generic
+// one. It cannot animate, since nothing here knows where that machine's
+// output slot is, but it can still carry the state.
+
+const withPhoto = (cfg, state) => render(state || 'idle', { image: '/local/xp7100.jpg', ...cfg });
+contains('la photo remplace le dessin', withPhoto({}), 'src="/local/xp7100.jpg"');
+check('et le dessin ne s\'affiche plus', /<svg viewBox="0 0 200 150"/.test(withPhoto({})), false);
+contains('elle porte le nom de l\'imprimante en texte alternatif', withPhoto({}), 'alt="HP LaserJet"');
+check('un bourrage pose un triangle dessus',
+  /class="overlay"/.test(withPhoto({}, 'stopped')), true);
+check('un avertissement aussi', /class="overlay"/.test(withPhoto({}, 'Toner low')), true);
+check('une imprimante prete n\'a pas de triangle',
+  /class="overlay"/.test(withPhoto({})), false);
+contains('une impression fait pulser un anneau', withPhoto({}), '.printing .photo .frame::after { animation:');
+// The slot is fixed so the card keeps its height whatever shape the picture
+// is, and the picture is capped inside it rather than stretched to fill it.
+contains('la photo tient dans une case de proportions fixes', withPhoto({}), 'aspect-ratio:3/2');
+contains('elle est contrainte, jamais deformee', withPhoto({}),
+  'max-width:100%; max-height:100%; width:auto; height:auto');
+// Pinned to the slot, the badge would float in the empty band a square shot
+// leaves on either side, so it hangs off the picture instead.
+contains('le triangle est accroche a la photo, pas a la case', withPhoto({}, 'stopped'),
+  '<div class="frame">');
+// Nothing here knows where that machine keeps its ink, so "inside" cannot be
+// honoured with a photo: it falls back to the row below, like compact mode.
+check('une photo renvoie "dans l\'imprimante" vers les cartouches',
+  /class="supplies"/.test(render('idle', { image: '/local/p.jpg', cartridge_style: 'inside' }, TONERS)), true);
+check('et la case ne compte plus une rangee de moins',
+  (() => { const c = new Card(); c.setConfig({ entity: 'sensor.printer', image: '/local/p.jpg', cartridge_style: 'inside' }); return c.getCardSize(); })(), 4);
+const editorHtml = (cfg) => {
+  const e = new Editor();
+  e.setConfig({ entity: 'sensor.printer', ...cfg });
+  e.hass = makeHass('idle');
+  return e._root ? e._root.innerHTML : '';
+};
+check('sans photo, "dans l\'imprimante" est toujours propose dans l\'editeur',
+  /value="inside"/.test(editorHtml({})), true);
+check('avec une photo, il disparait de l\'editeur',
+  /value="inside"/.test(editorHtml({ image: '/local/p.jpg' })), false);
+contains('hors ligne, la photo est attenuee', withPhoto({}), 'ha-card.offline .illu { opacity:.55; }');
+check('le mode compact garde son badge et ignore la photo',
+  /class="badge"/.test(withPhoto({ compact: true })), true);
+// A path is config, but an img src is still worth guarding.
+check('un src javascript: est refuse',
+  /javascript:/.test(render('idle', { image: 'javascript:alert(1)' })), false);
+check('et on retombe alors sur le dessin',
+  /<svg viewBox="0 0 200 150"/.test(render('idle', { image: 'javascript:alert(1)' })), true);
+// A wrong path is the likeliest mistake, so it must not leave a broken icon.
+const failing = new Card();
+failing.setConfig({ entity: 'sensor.printer', image: '/local/absente.jpg' });
+failing.hass = makeHass('idle');
+check('avant l\'erreur, la photo est tentee', /printer-photo/.test(markup(failing)), true);
+failing._imageFailed = '/local/absente.jpg';
+failing._signature = null;
+failing._render();
+check('une photo qui ne charge pas repasse au dessin',
+  /<svg viewBox="0 0 200 150"/.test(markup(failing)), true);
+check('et ne retente pas en boucle', /printer-photo/.test(markup(failing)), false);
+
 // ── Compact mode ─────────────────────────────────────────────────────────────
 
 const compact = render('printing', { compact: true }, TONERS);

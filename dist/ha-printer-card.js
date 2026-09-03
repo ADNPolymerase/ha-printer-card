@@ -1,4 +1,4 @@
-const CARD_VERSION = "0.6.2";
+const CARD_VERSION = "0.7.0";
 
 console.info(
   "%c HA-PRINTER-CARD %c v" + CARD_VERSION + " ",
@@ -36,7 +36,7 @@ const T = {
     cartridges_hint: "Cartridges, one entity per line (empty = auto-detect)",
     name: "Name", compact: "Compact mode (icon instead of illustration)",
     language: "Language", language_auto: "Follow Home Assistant",
-    printer_type: "Printer type", type_mfp: "All-in-one (with scanner)", type_inkjet: "Inkjet (rear feed)",
+    image: "\u6253\u5370\u673a\u7167\u7247\uff08URL \u6216 /local/... \u8def\u5f84\uff09", printer_type: "Printer type", type_mfp: "All-in-one (with scanner)", type_inkjet: "Inkjet (rear feed)",
     type_laser: "Laser (top output)", type_office: "Office multifunction",
     cartridge_style: "Cartridge style", style_cartridges: "Cartridges", style_bars: "Bars", style_inside: "Inside the printer", cartridge_rows: "Cartridge rows", rows_auto: "Automatic",
     show_supplies: "Show the cartridges",
@@ -69,7 +69,7 @@ const T = {
     cartridges_hint: "Cartouches, une entit\u00e9 par ligne (vide = d\u00e9tection auto)",
     name: "Nom", compact: "Mode compact (ic\u00f4ne au lieu de l'illustration)",
     language: "Langue", language_auto: "Suivre Home Assistant",
-    printer_type: "Type d'imprimante", type_mfp: "Multifonction (avec scanner)", type_inkjet: "Jet d'encre (bac arri\u00e8re)",
+    image: "\u0424\u043e\u0442\u043e \u0432\u0430\u0448\u0435\u0433\u043e \u043f\u0440\u0438\u043d\u0442\u0435\u0440\u0430 (URL \u0438\u043b\u0438 \u043f\u0443\u0442\u044c /local/...)", printer_type: "Type d'imprimante", type_mfp: "Multifonction (avec scanner)", type_inkjet: "Jet d'encre (bac arri\u00e8re)",
     type_laser: "Laser (sortie dessus)", type_office: "Multifonction de bureau",
     cartridge_style: "Style des cartouches", style_cartridges: "Cartouches", style_bars: "Barres", style_inside: "Dans l'imprimante", cartridge_rows: "Rang\u00e9es de cartouches", rows_auto: "Automatique",
     show_supplies: "Afficher les cartouches",
@@ -102,7 +102,7 @@ const T = {
     cartridges_hint: "Patronen, eine Entit\u00e4t pro Zeile (leer = automatisch)",
     name: "Name", compact: "Kompaktmodus (Symbol statt Illustration)",
     language: "Sprache", language_auto: "Home Assistant folgen",
-    printer_type: "Druckertyp", type_mfp: "Multifunktionsger\u00e4t (mit Scanner)", type_inkjet: "Tintenstrahl (hintere Zufuhr)",
+    image: "Zdj\u0119cie drukarki (URL lub \u015bcie\u017cka /local/...)", printer_type: "Druckertyp", type_mfp: "Multifunktionsger\u00e4t (mit Scanner)", type_inkjet: "Tintenstrahl (hintere Zufuhr)",
     type_laser: "Laser (Ausgabe oben)", type_office: "B\u00fcro-Multifunktionsger\u00e4t",
     cartridge_style: "Patronen-Stil", style_cartridges: "Patronen", style_bars: "Balken", style_inside: "Im Drucker", cartridge_rows: "Patronenreihen", rows_auto: "Automatisch",
     show_supplies: "Patronen anzeigen",
@@ -135,7 +135,7 @@ const T = {
     cartridges_hint: "Cartuchos, una entidad por l\u00ednea (vac\u00edo = autom\u00e1tico)",
     name: "Nombre", compact: "Modo compacto (icono en vez de ilustraci\u00f3n)",
     language: "Idioma", language_auto: "Seguir a Home Assistant",
-    printer_type: "Tipo de impresora", type_mfp: "Multifunci\u00f3n (con esc\u00e1ner)", type_inkjet: "Inyecci\u00f3n de tinta (bandeja trasera)",
+    image: "Foto af din printer (URL eller /local/... sti)", printer_type: "Tipo de impresora", type_mfp: "Multifunci\u00f3n (con esc\u00e1ner)", type_inkjet: "Inyecci\u00f3n de tinta (bandeja trasera)",
     type_laser: "L\u00e1ser (salida superior)", type_office: "Multifunci\u00f3n de oficina",
     cartridge_style: "Estilo de cartuchos", style_cartridges: "Cartuchos", style_bars: "Barras", style_inside: "Dentro de la impresora", cartridge_rows: "Filas de cartuchos", rows_auto: "Autom\u00e1tico",
     show_supplies: "Mostrar los cartuchos",
@@ -168,7 +168,7 @@ const T = {
     cartridges_hint: "Cartucce, una entit\u00e0 per riga (vuoto = automatico)",
     name: "Nome", compact: "Modalit\u00e0 compatta (icona invece dell'illustrazione)",
     language: "Lingua", language_auto: "Segui Home Assistant",
-    printer_type: "Tipo di stampante", type_mfp: "Multifunzione (con scanner)", type_inkjet: "Getto d'inchiostro (vassoio posteriore)",
+    image: "Bilde av skriveren din (URL eller /local/... bane)", printer_type: "Tipo di stampante", type_mfp: "Multifunzione (con scanner)", type_inkjet: "Getto d'inchiostro (vassoio posteriore)",
     type_laser: "Laser (uscita superiore)", type_office: "Multifunzione da ufficio",
     cartridge_style: "Stile delle cartucce", style_cartridges: "Cartucce", style_bars: "Barre", style_inside: "Dentro la stampante", cartridge_rows: "Righe di cartucce", rows_auto: "Automatico",
     show_supplies: "Mostra le cartucce",
@@ -201,7 +201,7 @@ const T = {
     cartridges_hint: "Cartridges, \u00e9\u00e9n entiteit per regel (leeg = automatisch)",
     name: "Naam", compact: "Compacte modus (pictogram in plaats van illustratie)",
     language: "Taal", language_auto: "Home Assistant volgen",
-    printer_type: "Type printer", type_mfp: "All-in-one (met scanner)", type_inkjet: "Inkjet (invoer achter)",
+    image: "Foto p\u00e5 din skrivare (URL eller /local/... s\u00f6kv\u00e4g)", printer_type: "Type printer", type_mfp: "All-in-one (met scanner)", type_inkjet: "Inkjet (invoer achter)",
     type_laser: "Laser (uitvoer boven)", type_office: "Kantoormultifunctional",
     cartridge_style: "Cartridgestijl", style_cartridges: "Cartridges", style_bars: "Balken", style_inside: "In de printer", cartridge_rows: "Rijen cartridges", rows_auto: "Automatisch",
     show_supplies: "Cartridges tonen",
@@ -234,7 +234,7 @@ const T = {
     cartridges_hint: "Cartuchos, uma entidade por linha (vazio = autom\u00e1tico)",
     name: "Nome", compact: "Modo compacto (\u00edcone em vez da ilustra\u00e7\u00e3o)",
     language: "Idioma", language_auto: "Seguir o Home Assistant",
-    printer_type: "Tipo de impressora", type_mfp: "Multifun\u00e7\u00f5es (com scanner)", type_inkjet: "Jato de tinta (alimenta\u00e7\u00e3o traseira)",
+    image: "Foto da sua impressora (URL ou caminho /local/...)", printer_type: "Tipo de impressora", type_mfp: "Multifun\u00e7\u00f5es (com scanner)", type_inkjet: "Jato de tinta (alimenta\u00e7\u00e3o traseira)",
     type_laser: "Laser (sa\u00edda superior)", type_office: "Multifun\u00e7\u00f5es de escrit\u00f3rio",
     cartridge_style: "Estilo dos cartuchos", style_cartridges: "Cartuchos", style_bars: "Barras", style_inside: "Dentro da impressora", cartridge_rows: "Linhas de cartuchos", rows_auto: "Autom\u00e1tico",
     show_supplies: "Mostrar os cartuchos",
@@ -267,7 +267,7 @@ const T = {
     cartridges_hint: "Patroner, en entitet per rad (tomt = automatiskt)",
     name: "Namn", compact: "Kompakt l\u00e4ge (ikon i st\u00e4llet f\u00f6r illustration)",
     language: "Spr\u00e5k", language_auto: "F\u00f6lj Home Assistant",
-    printer_type: "Skrivartyp", type_mfp: "Allt-i-ett (med skanner)", type_inkjet: "Bl\u00e4ckstr\u00e5le (bakre inmatning)",
+    image: "Foto van uw printer (URL of /local/... pad)", printer_type: "Skrivartyp", type_mfp: "Allt-i-ett (med skanner)", type_inkjet: "Bl\u00e4ckstr\u00e5le (bakre inmatning)",
     type_laser: "Laser (utmatning upptill)", type_office: "Kontorsmultifunktion",
     cartridge_style: "Patronstil", style_cartridges: "Patroner", style_bars: "Staplar", style_inside: "Inuti skrivaren", cartridge_rows: "Patronrader", rows_auto: "Automatiskt",
     show_supplies: "Visa patronerna",
@@ -300,7 +300,7 @@ const T = {
     cartridges_hint: "Patroner, \u00e9n entitet per linje (tom = automatisk)",
     name: "Navn", compact: "Kompakt modus (ikon i stedet for illustrasjon)",
     language: "Spr\u00e5k", language_auto: "F\u00f8lg Home Assistant",
-    printer_type: "Skrivertype", type_mfp: "Alt-i-ett (med skanner)", type_inkjet: "Blekk (bakre mating)",
+    image: "Foto della vostra stampante (URL o percorso /local/...)", printer_type: "Skrivertype", type_mfp: "Alt-i-ett (med skanner)", type_inkjet: "Blekk (bakre mating)",
     type_laser: "Laser (utmating p\u00e5 toppen)", type_office: "Kontormultifunksjon",
     cartridge_style: "Patronstil", style_cartridges: "Patroner", style_bars: "S\u00f8yler", style_inside: "Inni skriveren", cartridge_rows: "Patronrader", rows_auto: "Automatisk",
     show_supplies: "Vis patronene",
@@ -333,7 +333,7 @@ const T = {
     cartridges_hint: "Patroner, \u00e9n entitet pr. linje (tom = automatisk)",
     name: "Navn", compact: "Kompakt tilstand (ikon i stedet for illustration)",
     language: "Sprog", language_auto: "F\u00f8lg Home Assistant",
-    printer_type: "Printertype", type_mfp: "Alt-i-en (med scanner)", type_inkjet: "Bl\u00e6k (bagerste indf\u00f8ring)",
+    image: "Foto de su impresora (URL o ruta /local/...)", printer_type: "Printertype", type_mfp: "Alt-i-en (med scanner)", type_inkjet: "Bl\u00e6k (bagerste indf\u00f8ring)",
     type_laser: "Laser (udskrift foroven)", type_office: "Kontormultifunktion",
     cartridge_style: "Patronstil", style_cartridges: "Patroner", style_bars: "Bj\u00e6lker", style_inside: "Inde i printeren", cartridge_rows: "Patronr\u00e6kker", rows_auto: "Automatisk",
     show_supplies: "Vis patronerne",
@@ -366,7 +366,7 @@ const T = {
     cartridges_hint: "Kartrid\u017ce, jedna encja na wiersz (puste = automatycznie)",
     name: "Nazwa", compact: "Tryb kompaktowy (ikona zamiast ilustracji)",
     language: "J\u0119zyk", language_auto: "Zgodnie z Home Assistant",
-    printer_type: "Typ drukarki", type_mfp: "Urz\u0105dzenie wielofunkcyjne (ze skanerem)", type_inkjet: "Atramentowa (podajnik z ty\u0142u)",
+    image: "Foto Ihres Druckers (URL oder /local/... Pfad)", printer_type: "Typ drukarki", type_mfp: "Urz\u0105dzenie wielofunkcyjne (ze skanerem)", type_inkjet: "Atramentowa (podajnik z ty\u0142u)",
     type_laser: "Laserowa (wyj\u015bcie u g\u00f3ry)", type_office: "Biurowe urz\u0105dzenie wielofunkcyjne",
     cartridge_style: "Styl kartrid\u017cy", style_cartridges: "Kartrid\u017ce", style_bars: "S\u0142upki", style_inside: "Wewn\u0105trz drukarki", cartridge_rows: "Rz\u0119dy kartrid\u017cy", rows_auto: "Automatycznie",
     show_supplies: "Poka\u017c kartrid\u017ce",
@@ -399,7 +399,7 @@ const T = {
     cartridges_hint: "\u041a\u0430\u0440\u0442\u0440\u0438\u0434\u0436\u0438, \u043f\u043e \u043e\u0434\u043d\u043e\u043c\u0443 \u043e\u0431\u044a\u0435\u043a\u0442\u0443 \u0432 \u0441\u0442\u0440\u043e\u043a\u0435 (\u043f\u0443\u0441\u0442\u043e = \u0430\u0432\u0442\u043e\u043c\u0430\u0442\u0438\u0447\u0435\u0441\u043a\u0438)",
     name: "\u041d\u0430\u0437\u0432\u0430\u043d\u0438\u0435", compact: "\u041a\u043e\u043c\u043f\u0430\u043a\u0442\u043d\u044b\u0439 \u0440\u0435\u0436\u0438\u043c (\u0437\u043d\u0430\u0447\u043e\u043a \u0432\u043c\u0435\u0441\u0442\u043e \u0438\u043b\u043b\u044e\u0441\u0442\u0440\u0430\u0446\u0438\u0438)",
     language: "\u042f\u0437\u044b\u043a", language_auto: "\u0421\u043b\u0435\u0434\u043e\u0432\u0430\u0442\u044c Home Assistant",
-    printer_type: "\u0422\u0438\u043f \u043f\u0440\u0438\u043d\u0442\u0435\u0440\u0430", type_mfp: "\u041c\u0424\u0423 (\u0441\u043e \u0441\u043a\u0430\u043d\u0435\u0440\u043e\u043c)", type_inkjet: "\u0421\u0442\u0440\u0443\u0439\u043d\u044b\u0439 (\u0437\u0430\u0434\u043d\u044f\u044f \u043f\u043e\u0434\u0430\u0447\u0430)",
+    image: "Photo de votre imprimante (URL ou chemin /local/...)", printer_type: "\u0422\u0438\u043f \u043f\u0440\u0438\u043d\u0442\u0435\u0440\u0430", type_mfp: "\u041c\u0424\u0423 (\u0441\u043e \u0441\u043a\u0430\u043d\u0435\u0440\u043e\u043c)", type_inkjet: "\u0421\u0442\u0440\u0443\u0439\u043d\u044b\u0439 (\u0437\u0430\u0434\u043d\u044f\u044f \u043f\u043e\u0434\u0430\u0447\u0430)",
     type_laser: "\u041b\u0430\u0437\u0435\u0440\u043d\u044b\u0439 (\u0432\u044b\u0432\u043e\u0434 \u0441\u0432\u0435\u0440\u0445\u0443)", type_office: "\u041e\u0444\u0438\u0441\u043d\u043e\u0435 \u041c\u0424\u0423",
     cartridge_style: "\u0421\u0442\u0438\u043b\u044c \u043a\u0430\u0440\u0442\u0440\u0438\u0434\u0436\u0435\u0439", style_cartridges: "\u041a\u0430\u0440\u0442\u0440\u0438\u0434\u0436\u0438", style_bars: "\u041f\u043e\u043b\u043e\u0441\u044b", style_inside: "\u0412\u043d\u0443\u0442\u0440\u0438 \u043f\u0440\u0438\u043d\u0442\u0435\u0440\u0430", cartridge_rows: "\u0420\u044f\u0434\u044b \u043a\u0430\u0440\u0442\u0440\u0438\u0434\u0436\u0435\u0439", rows_auto: "\u0410\u0432\u0442\u043e\u043c\u0430\u0442\u0438\u0447\u0435\u0441\u043a\u0438",
     show_supplies: "\u041f\u043e\u043a\u0430\u0437\u044b\u0432\u0430\u0442\u044c \u043a\u0430\u0440\u0442\u0440\u0438\u0434\u0436\u0438",
@@ -432,7 +432,7 @@ const T = {
     cartridges_hint: "\u58a8\u76d2\uff0c\u6bcf\u884c\u4e00\u4e2a\u5b9e\u4f53\uff08\u7559\u7a7a = \u81ea\u52a8\u8bc6\u522b\uff09",
     name: "\u540d\u79f0", compact: "\u7d27\u51d1\u6a21\u5f0f\uff08\u7528\u56fe\u6807\u4ee3\u66ff\u63d2\u56fe\uff09",
     language: "\u8bed\u8a00", language_auto: "\u8ddf\u968f Home Assistant",
-    printer_type: "\u6253\u5370\u673a\u7c7b\u578b", type_mfp: "\u4e00\u4f53\u673a\uff08\u542b\u626b\u63cf\u4eea\uff09", type_inkjet: "\u55b7\u58a8\uff08\u540e\u8fdb\u7eb8\uff09",
+    image: "Photo of your printer (URL or /local/... path)", printer_type: "\u6253\u5370\u673a\u7c7b\u578b", type_mfp: "\u4e00\u4f53\u673a\uff08\u542b\u626b\u63cf\u4eea\uff09", type_inkjet: "\u55b7\u58a8\uff08\u540e\u8fdb\u7eb8\uff09",
     type_laser: "\u6fc0\u5149\uff08\u9876\u90e8\u51fa\u7eb8\uff09", type_office: "\u529e\u516c\u591a\u529f\u80fd\u4e00\u4f53\u673a",
     cartridge_style: "\u58a8\u76d2\u6837\u5f0f", style_cartridges: "\u58a8\u76d2", style_bars: "\u6761\u5f62", style_inside: "\u6253\u5370\u673a\u5185\u90e8", cartridge_rows: "\u58a8\u76d2\u884c\u6570", rows_auto: "\u81ea\u52a8",
     show_supplies: "\u663e\u793a\u58a8\u76d2",
@@ -1474,7 +1474,7 @@ class PrinterCard extends HTMLElement {
   getCardSize() {
     const cfg = this._config || {};
     if (cfg.compact) return 2;
-    return cfg.cartridge_style === "inside" ? 3 : 4;
+    return cfg.cartridge_style === "inside" && !cfg.image ? 3 : 4;
   }
 
   static getConfigElement() {
@@ -1572,20 +1572,31 @@ class PrinterCard extends HTMLElement {
     const url = webUrl(cfg, st, hass);
     const noPaper = isPaperOut(st) || paperEntityEmpty(hass, cfg)
       || ([rawMsg, msg].some((v) => !!v && PAPER_OUT_PATTERNS.some((re) => re.test(stripAccents(v)))));
+    // A photo of the actual machine, for people who want their own. It cannot
+    // animate: nothing here knows where that printer's output slot is. What it
+    // can still carry is the state, so a jam puts a triangle on it, an offline
+    // printer is dimmed, and a printing one gets a slow ring in the state
+    // colour. A path that does not load falls back to the drawing.
+    const photo = cfg.image && this._imageFailed !== cfg.image
+      && !/^\s*(javascript|vbscript|data:text)/i.test(String(cfg.image))
+      ? String(cfg.image) : null;
+
     // "inside" draws the cartridges in the machine and drops the row below it,
     // which is the shortest the card gets while keeping the illustration. It
-    // needs that illustration, so compact mode falls back to bars.
-    const inside = cfg.cartridge_style === "inside" && !cfg.compact;
+    // needs that illustration, so compact mode falls back to bars -- and so
+    // does a photo, since nothing here knows where that machine keeps its ink.
+    const inside = cfg.cartridge_style === "inside" && !cfg.compact && !photo;
     const bars = cfg.cartridge_style === "bars" || cfg.compact;
     // Only when there is something to show: a plug_entity pointing at an
     // entity that no longer exists would otherwise draw a crossed-out plug,
     // which reads as "socket off" rather than "entity missing".
     const showPower = cfg.show_power !== false && (plugOn !== null || watts !== null);
 
+
     const signature = JSON.stringify([
       norm, name, msg, url, lang(hass), cfg.compact, cfg.printer_type,
       cfg.cartridge_style, showPower, plugOn, watts, !!cfg.print_entity,
-      inside, noPaper, counters, cfg.cartridge_rows,
+      inside, noPaper, counters, cfg.cartridge_rows, photo,
       supplies.map((c) => [c.entity, c.level, c.low, c.color, c.kind]),
     ]);
     if (signature === this._signature) return;
@@ -1660,6 +1671,14 @@ ha-card.compact { padding:12px 16px; gap:10px; }
 .top { display:flex; align-items:center; gap:16px; }
 .illu { width:190px; max-width:64%; margin:0 auto; }
 .illu svg { display:block; width:100%; }
+.photo { width:200px; max-width:70%; aspect-ratio:3/2; display:flex; align-items:center; justify-content:center; }
+.photo .frame { position:relative; display:flex; max-width:100%; max-height:100%; }
+.photo img { display:block; max-width:100%; max-height:100%; width:auto; height:auto; border-radius:8px; }
+.photo .overlay { position:absolute; right:6px; bottom:6px; width:26px; height:26px; border-radius:50%; background:var(--pc-color); color:#fff; display:flex; align-items:center; justify-content:center; }
+.photo .overlay ha-icon { --mdc-icon-size:17px; }
+.photo .frame::after { content:""; position:absolute; inset:0; border-radius:8px; border:2px solid var(--pc-color); opacity:0; pointer-events:none; }
+.printing .photo .frame::after { animation:pc-photo-ring 2.2s ease-in-out infinite; }
+@keyframes pc-photo-ring { 0%, 100% { opacity:0; } 50% { opacity:.9; } }
 ha-card.offline .illu { opacity:.55; }
 .shell .fill { fill:${SHELL}; stroke:${SHELL_LINE}; stroke-width:1.6; }
 .shell .recess { fill:${SHELL_DARK}; }
@@ -1752,7 +1771,7 @@ svg .clickable { cursor:pointer; }
 .bar { flex:1; height:8px; border-radius:4px; background:#d3d8de; position:relative; overflow:hidden; }
 .bar i { display:block; height:100%; border-radius:4px; }
 @media (prefers-reduced-motion: reduce) {
-  .sheet, .led, .badge { animation:none !important; }
+  .sheet, .led, .badge, .photo .frame::after { animation:none !important; }
   .printing .sheet { opacity:1; transform:none; }
 }
       </style>
@@ -1761,6 +1780,13 @@ svg .clickable { cursor:pointer; }
         <div class="top">
           ${cfg.compact
             ? `<div class="badge"><ha-icon icon="${STATE_ICONS[norm]}"></ha-icon></div>`
+            : photo
+            ? `<div class="illu photo">
+                 <div class="frame">
+                   <img class="printer-photo" src="${escapeHtml(photo)}" alt="${escapeHtml(name)}"/>
+                   ${["stopped", "warning"].includes(norm) ? `<span class="overlay"><ha-icon icon="mdi:alert"></ha-icon></span>` : ""}
+                 </div>
+               </div>`
             : `<div class="illu">${printerSvg(norm, cfg, inside ? carts : null, noPaper)}</div>`}
           ${cfg.compact ? `<div class="bottom">
             <div class="body${clk}"${ent(cfg.entity)}>
@@ -1789,6 +1815,13 @@ svg .clickable { cursor:pointer; }
         ${countersMarkup}
       </ha-card>`;
 
+    this._root.querySelectorAll("img.printer-photo").forEach((img) => {
+      img.addEventListener("error", () => {
+        this._imageFailed = cfg.image;
+        this._signature = null;
+        this._render();
+      });
+    });
     this._root.querySelectorAll("[data-entity]").forEach((el) => {
       const id = el.getAttribute("data-entity");
       if (!id) return;
@@ -1953,10 +1986,14 @@ details .form { padding-top:10px; }
             <div class="row">
               <label>${t(hass, "cartridge_style")}</label>
               <select data-field="cartridge_style">
-                ${["cartridges", "bars", "inside"]
+                ${["cartridges", "bars"].concat(cfg.image ? [] : ["inside"])
                   .map((v) => `<option value="${v}" ${(cfg.cartridge_style || "cartridges") === v ? "selected" : ""}>${t(hass, "style_" + v)}</option>`)
                   .join("")}
               </select>
+            </div>
+            <div class="row">
+              <label>${t(hass, "image")}</label>
+              <input type="text" data-field="image" placeholder="/local/mon_imprimante.jpg" value="${escapeHtml(cfg.image || "")}" />
             </div>
             <div class="row">
               <label>${t(hass, "cartridge_rows")}</label>
