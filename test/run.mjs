@@ -1186,6 +1186,72 @@ contains('un niveau qui bouge est bien re-rendu', markup(guard), '33%');
 guard.hass = makeHass('printing', { 'sensor.printer_black_cartridge_hp_cf400x': toner(33) });
 check("un etat qui change est bien re-rendu", label(markup(guard)), 'Printing…');
 
+// ── Tri-colour cartridges (issue #1) ───────────────────────────────────
+
+// Reported on the repo: an HP tri-colour cartridge read as plain Cyan. The
+// table is ordered by specificity and "cyan" simply came first. What no
+// single-colour supply ever does is name two primaries at once, so that is
+// what marks a combined cartridge.
+const tri = (id, name) => {
+  const c = new Card();
+  c.setConfig({ entity: 'sensor.hp_printer' });
+  const states = {
+    'sensor.hp_printer': { state: 'idle', attributes: { friendly_name: 'HP Printer' } },
+    [id]: { state: '41', attributes: { unit_of_measurement: '%', friendly_name: `HP Printer ${name}` } },
+  };
+  const hass = makeHass('idle', states, { friendly_name: 'HP Printer' });
+  hass.entities = Object.fromEntries(Object.keys(states).map((e) => [e, { device_id: 'dev1' }]));
+  hass.devices = { dev1: { name: 'HP Printer', via_device_id: null } };
+  c.hass = hass;
+  return labelsOf(markup(c));
+};
+// L'identifiant exact du signalement. HP colle les mots, donc un \b devant
+// "magenta" ne matche jamais : c'est ce qui rendait la detection aveugle.
+check('la cartouche trois couleurs de l\'issue #1 n\'est plus du cyan',
+  tri('sensor.hp_printer_cyanmagentayellow_inkcartridge_level', 'CyanMagentaYellow Ink Cartridge Level').join(','), 'Colour');
+check('la forme separee est reconnue aussi',
+  tri('sensor.hp_printer_tri', 'Cyan/Magenta/Yellow Ink').join(','), 'Colour');
+check('et la forme abregee', tri('sensor.hp_printer_cmy', 'C M Y Ink').join(','), 'Colour');
+// Une seule primaire reste elle-meme : c'est la garantie de non-regression.
+check('une cartouche cyan reste cyan', tri('sensor.hp_printer_cyan', 'Cyan Ink Cartridge').join(','), 'Cyan');
+check('un magenta photo reste un magenta photo',
+  tri('sensor.hp_printer_pm', 'PhotoMagenta Ink').join(','), 'Photo magenta');
+check('un cyan clair reste un cyan clair',
+  tri('sensor.hp_printer_lc', 'LightCyan Ink').join(','), 'Light cyan');
+check('et le noir n\'est pas concerne', tri('sensor.hp_printer_black', 'Black Ink Cartridge').join(','), 'Black');
+
+// Une cartouche trois couleurs a trois chambres cote a cote : la dessiner
+// dans une teinte inventee ne ressemblait a rien de reel.
+const triHtml = (cfg) => {
+  const c = new Card();
+  c.setConfig({ entity: 'sensor.hp_printer', ...cfg });
+  const states = {
+    'sensor.hp_printer': { state: 'idle', attributes: { friendly_name: 'HP Printer' } },
+    'sensor.hp_printer_cmy': { state: '41', attributes: { unit_of_measurement: '%', friendly_name: 'HP Printer CyanMagentaYellow Ink' } },
+    'sensor.hp_printer_black': { state: '64', attributes: { unit_of_measurement: '%', friendly_name: 'HP Printer Black Ink' } },
+  };
+  const hass = makeHass('idle', states, { friendly_name: 'HP Printer' });
+  hass.entities = Object.fromEntries(Object.keys(states).map((e) => [e, { device_id: 'dev1' }]));
+  hass.devices = { dev1: { name: 'HP Printer', via_device_id: null } };
+  c.hass = hass;
+  return markup(c);
+};
+const fillsOf = (html) => [...String(html).matchAll(/<rect [^>]*fill="(#[0-9a-f]{6})"/gi)].map((m) => m[1].toLowerCase());
+const triFills = fillsOf(triHtml({}));
+check('les trois bandes decoupent le corps du flacon en parts egales',
+  [...String(triHtml({})).matchAll(/<rect x="([\d.]+)" y="[\d.]+" width="([\d.]+)"[^>]*fill="#(?:00a9d4|d6006e|f0c000)"/g)]
+    .map((m) => `${m[1]}+${m[2]}`).join(' '), '4.00+6.68 10.67+6.68 17.33+6.68');
+check('la cartouche trois couleurs est dessinee en trois bandes',
+  triFills.filter((f) => ['#00a9d4', '#d6006e', '#f0c000'].includes(f)).join(','), '#00a9d4,#d6006e,#f0c000');
+check('et le noir garde son unique remplissage',
+  triFills.filter((f) => f === '#26292e').length, 1);
+check('aucune trace de la teinte inventee', triFills.includes('#7a5cc6'), false);
+// Les bandes valent aussi dans la machine et en barres.
+contains('les trois chambres se voient aussi dans l\'imprimante',
+  triHtml({ cartridge_style: 'inside' }), '#d6006e');
+contains('et la barre est decoupee en trois',
+  triHtml({ cartridge_style: 'bars' }), 'linear-gradient(180deg,#00a9d4 0.00% 33.33%,#d6006e 33.33% 66.67%,#f0c000 66.67% 100.00%)');
+
 // ── Cartridge order and an explicit counter list ───────────────────────
 
 // Asked for on the forum: the emptiest first, which is what you want when the

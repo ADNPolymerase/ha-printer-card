@@ -1,4 +1,4 @@
-const CARD_VERSION = "0.8.1";
+const CARD_VERSION = "0.8.2";
 
 console.info(
   "%c HA-PRINTER-CARD %c v" + CARD_VERSION + " ",
@@ -791,14 +791,32 @@ const COLOR_SWATCH = {
 
 // Drawn in the order a photo printer lays them out: the blacks, then the
 // greys, then each colour with its lighter companion beside it.
+// A tri-colour cartridge holds three chambers side by side, so it is drawn
+// that way rather than in one invented colour. Same three inks as the
+// separate cartridges, so the card reads the same whichever the printer uses.
+const TRI_BANDS = ["cyan", "magenta", "yellow"];
+
 const COLOR_ORDER = ["black", "photo", "matte_black", "light_black", "light_light_black",
   "grey", "light_grey", "cyan", "photo_cyan", "light_cyan",
   "magenta", "photo_magenta", "light_magenta", "yellow", "color", "other"];
 
+const colorRx = (kw) => new RegExp(kw.startsWith("\\b") ? kw : `\\b${kw}`, "i");
+const PRIMARY_KEYWORDS = ["cyan", "magenta", "yellow"]
+  .map((c) => COLOR_KEYWORDS.find(([k]) => k === c)[1]);
+
 function detectColor(text) {
   const hay = stripAccents(String(text || "")).toLowerCase().replace(/_/g, " ");
+  // A tri-colour cartridge names its primaries in one label: HP writes
+  // "CyanMagentaYellow" into the entity id, panels write "Cyan/Magenta/Yellow".
+  // Read one keyword at a time it comes out as whichever primary the table
+  // tests first, which is how a CMY cartridge was reported as plain cyan.
+  // Naming two primaries at once is what a combined cartridge does, and no
+  // single-colour supply does it.
+  const primaries = PRIMARY_KEYWORDS.filter((kws) => kws.some((kw) =>
+    (kw.startsWith("\\b") ? colorRx(kw).test(hay) : hay.includes(kw)))).length;
+  if (primaries > 1) return "color";
   for (const [color, keywords] of COLOR_KEYWORDS) {
-    if (keywords.some((kw) => new RegExp(kw.startsWith("\\b") ? kw : `\\b${kw}`, "i").test(hay))) return color;
+    if (keywords.some((kw) => colorRx(kw).test(hay))) return color;
   }
   return "other";
 }
@@ -991,6 +1009,7 @@ function readCartridges(hass, cfg) {
       swatch: (color === "other" && Array.isArray(attrs.rgb_color) && attrs.rgb_color.length === 3
         ? `rgb(${attrs.rgb_color.map((n) => Math.max(0, Math.min(255, Number(n) || 0))).join(",")})`
         : COLOR_SWATCH[color]) || (entry.color && /^#|^rgb|^var\(/.test(entry.color) ? entry.color : COLOR_SWATCH.other),
+      bands: color === "color" ? TRI_BANDS.map((c) => COLOR_SWATCH[c]) : null,
       name: entry.name || null,
       // The integration said what this is, so "other" is an answer and not a
       // gap to be filled by the mono-printer guess below.
@@ -1424,7 +1443,9 @@ function inkBay(carts, bay, tappable) {
       <title>${escapeHtml(c.label || c.title)} ${c.level === null ? "?" : Math.round(c.level)}%</title>
       <rect class="ink-cap" x="${+(x + w * 0.3).toFixed(1)}" y="${+rowTop.toFixed(1)}" width="${+(w * 0.4).toFixed(1)}" height="${capH}" rx="1"/>
       <rect class="ink-track" x="${x}" y="${top}" width="${ww}" height="${inner}" rx="2"/>
-      ${fh > 0 ? `<rect x="${x}" y="${fy}" width="${ww}" height="${fh}" rx="${Math.min(2, fh / 2)}" fill="${c.swatch}"/>` : ""}
+      ${fh > 0 ? (c.bands
+        ? c.bands.map((b, i) => `<rect x="${+(x + i * ww / 3).toFixed(2)}" y="${fy}" width="${+(ww / 3 + 0.01).toFixed(2)}" height="${fh}" fill="${b}"/>`).join("")
+        : `<rect x="${x}" y="${fy}" width="${ww}" height="${fh}" rx="${Math.min(2, fh / 2)}" fill="${c.swatch}"/>`) : ""}
       <rect class="ink-outline" x="${x}" y="${top}" width="${ww}" height="${inner}" rx="2"/>
     </g>`;
   }).join("");
@@ -1544,11 +1565,17 @@ function printerSvg(norm, cfg, carts, noPaper) {
 </svg>`;
 }
 
-function cartridgeSvg(level, swatch, idx) {
+function cartridgeSvg(level, swatch, idx, bands) {
   const pct = Math.max(0, Math.min(100, level === null ? 0 : level));
   const inner = 34;                       // usable height inside the body
   const h = (inner * pct) / 100;
   const y = 42 - h;
+  // Bands overlap by a hundredth to keep a hairline from showing between them
+  // once the browser rounds the subpixels.
+  const body = 20;                        // the flask body spans x=4 to x=24
+  const fill = bands
+    ? bands.map((c, i) => `<rect x="${(4 + i * body / 3).toFixed(2)}" y="${y.toFixed(1)}" width="${(body / 3 + 0.01).toFixed(2)}" height="${h.toFixed(1)}" fill="${c}"/>`).join("")
+    : `<rect x="0" y="${y.toFixed(1)}" width="28" height="${h.toFixed(1)}" fill="${swatch}"/>`;
   return `
 <svg viewBox="0 0 28 50" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
   <defs>
@@ -1558,15 +1585,18 @@ function cartridgeSvg(level, swatch, idx) {
   </defs>
   <g clip-path="url(#pc-cart-${idx})">
     <rect class="cart-track" x="0" y="0" width="28" height="50"/>
-    <rect x="0" y="${y.toFixed(1)}" width="28" height="${h.toFixed(1)}" fill="${swatch}"/>
+    ${fill}
   </g>
   <path class="cart-outline" d="M10 3 h8 v5 h3 a3 3 0 0 1 3 3 v29 a3 3 0 0 1 -3 3 h-14 a3 3 0 0 1 -3 -3 v-29 a3 3 0 0 1 3 -3 h3 z"/>
 </svg>`;
 }
 
-function cartridgeBar(level, swatch) {
+function cartridgeBar(level, swatch, bands) {
   const pct = Math.max(0, Math.min(100, level === null ? 0 : level));
-  return `<div class="bar"><i style="width:${pct}%;background:${swatch}"></i></div>`;
+  const bg = bands
+    ? `linear-gradient(180deg,${bands.map((c, i) => `${c} ${(i * 100 / 3).toFixed(2)}% ${((i + 1) * 100 / 3).toFixed(2)}%`).join(",")})`
+    : swatch;
+  return `<div class="bar"><i style="width:${pct}%;background:${bg}"></i></div>`;
 }
 
 // ---------------------------------------------------------------------------
@@ -1742,12 +1772,12 @@ class PrinterCard extends HTMLElement {
       ? `<div class="supplies bars">${carts.map((c) => `
           <div class="row-b${clk} ${c.low ? "low" : ""}"${ent(c.entity)} title="${escapeHtml(c.title)}">
             <span class="lbl">${escapeHtml(c.label)}</span>
-            ${cartridgeBar(c.level, c.swatch)}
+            ${cartridgeBar(c.level, c.swatch, c.bands)}
             <span class="pct">${c.level === null ? "?" : Math.round(c.level)}%</span>
           </div>`).join("")}</div>`
       : `<div class="supplies" style="grid-template-columns:repeat(${supplyColumns(carts.length, cfg.cartridge_rows)},minmax(0,1fr))">${carts.map((c, i) => `
           <div class="cart${clk} ${c.low ? "low" : ""}"${ent(c.entity)} title="${escapeHtml(c.title)}">
-            <span class="wrap">${cartridgeSvg(c.level, c.swatch, i)}${c.low ? '<span class="lowdot">!</span>' : ""}</span>
+            <span class="wrap">${cartridgeSvg(c.level, c.swatch, i, c.bands)}${c.low ? '<span class="lowdot">!</span>' : ""}</span>
             <span class="pct">${c.level === null ? "?" : Math.round(c.level)}%</span>
             <span class="lbl">${escapeHtml(c.label)}</span>
           </div>`).join("")}</div>`;
