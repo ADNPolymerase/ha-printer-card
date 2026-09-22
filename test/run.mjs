@@ -1291,6 +1291,81 @@ check('nomme explicitement, il est pris malgre son unite',
 contains('et sa ventilation N&B est reconnue', avecListe, 'sensor.ailleurs_nb');
 contains('comme sa ventilation couleur', avecListe, 'sensor.ailleurs_couleur');
 
+// ── Free entities and the name in the header (issue #2) ────────────────
+
+// Asked for on #2: an uptime next to the state. The counter list cannot carry
+// it -- those are wired to print/scan/copy/fax and come out "N pages" -- so
+// free entities are listed by hand and shown exactly as given.
+const EXTRA_STATES = {
+  'sensor.printer_uptime': { state: '3', attributes: { friendly_name: 'HP LaserJet Uptime', unit_of_measurement: 'd' } },
+  'sensor.printer_boot': { state: '2026-09-20T06:30:00Z', attributes: { friendly_name: 'HP LaserJet Last boot', device_class: 'timestamp' } },
+  'sensor.printer_firmware': { state: '20260722', attributes: { friendly_name: 'HP LaserJet Firmware' } },
+};
+check('sans liste, aucune entite libre ne s\'invite sur la carte',
+  /class="extras"/.test(renderDev('idle', {}, EXTRA_STATES)), false);
+
+const avecExtras = renderDev('idle', { extra_entities: ['sensor.printer_uptime'] }, EXTRA_STATES);
+contains('une entite libre nommee est affichee', avecExtras, 'class="extras"');
+contains('avec sa valeur et son unite', avecExtras, '>3 d<');
+contains('et son libelle sans le nom de l\'imprimante', avecExtras, '>Uptime<');
+check('elle est cliquable comme le reste',
+  /data-entity="sensor\.printer_uptime"/.test(avecExtras), true);
+
+// Un ISO brut sur une carte d'imprimante ne dit rien a personne. La garde
+// porte sur la date REELLEMENT attendue : sans elle, l'ISO retombe sur le
+// prettifieur de jetons, qui remplace les tirets par des espaces et produit
+// un "2026 09 20t06:30:00z" ou se lisent encore l'annee et l'absence d'ISO.
+const avecDate = renderDev('idle', { extra_entities: ['sensor.printer_boot'] }, EXTRA_STATES);
+const attendue = new Date('2026-09-20T06:30:00Z').toLocaleString('en');
+check('un horodatage est rendu comme Home Assistant le ferait',
+  avecDate.includes('>' + attendue + '<'), true);
+check('et jamais en ISO brut', /2026-09-20T06:30:00Z/.test(avecDate), false);
+
+// Une entite absente laisserait une ligne vide, ce qui se lit comme un bug.
+check('une entite qui n\'existe pas est ignoree',
+  /class="extras"/.test(renderDev('idle', { extra_entities: ['sensor.nexiste_pas'] }, EXTRA_STATES)), false);
+
+// L'ordre de la liste est celui que la personne a choisi.
+const deuxExtras = renderDev('idle', { extra_entities: ['sensor.printer_firmware', 'sensor.printer_uptime'] }, EXTRA_STATES);
+check('l\'ordre donne est l\'ordre affiche',
+  (deuxExtras.match(/data-entity="sensor\.printer_(uptime|firmware)"/g) || [])
+    .map((m) => (m.includes('firmware') ? 'f' : 'u')).join(''), 'fu');
+
+// Le piege classique: une valeur oubliee dans la signature ne redessine pas,
+// et la carte affiche l'ancienne pour toujours sans rien signaler.
+{
+  const c = new Card();
+  c.setConfig({ entity: 'sensor.printer', extra_entities: ['sensor.printer_uptime'] });
+  const mk = (v) => {
+    const h = makeHass('idle', { 'sensor.printer_uptime': { state: String(v), attributes: { friendly_name: 'HP LaserJet Uptime', unit_of_measurement: 'd' } } });
+    h.entities = { 'sensor.printer_uptime': { device_id: 'dev1' } };
+    return h;
+  };
+  c.hass = mk(3);
+  c.hass = mk(4);
+  contains('une valeur libre qui change redessine la carte', markup(c), '>4 d<');
+}
+
+// #2 encore: le nom sur la ligne du haut, partagee avec la prise.
+const POWER = { 'sensor.printer_power': { state: '1.4', attributes: { unit_of_measurement: 'W', friendly_name: 'Prise' } } };
+const nomSous = renderDev('idle', { power_entity: 'sensor.printer_power' }, POWER);
+check('par defaut le nom reste sous l\'illustration', /class="head"/.test(nomSous), false);
+
+const nomHaut = renderDev('idle', { power_entity: 'sensor.printer_power', name_position: 'top' }, POWER);
+contains('en mode "top" le nom monte dans un en-tete', nomHaut, 'class="head"');
+check('la prise le rejoint sur cette ligne',
+  /class="head"[\s\S]*?class="corner/.test(nomHaut), true);
+check('et ne reste pas aussi dans le coin absolu',
+  (nomHaut.match(/class="corner/g) || []).length, 1);
+check('le nom n\'est pas affiche deux fois',
+  (nomHaut.match(/class="name/g) || []).length, 1);
+contains('l\'etat reste sous l\'illustration', nomHaut, 'class="state"');
+
+// Le mode compact pose deja le nom a cote de l'icone: l'option n'y a rien a
+// gagner et lui prendrait sa seule ligne.
+check('le mode compact garde sa mise en page',
+  /class="head"/.test(renderDev('idle', { compact: true, name_position: 'top', power_entity: 'sensor.printer_power' }, POWER)), false);
+
 // ── Language tables: right keys is not the same as right values ────────
 
 // The key guard added in 0.6.2 compares each table's key set to English, so

@@ -75,6 +75,7 @@ Copy `dist/ha-printer-card.js` into `/config/www/`, then add it as a dashboard r
 | `entity` | **Required.** The printer's state sensor (`sensor.<printer>` from the `ipp` integration, `sensor.<printer>_status` from Brother, or any sensor holding the status). |
 | `cartridges` | Supply sensors. Leave it out and they are discovered: same device, or same `entity_id` prefix. Each item is an entity id, or `{entity, name, color, kind}` for printers whose sensors are named after the part number only. |
 | `counters` | Page counters, one entity id per line. Leave it out and they are discovered the same way. Name them and they are taken at their word: a counter with an unexpected unit, or one that lives outside the printer's device because it comes from a template sensor, is used as given. Their names still decide which function they belong to and whether they count colour or black. |
+| `extra_entities` | Anything else worth a place on the card, one entity per line, shown under the status in the order given: an uptime, a firmware version, a wifi signal. Nothing is discovered here, unlike the cartridges and the counters: what you list is what you get. A number is shown in your locale with its unit, a `timestamp` as a date, and an entity that does not exist is skipped rather than drawn empty. Write `{ entity: sensor.x, name: Uptime }` to set the label yourself; otherwise it is the entity's name with the printer's name stripped off the front. |
 | `plug_entity` | The socket the printer is on (`switch` / `input_boolean`). Off means offline, and an On/Off button appears. |
 | `power_entity` | Power sensor (W), shown top-right. |
 | `printing_watts` | Watts above which the printer counts as printing, whatever it reports. `0` or unset disables it. One-way: it never hides a jam or an unplugged socket. |
@@ -92,6 +93,7 @@ Copy `dist/ha-printer-card.js` into `/config/www/`, then add it as a dashboard r
 | `more_info` | `false` to stop values from opening their entity when tapped. Default `true`. |
 | `state_map` | Optional map: raw state → `printing`\|`idle`\|`sleep`\|`warning`\|`stopped`\|`offline`\|`unknown`. |
 | `name` | Card title. Defaults to the device name, then to the entity's friendly name. |
+| `name_position` | `below` (default) keeps the name under the illustration. `top` moves it to a header line at the top left, sharing that line with the socket and its power draw. Compact mode already puts the name beside the icon, so it ignores this. |
 | `compact` | `true` for a colored icon instead of the illustration (cartridges switch to bars, buttons to icons). |
 | `show_supplies` / `show_parts` / `show_counters` / `show_message` / `show_power` | `false` to hide the cartridges, the wear parts, the page counters, the printer message, or the socket corner. All default to `true`, and none of them shows if the printer has nothing to put there. |
 | `language` | Pin the card to one language: `en`, `fr`, `de`, `es`, `it`, `nl`, `pt`, `sv`, `no`, `da`, `pl`, `ru`, `zh`. Default: follow Home Assistant. |
