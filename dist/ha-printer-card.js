@@ -1,4 +1,4 @@
-const CARD_VERSION = "1.0.0";
+const CARD_VERSION = "1.1.0";
 
 console.info(
   "%c HA-PRINTER-CARD %c v" + CARD_VERSION + " ",
@@ -27,7 +27,7 @@ const T = {
     c_grey: "Grey", c_photo: "Photo black", c_light_cyan: "Light cyan",
     c_light_magenta: "Light magenta", c_color: "Colour",
     c_photo_cyan: "Photo cyan", c_photo_magenta: "Photo magenta", c_light_grey: "Light grey",
-    c_matte_black: "Matte black", c_light_black: "Light black", c_light_light_black: "Light light black",
+    c_matte_black: "Matte black", c_light_black: "Light black", c_light_light_black: "Light light black", c_pigment: "Pigment black",
     entity: "Printer entity (required)",
     power_entity: "Power sensor (W)",
     plug_entity: "Printer socket (switch)",
@@ -41,6 +41,7 @@ const T = {
     counters_align: "Counter alignment", align_left: "Left", align_center: "Centred",
     name_position: "Name position", pos_below: "Below the illustration", pos_top: "Top line, next to the socket",
     extras_hint: "Extra entities, one per line (shown under the status)",
+    shop_url: "Shop link, {ref} stands for the cartridge reference",
     name: "Name", compact: "Compact mode (icon instead of illustration)",
     language: "Language", language_auto: "Follow Home Assistant",
     image: "Photo of your printer (URL or /local/... path)", printer_type: "Printer type", type_mfp: "All-in-one (with scanner)", type_inkjet: "Inkjet (rear feed)",
@@ -67,7 +68,7 @@ const T = {
     c_grey: "Gris", c_photo: "Noir photo", c_light_cyan: "Cyan clair",
     c_light_magenta: "Magenta clair", c_color: "Couleur",
     c_photo_cyan: "Cyan photo", c_photo_magenta: "Magenta photo", c_light_grey: "Gris clair",
-    c_matte_black: "Noir mat", c_light_black: "Noir clair", c_light_light_black: "Noir tr\u00e8s clair",
+    c_matte_black: "Noir mat", c_light_black: "Noir clair", c_light_light_black: "Noir tr\u00e8s clair", c_pigment: "Noir pigment",
     entity: "Entit\u00e9 de l'imprimante (obligatoire)",
     power_entity: "Capteur de puissance (W)",
     plug_entity: "Prise de l'imprimante (switch)",
@@ -81,6 +82,7 @@ const T = {
     counters_align: "Alignement des compteurs", align_left: "\u00c0 gauche", align_center: "Centr\u00e9s",
     name_position: "Position du nom", pos_below: "Sous l'illustration", pos_top: "En haut, \u00e0 c\u00f4t\u00e9 de la prise",
     extras_hint: "Entit\u00e9s suppl\u00e9mentaires, une par ligne (affich\u00e9es sous l'\u00e9tat)",
+    shop_url: "Lien d'achat, {ref} remplace la r\u00e9f\u00e9rence de la cartouche",
     name: "Nom", compact: "Mode compact (ic\u00f4ne au lieu de l'illustration)",
     language: "Langue", language_auto: "Suivre Home Assistant",
     image: "Photo de votre imprimante (URL ou chemin /local/...)", printer_type: "Type d'imprimante", type_mfp: "Multifonction (avec scanner)", type_inkjet: "Jet d'encre (bac arri\u00e8re)",
@@ -107,7 +109,7 @@ const T = {
     c_grey: "Grau", c_photo: "Fotoschwarz", c_light_cyan: "Hellcyan",
     c_light_magenta: "Hellmagenta", c_color: "Farbe",
     c_photo_cyan: "Fotocyan", c_photo_magenta: "Fotomagenta", c_light_grey: "Hellgrau",
-    c_matte_black: "Mattschwarz", c_light_black: "Hellschwarz", c_light_light_black: "Sehr helles Schwarz",
+    c_matte_black: "Mattschwarz", c_light_black: "Hellschwarz", c_light_light_black: "Sehr helles Schwarz", c_pigment: "Pigmentschwarz",
     entity: "Drucker-Entit\u00e4t (erforderlich)",
     power_entity: "Leistungssensor (W)",
     plug_entity: "Steckdose des Druckers (Switch)",
@@ -121,6 +123,7 @@ const T = {
     counters_align: "Ausrichtung der Z\u00e4hler", align_left: "Links", align_center: "Zentriert",
     name_position: "Position des Namens", pos_below: "Unter der Abbildung", pos_top: "Oben, neben der Steckdose",
     extras_hint: "Zus\u00e4tzliche Entit\u00e4ten, eine pro Zeile (unter dem Status)",
+    shop_url: "Einkaufslink, {ref} steht f\u00fcr die Patronennummer",
     name: "Name", compact: "Kompaktmodus (Symbol statt Illustration)",
     language: "Sprache", language_auto: "Home Assistant folgen",
     image: "Foto Ihres Druckers (URL oder /local/... Pfad)", printer_type: "Druckertyp", type_mfp: "Multifunktionsger\u00e4t (mit Scanner)", type_inkjet: "Tintenstrahl (hintere Zufuhr)",
@@ -147,7 +150,7 @@ const T = {
     c_grey: "Gris", c_photo: "Negro foto", c_light_cyan: "Cian claro",
     c_light_magenta: "Magenta claro", c_color: "Color",
     c_photo_cyan: "Cian foto", c_photo_magenta: "Magenta foto", c_light_grey: "Gris claro",
-    c_matte_black: "Negro mate", c_light_black: "Negro claro", c_light_light_black: "Negro muy claro",
+    c_matte_black: "Negro mate", c_light_black: "Negro claro", c_light_light_black: "Negro muy claro", c_pigment: "Negro pigmento",
     entity: "Entidad de la impresora (obligatoria)",
     power_entity: "Sensor de potencia (W)",
     plug_entity: "Enchufe de la impresora (switch)",
@@ -161,6 +164,7 @@ const T = {
     counters_align: "Alineaci\u00f3n de los contadores", align_left: "A la izquierda", align_center: "Centrados",
     name_position: "Posici\u00f3n del nombre", pos_below: "Debajo de la ilustraci\u00f3n", pos_top: "Arriba, junto al enchufe",
     extras_hint: "Entidades adicionales, una por l\u00ednea (bajo el estado)",
+    shop_url: "Enlace de compra, {ref} sustituye la referencia del cartucho",
     name: "Nombre", compact: "Modo compacto (icono en vez de ilustraci\u00f3n)",
     language: "Idioma", language_auto: "Seguir a Home Assistant",
     image: "Foto de su impresora (URL o ruta /local/...)", printer_type: "Tipo de impresora", type_mfp: "Multifunci\u00f3n (con esc\u00e1ner)", type_inkjet: "Inyecci\u00f3n de tinta (bandeja trasera)",
@@ -187,7 +191,7 @@ const T = {
     c_grey: "Grigio", c_photo: "Nero foto", c_light_cyan: "Ciano chiaro",
     c_light_magenta: "Magenta chiaro", c_color: "Colore",
     c_photo_cyan: "Ciano foto", c_photo_magenta: "Magenta foto", c_light_grey: "Grigio chiaro",
-    c_matte_black: "Nero opaco", c_light_black: "Nero chiaro", c_light_light_black: "Nero molto chiaro",
+    c_matte_black: "Nero opaco", c_light_black: "Nero chiaro", c_light_light_black: "Nero molto chiaro", c_pigment: "Nero pigmento",
     entity: "Entit\u00e0 della stampante (obbligatoria)",
     power_entity: "Sensore di potenza (W)",
     plug_entity: "Presa della stampante (switch)",
@@ -201,6 +205,7 @@ const T = {
     counters_align: "Allineamento dei contatori", align_left: "A sinistra", align_center: "Centrati",
     name_position: "Posizione del nome", pos_below: "Sotto l'illustrazione", pos_top: "In alto, accanto alla presa",
     extras_hint: "Entit\u00e0 aggiuntive, una per riga (sotto lo stato)",
+    shop_url: "Link di acquisto, {ref} sostituisce il codice della cartuccia",
     name: "Nome", compact: "Modalit\u00e0 compatta (icona invece dell'illustrazione)",
     language: "Lingua", language_auto: "Segui Home Assistant",
     image: "Foto della vostra stampante (URL o percorso /local/...)", printer_type: "Tipo di stampante", type_mfp: "Multifunzione (con scanner)", type_inkjet: "Getto d'inchiostro (vassoio posteriore)",
@@ -227,7 +232,7 @@ const T = {
     c_grey: "Grijs", c_photo: "Fotozwart", c_light_cyan: "Lichtcyaan",
     c_light_magenta: "Lichtmagenta", c_color: "Kleur",
     c_photo_cyan: "Fotocyaan", c_photo_magenta: "Fotomagenta", c_light_grey: "Lichtgrijs",
-    c_matte_black: "Matzwart", c_light_black: "Lichtzwart", c_light_light_black: "Zeer lichtzwart",
+    c_matte_black: "Matzwart", c_light_black: "Lichtzwart", c_light_light_black: "Zeer lichtzwart", c_pigment: "Pigmentzwart",
     entity: "Printerentiteit (verplicht)",
     power_entity: "Vermogenssensor (W)",
     plug_entity: "Stopcontact van de printer (switch)",
@@ -241,6 +246,7 @@ const T = {
     counters_align: "Uitlijning van de tellers", align_left: "Links", align_center: "Gecentreerd",
     name_position: "Positie van de naam", pos_below: "Onder de afbeelding", pos_top: "Bovenaan, naast het stopcontact",
     extras_hint: "Extra entiteiten, \u00e9\u00e9n per regel (onder de status)",
+    shop_url: "Winkellink, {ref} staat voor het cartridgenummer",
     name: "Naam", compact: "Compacte modus (pictogram in plaats van illustratie)",
     language: "Taal", language_auto: "Home Assistant volgen",
     image: "Foto van uw printer (URL of /local/... pad)", printer_type: "Type printer", type_mfp: "All-in-one (met scanner)", type_inkjet: "Inkjet (invoer achter)",
@@ -267,7 +273,7 @@ const T = {
     c_grey: "Cinzento", c_photo: "Preto foto", c_light_cyan: "Ciano claro",
     c_light_magenta: "Magenta claro", c_color: "Cor",
     c_photo_cyan: "Ciano foto", c_photo_magenta: "Magenta foto", c_light_grey: "Cinzento claro",
-    c_matte_black: "Preto mate", c_light_black: "Preto claro", c_light_light_black: "Preto muito claro",
+    c_matte_black: "Preto mate", c_light_black: "Preto claro", c_light_light_black: "Preto muito claro", c_pigment: "Preto pigmento",
     entity: "Entidade da impressora (obrigat\u00f3ria)",
     power_entity: "Sensor de pot\u00eancia (W)",
     plug_entity: "Tomada da impressora (switch)",
@@ -281,6 +287,7 @@ const T = {
     counters_align: "Alinhamento dos contadores", align_left: "\u00c0 esquerda", align_center: "Centrados",
     name_position: "Posi\u00e7\u00e3o do nome", pos_below: "Abaixo da ilustra\u00e7\u00e3o", pos_top: "No topo, ao lado da tomada",
     extras_hint: "Entidades adicionais, uma por linha (abaixo do estado)",
+    shop_url: "Liga\u00e7\u00e3o de compra, {ref} substitui a refer\u00eancia do tinteiro",
     name: "Nome", compact: "Modo compacto (\u00edcone em vez da ilustra\u00e7\u00e3o)",
     language: "Idioma", language_auto: "Seguir o Home Assistant",
     image: "Foto da sua impressora (URL ou caminho /local/...)", printer_type: "Tipo de impressora", type_mfp: "Multifun\u00e7\u00f5es (com scanner)", type_inkjet: "Jato de tinta (alimenta\u00e7\u00e3o traseira)",
@@ -307,7 +314,7 @@ const T = {
     c_grey: "Gr\u00e5", c_photo: "Fotosvart", c_light_cyan: "Ljus cyan",
     c_light_magenta: "Ljus magenta", c_color: "F\u00e4rg",
     c_photo_cyan: "Fotocyan", c_photo_magenta: "Fotomagenta", c_light_grey: "Ljusgr\u00e5",
-    c_matte_black: "Mattsvart", c_light_black: "Ljussvart", c_light_light_black: "Mycket ljussvart",
+    c_matte_black: "Mattsvart", c_light_black: "Ljussvart", c_light_light_black: "Mycket ljussvart", c_pigment: "Pigmentsvart",
     entity: "Skrivarens entitet (obligatorisk)",
     power_entity: "Effektsensor (W)",
     plug_entity: "Skrivarens uttag (switch)",
@@ -321,6 +328,7 @@ const T = {
     counters_align: "R\u00e4knarnas justering", align_left: "V\u00e4nster", align_center: "Centrerade",
     name_position: "Namnets placering", pos_below: "Under bilden", pos_top: "\u00d6verst, bredvid uttaget",
     extras_hint: "Extra entiteter, en per rad (under statusen)",
+    shop_url: "K\u00f6pl\u00e4nk, {ref} ers\u00e4tts med patronens beteckning",
     name: "Namn", compact: "Kompakt l\u00e4ge (ikon i st\u00e4llet f\u00f6r illustration)",
     language: "Spr\u00e5k", language_auto: "F\u00f6lj Home Assistant",
     image: "Foto p\u00e5 din skrivare (URL eller /local/... s\u00f6kv\u00e4g)", printer_type: "Skrivartyp", type_mfp: "Allt-i-ett (med skanner)", type_inkjet: "Bl\u00e4ckstr\u00e5le (bakre inmatning)",
@@ -347,7 +355,7 @@ const T = {
     c_grey: "Gr\u00e5", c_photo: "Fotosvart", c_light_cyan: "Lys cyan",
     c_light_magenta: "Lys magenta", c_color: "Farge",
     c_photo_cyan: "Fotocyan", c_photo_magenta: "Fotomagenta", c_light_grey: "Lysegr\u00e5",
-    c_matte_black: "Mattsvart", c_light_black: "Lyssvart", c_light_light_black: "Sv\u00e6rt lyssvart",
+    c_matte_black: "Mattsvart", c_light_black: "Lyssvart", c_light_light_black: "Sv\u00e6rt lyssvart", c_pigment: "Pigmentsvart",
     entity: "Skriverens entitet (p\u00e5krevd)",
     power_entity: "Effektsensor (W)",
     plug_entity: "Skriverens stikkontakt (switch)",
@@ -361,6 +369,7 @@ const T = {
     counters_align: "Justering av tellere", align_left: "Venstre", align_center: "Sentrert",
     name_position: "Navnets plassering", pos_below: "Under illustrasjonen", pos_top: "\u00d8verst, ved siden av stikkontakten",
     extras_hint: "Ekstra entiteter, \u00e9n per linje (under statusen)",
+    shop_url: "Kj\u00f8pslenke, {ref} erstattes med patronens referanse",
     name: "Navn", compact: "Kompakt modus (ikon i stedet for illustrasjon)",
     language: "Spr\u00e5k", language_auto: "F\u00f8lg Home Assistant",
     image: "Bilde av skriveren din (URL eller /local/... bane)", printer_type: "Skrivertype", type_mfp: "Alt-i-ett (med skanner)", type_inkjet: "Blekk (bakre mating)",
@@ -387,7 +396,7 @@ const T = {
     c_grey: "Gr\u00e5", c_photo: "Fotosort", c_light_cyan: "Lys cyan",
     c_light_magenta: "Lys magenta", c_color: "Farve",
     c_photo_cyan: "Fotocyan", c_photo_magenta: "Fotomagenta", c_light_grey: "Lysegr\u00e5",
-    c_matte_black: "Matsort", c_light_black: "Lyssort", c_light_light_black: "Meget lyssort",
+    c_matte_black: "Matsort", c_light_black: "Lyssort", c_light_light_black: "Meget lyssort", c_pigment: "Pigmentsort",
     entity: "Printerens entitet (p\u00e5kr\u00e6vet)",
     power_entity: "Effektsensor (W)",
     plug_entity: "Printerens stikkontakt (switch)",
@@ -401,6 +410,7 @@ const T = {
     counters_align: "Justering af t\u00e6llere", align_left: "Venstre", align_center: "Centreret",
     name_position: "Navnets placering", pos_below: "Under illustrationen", pos_top: "\u00d8verst, ved siden af stikkontakten",
     extras_hint: "Ekstra entiteter, \u00e9n pr. linje (under status)",
+    shop_url: "K\u00f8bslink, {ref} erstattes med patronens reference",
     name: "Navn", compact: "Kompakt tilstand (ikon i stedet for illustration)",
     language: "Sprog", language_auto: "F\u00f8lg Home Assistant",
     image: "Foto af din printer (URL eller /local/... sti)", printer_type: "Printertype", type_mfp: "Alt-i-en (med scanner)", type_inkjet: "Bl\u00e6k (bagerste indf\u00f8ring)",
@@ -427,7 +437,7 @@ const T = {
     c_grey: "Szary", c_photo: "Czarny foto", c_light_cyan: "Jasny cyjan",
     c_light_magenta: "Jasna magenta", c_color: "Kolor",
     c_photo_cyan: "Cyjan foto", c_photo_magenta: "Magenta foto", c_light_grey: "Jasnoszary",
-    c_matte_black: "Czarny matowy", c_light_black: "Jasny czarny", c_light_light_black: "Bardzo jasny czarny",
+    c_matte_black: "Czarny matowy", c_light_black: "Jasny czarny", c_light_light_black: "Bardzo jasny czarny", c_pigment: "Czarny pigmentowy",
     entity: "Encja drukarki (wymagana)",
     power_entity: "Czujnik mocy (W)",
     plug_entity: "Gniazdko drukarki (switch)",
@@ -441,6 +451,7 @@ const T = {
     counters_align: "Wyr\u00f3wnanie licznik\u00f3w", align_left: "Do lewej", align_center: "Wy\u015brodkowane",
     name_position: "Pozycja nazwy", pos_below: "Pod ilustracj\u0105", pos_top: "U g\u00f3ry, obok gniazdka",
     extras_hint: "Dodatkowe encje, jedna w wierszu (pod stanem)",
+    shop_url: "Link do sklepu, {ref} zast\u0119puje oznaczenie kartrid\u017ca",
     name: "Nazwa", compact: "Tryb kompaktowy (ikona zamiast ilustracji)",
     language: "J\u0119zyk", language_auto: "Zgodnie z Home Assistant",
     image: "Zdj\u0119cie drukarki (URL lub \u015bcie\u017cka /local/...)", printer_type: "Typ drukarki", type_mfp: "Urz\u0105dzenie wielofunkcyjne (ze skanerem)", type_inkjet: "Atramentowa (podajnik z ty\u0142u)",
@@ -467,7 +478,7 @@ const T = {
     c_grey: "\u0421\u0435\u0440\u044b\u0439", c_photo: "\u0424\u043e\u0442\u043e \u0447\u0451\u0440\u043d\u044b\u0439", c_light_cyan: "\u0421\u0432\u0435\u0442\u043b\u043e-\u0433\u043e\u043b\u0443\u0431\u043e\u0439",
     c_light_magenta: "\u0421\u0432\u0435\u0442\u043b\u043e-\u043f\u0443\u0440\u043f\u0443\u0440\u043d\u044b\u0439", c_color: "\u0426\u0432\u0435\u0442\u043d\u043e\u0439",
     c_photo_cyan: "\u0424\u043e\u0442\u043e \u0433\u043e\u043b\u0443\u0431\u043e\u0439", c_photo_magenta: "\u0424\u043e\u0442\u043e \u043f\u0443\u0440\u043f\u0443\u0440\u043d\u044b\u0439", c_light_grey: "\u0421\u0432\u0435\u0442\u043b\u043e-\u0441\u0435\u0440\u044b\u0439",
-    c_matte_black: "\u041c\u0430\u0442\u043e\u0432\u044b\u0439 \u0447\u0451\u0440\u043d\u044b\u0439", c_light_black: "\u0421\u0432\u0435\u0442\u043b\u043e-\u0447\u0451\u0440\u043d\u044b\u0439", c_light_light_black: "\u041e\u0447\u0435\u043d\u044c \u0441\u0432\u0435\u0442\u043b\u044b\u0439 \u0447\u0451\u0440\u043d\u044b\u0439",
+    c_matte_black: "\u041c\u0430\u0442\u043e\u0432\u044b\u0439 \u0447\u0451\u0440\u043d\u044b\u0439", c_light_black: "\u0421\u0432\u0435\u0442\u043b\u043e-\u0447\u0451\u0440\u043d\u044b\u0439", c_light_light_black: "\u041e\u0447\u0435\u043d\u044c \u0441\u0432\u0435\u0442\u043b\u044b\u0439 \u0447\u0451\u0440\u043d\u044b\u0439", c_pigment: "\u041f\u0438\u0433\u043c\u0435\u043d\u0442\u043d\u044b\u0439 \u0447\u0451\u0440\u043d\u044b\u0439",
     entity: "\u041e\u0431\u044a\u0435\u043a\u0442 \u043f\u0440\u0438\u043d\u0442\u0435\u0440\u0430 (\u043e\u0431\u044f\u0437\u0430\u0442\u0435\u043b\u044c\u043d\u043e)",
     power_entity: "\u0414\u0430\u0442\u0447\u0438\u043a \u043c\u043e\u0449\u043d\u043e\u0441\u0442\u0438 (\u0412\u0442)",
     plug_entity: "\u0420\u043e\u0437\u0435\u0442\u043a\u0430 \u043f\u0440\u0438\u043d\u0442\u0435\u0440\u0430 (switch)",
@@ -481,6 +492,7 @@ const T = {
     counters_align: "\u0412\u044b\u0440\u0430\u0432\u043d\u0438\u0432\u0430\u043d\u0438\u0435 \u0441\u0447\u0451\u0442\u0447\u0438\u043a\u043e\u0432", align_left: "\u041f\u043e \u043b\u0435\u0432\u043e\u043c\u0443 \u043a\u0440\u0430\u044e", align_center: "\u041f\u043e \u0446\u0435\u043d\u0442\u0440\u0443",
     name_position: "\u041f\u043e\u043b\u043e\u0436\u0435\u043d\u0438\u0435 \u043d\u0430\u0437\u0432\u0430\u043d\u0438\u044f", pos_below: "\u041f\u043e\u0434 \u0438\u0437\u043e\u0431\u0440\u0430\u0436\u0435\u043d\u0438\u0435\u043c", pos_top: "\u0421\u0432\u0435\u0440\u0445\u0443, \u0440\u044f\u0434\u043e\u043c \u0441 \u0440\u043e\u0437\u0435\u0442\u043a\u043e\u0439",
     extras_hint: "\u0414\u043e\u043f\u043e\u043b\u043d\u0438\u0442\u0435\u043b\u044c\u043d\u044b\u0435 \u043e\u0431\u044a\u0435\u043a\u0442\u044b, \u043f\u043e \u043e\u0434\u043d\u043e\u043c\u0443 \u0432 \u0441\u0442\u0440\u043e\u043a\u0435 (\u043f\u043e\u0434 \u0441\u043e\u0441\u0442\u043e\u044f\u043d\u0438\u0435\u043c)",
+    shop_url: "\u0421\u0441\u044b\u043b\u043a\u0430 \u043d\u0430 \u043c\u0430\u0433\u0430\u0437\u0438\u043d, {ref} \u0437\u0430\u043c\u0435\u043d\u044f\u0435\u0442\u0441\u044f \u0430\u0440\u0442\u0438\u043a\u0443\u043b\u043e\u043c \u043a\u0430\u0440\u0442\u0440\u0438\u0434\u0436\u0430",
     name: "\u041d\u0430\u0437\u0432\u0430\u043d\u0438\u0435", compact: "\u041a\u043e\u043c\u043f\u0430\u043a\u0442\u043d\u044b\u0439 \u0440\u0435\u0436\u0438\u043c (\u0437\u043d\u0430\u0447\u043e\u043a \u0432\u043c\u0435\u0441\u0442\u043e \u0438\u043b\u043b\u044e\u0441\u0442\u0440\u0430\u0446\u0438\u0438)",
     language: "\u042f\u0437\u044b\u043a", language_auto: "\u0421\u043b\u0435\u0434\u043e\u0432\u0430\u0442\u044c Home Assistant",
     image: "\u0424\u043e\u0442\u043e \u0432\u0430\u0448\u0435\u0433\u043e \u043f\u0440\u0438\u043d\u0442\u0435\u0440\u0430 (URL \u0438\u043b\u0438 \u043f\u0443\u0442\u044c /local/...)", printer_type: "\u0422\u0438\u043f \u043f\u0440\u0438\u043d\u0442\u0435\u0440\u0430", type_mfp: "\u041c\u0424\u0423 (\u0441\u043e \u0441\u043a\u0430\u043d\u0435\u0440\u043e\u043c)", type_inkjet: "\u0421\u0442\u0440\u0443\u0439\u043d\u044b\u0439 (\u0437\u0430\u0434\u043d\u044f\u044f \u043f\u043e\u0434\u0430\u0447\u0430)",
@@ -507,7 +519,7 @@ const T = {
     c_grey: "\u7070\u8272", c_photo: "\u7167\u7247\u9ed1", c_light_cyan: "\u6de1\u9752\u8272",
     c_light_magenta: "\u6de1\u54c1\u7ea2", c_color: "\u5f69\u8272",
     c_photo_cyan: "\u7167\u7247\u9752\u8272", c_photo_magenta: "\u7167\u7247\u54c1\u7ea2", c_light_grey: "\u6d45\u7070",
-    c_matte_black: "\u4e9a\u5149\u9ed1", c_light_black: "\u6de1\u9ed1", c_light_light_black: "\u6781\u6de1\u9ed1",
+    c_matte_black: "\u4e9a\u5149\u9ed1", c_light_black: "\u6de1\u9ed1", c_light_light_black: "\u6781\u6de1\u9ed1", c_pigment: "\u989c\u6599\u9ed1",
     entity: "\u6253\u5370\u673a\u5b9e\u4f53\uff08\u5fc5\u586b\uff09",
     power_entity: "\u529f\u7387\u4f20\u611f\u5668\uff08W\uff09",
     plug_entity: "\u6253\u5370\u673a\u63d2\u5ea7\uff08switch\uff09",
@@ -521,6 +533,7 @@ const T = {
     counters_align: "\u8ba1\u6570\u5668\u5bf9\u9f50", align_left: "\u5de6\u5bf9\u9f50", align_center: "\u5c45\u4e2d",
     name_position: "\u540d\u79f0\u4f4d\u7f6e", pos_below: "\u56fe\u793a\u4e0b\u65b9", pos_top: "\u9876\u90e8\uff0c\u63d2\u5ea7\u65c1",
     extras_hint: "\u989d\u5916\u5b9e\u4f53\uff0c\u6bcf\u884c\u4e00\u4e2a\uff08\u663e\u793a\u5728\u72b6\u6001\u4e0b\u65b9\uff09",
+    shop_url: "\u8d2d\u4e70\u94fe\u63a5\uff0c{ref} \u66ff\u6362\u4e3a\u58a8\u76d2\u578b\u53f7",
     name: "\u540d\u79f0", compact: "\u7d27\u51d1\u6a21\u5f0f\uff08\u7528\u56fe\u6807\u4ee3\u66ff\u63d2\u56fe\uff09",
     language: "\u8bed\u8a00", language_auto: "\u8ddf\u968f Home Assistant",
     image: "\u6253\u5370\u673a\u7167\u7247\uff08URL \u6216 /local/... \u8def\u5f84\uff09", printer_type: "\u6253\u5370\u673a\u7c7b\u578b", type_mfp: "\u4e00\u4f53\u673a\uff08\u542b\u626b\u63cf\u4eea\uff09", type_inkjet: "\u55b7\u58a8\uff08\u540e\u8fdb\u7eb8\uff09",
@@ -786,6 +799,9 @@ const COLOR_KEYWORDS = [
   ["light_magenta", ["light magenta", "lightmagenta", "magenta clair", "hellmagenta", "ljus magenta", "lys magenta", "jasna magenta", "vivid light magenta", "\\bvlm\\b", "\\blm\\b"]],
   ["light_grey", ["light grey", "light gray", "lightgray", "gris clair", "hellgrau", "grigio chiaro",
     "lichtgrijs", "ljusgra", "lysegra", "jasnoszary", "\\blgy\\b", "\\blg\\b"]],
+  ["pigment", ["pigment black", "black pigment", "noir pigment", "pigmentschwarz",
+    "negro pigmento", "nero pigmento", "pigmentzwart", "preto pigmento", "pigmentsvart",
+    "pigmentsort", "czarny pigmentowy", "\\bpgbk\\b"]],
   ["black", ["black", "noir", "schwarz", "negro", "nero", "zwart", "preto", "svart", "sort", "czarny",
     "\u0447\u0435\u0440\u043d", "\u9ed1", "\\bk\\b", "\\bbk\\b"]],
   ["cyan", ["cyan", "cian", "ciano", "cyaan", "cyjan", "\u0433\u043e\u043b\u0443\u0431", "\u9752", "\\bc\\b"]],
@@ -798,6 +814,7 @@ const COLOR_KEYWORDS = [
 
 const COLOR_SWATCH = {
   black: "#26292e",
+  pigment: "#3a3f45",
   photo: "#15171a",
   matte_black: "#2b2d30",
   light_black: "#5a6067",
@@ -822,7 +839,7 @@ const COLOR_SWATCH = {
 // separate cartridges, so the card reads the same whichever the printer uses.
 const TRI_BANDS = ["cyan", "magenta", "yellow"];
 
-const COLOR_ORDER = ["black", "photo", "matte_black", "light_black", "light_light_black",
+const COLOR_ORDER = ["black", "pigment", "photo", "matte_black", "light_black", "light_light_black",
   "grey", "light_grey", "cyan", "photo_cyan", "light_cyan",
   "magenta", "photo_magenta", "light_magenta", "yellow", "color", "other"];
 
@@ -1037,6 +1054,9 @@ function readCartridges(hass, cfg) {
         : COLOR_SWATCH[color]) || (entry.color && /^#|^rgb|^var\(/.test(entry.color) ? entry.color : COLOR_SWATCH.other),
       bands: color === "color" ? TRI_BANDS.map((c) => COLOR_SWATCH[c]) : null,
       name: entry.name || null,
+      // The part number to buy. Two black cartridges on a Canon are a PGBK and
+      // a BK, and no amount of reading the name tells the card which is which.
+      ref: entry.ref ? String(entry.ref) : null,
       // The integration said what this is, so "other" is an answer and not a
       // gap to be filled by the mono-printer guess below.
       described: !!(attrs.description || (Array.isArray(attrs.rgb_color) && attrs.rgb_color.length === 3)),
@@ -1326,6 +1346,19 @@ function cartridgeLabel(hass, c) {
   return t(hass, `c_${c.color}`);
 }
 
+// Asked for on the forum: a tap that leads to the cartridge rather than to its
+// own history. It takes two halves, a template on the card and a reference on
+// the supply, because a search box handed nothing to search for is worse than
+// no link at all. The scheme is checked here, once, this being the only string
+// in a dashboard config that the card ever hands the browser as a destination.
+function shopLink(cfg, c) {
+  const tpl = String((cfg && cfg.shop_url) || "").trim();
+  if (!tpl || !c || !c.ref) return null;
+  const ref = encodeURIComponent(String(c.ref));
+  const url = tpl.includes("{ref}") ? tpl.replace(/\{ref\}/g, ref) : tpl + ref;
+  return /^https?:\/\//i.test(url) ? url : null;
+}
+
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
@@ -1505,8 +1538,8 @@ function inkBay(carts, bay, tappable) {
     const fy = +(top + inner - 1 - fh).toFixed(1);
     const ww = +w.toFixed(1);
     return `
-    <g class="ink${tappable ? " clickable" : ""}${c.low ? " low" : ""}"${tappable && c.entity ? ` data-entity="${escapeHtml(c.entity)}"` : ""}>
-      <title>${escapeHtml(c.label || c.title)} ${c.level === null ? "?" : Math.round(c.level)}%</title>
+    <g class="ink${c.shop || tappable ? " clickable" : ""}${c.low ? " low" : ""}"${c.shop ? ` data-shop="${escapeHtml(c.shop)}"` : (tappable && c.entity ? ` data-entity="${escapeHtml(c.entity)}"` : "")}>
+      <title>${escapeHtml(c.label || c.title)}${c.ref ? ` \u00b7 ${escapeHtml(c.ref)}` : ""} ${c.level === null ? "?" : Math.round(c.level)}%</title>
       <rect class="ink-cap" x="${+(x + w * 0.3).toFixed(1)}" y="${+rowTop.toFixed(1)}" width="${+(w * 0.4).toFixed(1)}" height="${capH}" rx="1"/>
       <rect class="ink-track" x="${x}" y="${top}" width="${ww}" height="${inner}" rx="2"/>
       ${fh > 0 ? (c.bands
@@ -1785,7 +1818,10 @@ class PrinterCard extends HTMLElement {
       }
     }
     const supplies = cfg.show_supplies === false ? [] : readCartridges(hass, cfg);
-    supplies.forEach((c) => { c.label = supplyLabel(hass, c, name); });
+    supplies.forEach((c) => {
+      c.label = supplyLabel(hass, c, name);
+      c.shop = shopLink(cfg, c);
+    });
     const color = STATE_COLORS[norm];
     const carts = supplies.filter((c) => c.kind === "ink");
     const parts = cfg.show_parts === false ? [] : supplies.filter((c) => c.kind !== "ink");
@@ -1839,16 +1875,22 @@ class PrinterCard extends HTMLElement {
     const tappable = cfg.more_info !== false;
     const clk = tappable ? " clickable" : "";
     const ent = (id) => (tappable && id ? ` data-entity="${escapeHtml(id)}"` : "");
+    // Opt-in twice over, so a card without a shop link behaves exactly as it
+    // always has. Where there is one it takes the tap: having written both the
+    // template and the reference is not an ambiguous request.
+    const tap = (c) => (c.shop ? ` data-shop="${escapeHtml(c.shop)}"` : ent(c.entity));
+    const tapClk = (c) => (c.shop || tappable ? " clickable" : "");
+    const tip = (c) => escapeHtml(c.ref ? `${c.title} \u00b7 ${c.ref}` : c.title);
 
     const cartMarkup = carts.length === 0 || inside ? "" : bars
       ? `<div class="supplies bars">${carts.map((c) => `
-          <div class="row-b${clk} ${c.low ? "low" : ""}"${ent(c.entity)} title="${escapeHtml(c.title)}">
+          <div class="row-b${tapClk(c)} ${c.low ? "low" : ""}"${tap(c)} title="${tip(c)}">
             <span class="lbl">${escapeHtml(c.label)}</span>
             ${cartridgeBar(c.level, c.swatch, c.bands)}
             <span class="pct">${c.level === null ? "?" : Math.round(c.level)}%</span>
           </div>`).join("")}</div>`
       : `<div class="supplies" style="grid-template-columns:repeat(${supplyColumns(carts.length, cfg.cartridge_rows)},minmax(0,1fr))">${carts.map((c, i) => `
-          <div class="cart${clk} ${c.low ? "low" : ""}"${ent(c.entity)} title="${escapeHtml(c.title)}">
+          <div class="cart${tapClk(c)} ${c.low ? "low" : ""}"${tap(c)} title="${tip(c)}">
             <span class="wrap">${cartridgeSvg(c.level, c.swatch, i, c.bands)}${c.low ? '<span class="lowdot">!</span>' : ""}</span>
             <span class="pct">${c.level === null ? "?" : Math.round(c.level)}%</span>
             <span class="lbl">${escapeHtml(c.label)}</span>
@@ -1874,7 +1916,7 @@ class PrinterCard extends HTMLElement {
 
     const nf = new Intl.NumberFormat(lang(hass));
     const partsMarkup = parts.length === 0 ? "" : `<div class="parts">${parts.map((c) => `
-          <span class="part${clk} ${c.low ? "low" : ""}"${ent(c.entity)} title="${escapeHtml(c.title)}">
+          <span class="part${tapClk(c)} ${c.low ? "low" : ""}"${tap(c)} title="${tip(c)}">
             <span class="pname">${escapeHtml(c.label)}</span>
             <span class="pval">${c.level === null ? "?" : Math.round(c.level)}%</span>
             <i style="width:${Math.max(0, Math.min(100, c.level === null ? 0 : c.level)) * 0.42}px"></i>
@@ -2080,6 +2122,16 @@ svg .clickable { cursor:pointer; }
         this._render();
       });
     });
+    // The one place the card sends anyone outside Home Assistant. The scheme
+    // was checked when the link was built; the new window gets no handle back.
+    this._root.querySelectorAll("[data-shop]").forEach((el) => {
+      const url = el.getAttribute("data-shop");
+      if (!url) return;
+      el.addEventListener("click", (ev) => {
+        ev.stopPropagation();
+        window.open(url, "_blank", "noopener,noreferrer");
+      });
+    });
     this._root.querySelectorAll("[data-entity]").forEach((el) => {
       const id = el.getAttribute("data-entity");
       if (!id) return;
@@ -2180,6 +2232,18 @@ class PrinterCardEditor extends HTMLElement {
 
   _emit() {
     this.dispatchEvent(new CustomEvent("config-changed", { detail: { config: this._config } }));
+  }
+
+  // These lists also take objects, carrying a label, a colour, a kind or a
+  // part number that the textarea cannot show and must not eat. Reordering the
+  // lines, or adding one, used to flatten every entry back to a bare id and
+  // drop the rest without a word.
+  _mergeList(field, text) {
+    const kept = new Map(((this._config || {})[field] || [])
+      .filter((c) => c && typeof c === "object" && c.entity)
+      .map((c) => [c.entity, c]));
+    return String(text || "").split("\n").map((s) => s.trim()).filter(Boolean)
+      .map((id) => kept.get(id) || id);
   }
 
   _set(field, value) {
@@ -2324,7 +2388,7 @@ details .form { padding-top:10px; }
             </div>
           </div>
         </details>
-        <details ${cfg.print_entity || cfg.paper_entity || cfg.web_url || cfg.cartridges || cfg.counters || cfg.extra_entities || cfg.printing_watts || cfg.low_threshold ? "open" : ""}>
+        <details ${cfg.print_entity || cfg.paper_entity || cfg.web_url || cfg.cartridges || cfg.counters || cfg.extra_entities || cfg.shop_url || cfg.printing_watts || cfg.low_threshold ? "open" : ""}>
           <summary>${t(hass, "section_advanced")}</summary>
           <div class="form">
             <div class="row" data-picker="print_entity"></div>
@@ -2344,6 +2408,10 @@ details .form { padding-top:10px; }
             <div class="row">
               <label>${t(hass, "cartridges_hint")}</label>
               <textarea data-field="cartridges" spellcheck="false">${escapeHtml(cartLines)}</textarea>
+            </div>
+            <div class="row">
+              <label>${t(hass, "shop_url")}</label>
+              <input type="text" data-field="shop_url" placeholder="https://www.example.com/search?q={ref}" value="${escapeHtml(cfg.shop_url || "")}" />
             </div>
             <div class="row">
               <label>${t(hass, "counters_hint")}</label>
@@ -2393,7 +2461,7 @@ details .form { padding-top:10px; }
     });
     this._root.querySelectorAll("textarea[data-field]").forEach((ta) => {
       ta.addEventListener("change", () => {
-        const list = ta.value.split("\n").map((s) => s.trim()).filter(Boolean);
+        const list = this._mergeList(ta.dataset.field, ta.value);
         this._set(ta.dataset.field, list.length ? list : undefined);
       });
     });

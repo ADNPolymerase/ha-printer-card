@@ -1548,6 +1548,137 @@ ed2._set('low_threshold', 0);
 check('un zero explicite est conserve (et non traite comme vide)',
   ed2.events.at(-1).detail.config.low_threshold, 0);
 
+// ── Pigment black and the shop link (forum, post 33) ──────────────
+
+// Freeman59 carries two black cartridges and the card called them both the
+// same thing. "pgbk" answers to neither "black" nor "\bbk\b", which needs a
+// word boundary it does not have, so a Canon pigment tank used to fall through
+// to "other" and be labelled with whatever the integration had named it.
+const CANON_TS = ['pgbk', 'bk', 'cyan', 'magenta', 'yellow'];
+const tsLabels = labelsOf(renderInks(CANON_TS, {}, 'Canon TS8050 series'));
+check('un noir pigment est reconnu comme tel',
+  tsLabels.includes('Pigment black'), true);
+check('et le noir ordinaire reste le noir',
+  tsLabels.includes('Black'), true);
+// C'est tout l'interet: deux pastilles, deux libelles. Les confondre etait la
+// plainte d'origine, pas un detail de presentation.
+check('les deux noirs ne portent pas le meme libelle',
+  new Set(tsLabels.filter((l) => /Black|black/.test(l))).size, 2);
+check('et aucun des deux n\'est avale par la deduplication',
+  tsLabels.filter((l) => /black/i.test(l)).length, 2);
+
+// La garde inverse: le mot-cle ne doit pas se servir chez les voisins. Un PGI
+// de Canon couvre aussi des encres photo, et "pbk" appartient au noir photo.
+check('un noir photo reste un noir photo',
+  labelsOf(renderInks(['pbk'], {}, 'Canon PRO-10 series'))[0], 'Photo black');
+check('un noir simple n\'est pas requalifie en pigment',
+  labelsOf(renderInks(['black'], {}, 'Canon TS8050 series'))[0], 'Black');
+
+// Le lien d'achat demande deux moities: un modele sur la carte et une
+// reference sur la cartouche. Sans les deux, le clic ouvre l'entite comme
+// avant, parce qu'une recherche sans rien a chercher est pire que rien.
+const REF_CART = [{ entity: 'sensor.printer_pgbk', ref: 'PGI-580PGBK' }];
+const SHOP = 'https://shop.example/s?q={ref}';
+
+const sansModele = renderInks(CANON_TS, { cartridges: REF_CART });
+check('une reference seule ne fabrique aucun lien',
+  /data-shop=/.test(sansModele), false);
+contains('mais elle se lit au survol', sansModele, 'PGI-580PGBK');
+check('et le clic ouvre toujours l\'entite',
+  /data-entity="sensor\.printer_pgbk"/.test(sansModele), true);
+
+const sansRef = renderInks(CANON_TS, { shop_url: SHOP });
+check('un modele seul ne fabrique aucun lien non plus',
+  /data-shop=/.test(sansRef), false);
+
+const avecLien = renderInks(CANON_TS, { cartridges: REF_CART, shop_url: SHOP });
+contains('les deux moities donnent le lien', avecLien,
+  'data-shop="https://shop.example/s?q=PGI-580PGBK"');
+// Une cartouche qui porte un lien ne porte plus data-entity: les deux
+// poseraient chacun leur ecouteur et le clic ferait les deux choses.
+check('et le lien remplace l\'ouverture de l\'entite, il ne s\'y ajoute pas',
+  /data-entity="sensor\.printer_pgbk"/.test(avecLien), false);
+
+// Une reference n'est pas garantie propre a coller dans une URL.
+contains('une reference est encodee', renderInks(CANON_TS, {
+  cartridges: [{ entity: 'sensor.printer_pgbk', ref: 'PGI 580 PGBK' }], shop_url: SHOP,
+}), 'q=PGI%20580%20PGBK');
+
+// Confort: un modele qui se termine par le parametre n'a pas besoin du jeton.
+contains('sans jeton, la reference est ajoutee a la fin', renderInks(CANON_TS, {
+  cartridges: REF_CART, shop_url: 'https://shop.example/s?q=',
+}), 'data-shop="https://shop.example/s?q=PGI-580PGBK"');
+
+// C'est le seul endroit ou la carte envoie quelqu'un hors de Home Assistant,
+// et le modele vient d'une config que la carte ne relit pas.
+for (const mauvais of ['javascript:alert(1)', 'data:text/html,x', '/local/pas_une_url']) {
+  check(`un modele en ${mauvais.split(':')[0].slice(0, 12)} est refuse`,
+    /data-shop=/.test(renderInks(CANON_TS, { cartridges: REF_CART, shop_url: mauvais })), false);
+}
+
+// Couper l'ouverture des entites ne doit pas couper un lien ecrit expres:
+// ce sont deux demandes differentes, et more_info ne parle que de la premiere.
+const sansMoreInfo = renderInks(CANON_TS, { cartridges: REF_CART, shop_url: SHOP, more_info: false });
+contains('le lien survit a more_info: false', sansMoreInfo,
+  'data-shop="https://shop.example/s?q=PGI-580PGBK"');
+check('et la cartouche reste cliquable',
+  /class="cart clickable/.test(sansMoreInfo), true);
+
+// Bout en bout: changer de boutique dans la config doit se voir sur la carte.
+// La signature de rendu n'a pas besoin de porter le lien, setConfig la remet a
+// zero, mais le chemin complet config -> markup merite d'etre tenu.
+{
+  const c = new Card();
+  const hassOf = () => {
+    const h = makeHass('idle', {
+      'sensor.printer_pgbk': { state: '40', attributes: { unit_of_measurement: '%', friendly_name: 'Canon TS8050 series pgbk' } },
+    }, { friendly_name: 'Canon TS8050 series' });
+    h.entities = { 'sensor.printer': { device_id: 'dev1' }, 'sensor.printer_pgbk': { device_id: 'dev1' } };
+    h.devices = { dev1: { name: 'Canon TS8050 series', via_device_id: null } };
+    return h;
+  };
+  c.setConfig({ entity: 'sensor.printer', cartridges: REF_CART, shop_url: SHOP });
+  c.hass = hassOf();
+  const avant = markup(c);
+  c.setConfig({ entity: 'sensor.printer', cartridges: REF_CART, shop_url: 'https://autre.example/?q={ref}' });
+  c.hass = hassOf();
+  contains('changer de boutique change la carte', markup(c), 'autre.example');
+  check('et l\'ancienne adresse a bien disparu',
+    avant.includes('shop.example') && !markup(c).includes('shop.example'), true);
+}
+
+// La zone de texte de l'editeur ne montre que des identifiants, mais la liste
+// accepte des objets. Les reecrire en chaines effacerait sans un mot le
+// libelle, la couleur, le type et la reference qu'on avait pris la peine
+// d'ecrire, et c'est en ouvrant l'editeur qu'on l'aurait decouvert.
+{
+  const ed = new Editor();
+  const riche = [
+    { entity: 'sensor.p_pgbk', ref: 'PGI-580PGBK', name: 'Pigment' },
+    'sensor.p_cyan',
+  ];
+  ed.setConfig({ entity: 'sensor.printer', cartridges: riche });
+  const garde = ed._mergeList('cartridges', 'sensor.p_pgbk\nsensor.p_cyan');
+  check('une cartouche en objet survit a un passage dans l\'editeur',
+    garde[0].ref, 'PGI-580PGBK');
+  check('avec son libelle', garde[0].name, 'Pigment');
+  check('et une entree simple reste simple', garde[1], 'sensor.p_cyan');
+
+  // Reordonner les lignes est le geste le plus banal de cette zone de texte.
+  const inverse = ed._mergeList('cartridges', 'sensor.p_cyan\nsensor.p_pgbk');
+  check('reordonner ne perd rien non plus', inverse[1].ref, 'PGI-580PGBK');
+
+  // Une ligne ajoutee a la main n'a rien a preserver.
+  const ajoute = ed._mergeList('cartridges', 'sensor.p_pgbk\nsensor.p_neuf');
+  check('une ligne neuve reste un simple identifiant', ajoute[1], 'sensor.p_neuf');
+  // Une ligne retiree doit vraiment partir, objet ou pas.
+  check('une ligne retiree ne revient pas par la porte de derriere',
+    ed._mergeList('cartridges', 'sensor.p_cyan').length, 1);
+  // Les autres listes passent par le meme chemin et n'ont rien a garder.
+  check('une liste sans objet traverse inchangee',
+    ed._mergeList('counters', 'sensor.a\n  sensor.b  \n\n').join(','), 'sensor.a,sensor.b');
+}
+
 // ── Config guards ────────────────────────────────────────────────────────────
 
 let threw = false;
