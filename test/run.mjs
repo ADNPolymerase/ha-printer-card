@@ -1574,77 +1574,95 @@ check('un noir photo reste un noir photo',
 check('un noir simple n\'est pas requalifie en pigment',
   labelsOf(renderInks(['black'], {}, 'Canon TS8050 series'))[0], 'Black');
 
-// Le lien d'achat demande deux moities: un modele sur la carte et une
-// reference sur la cartouche. Sans les deux, le clic ouvre l'entite comme
-// avant, parce qu'une recherche sans rien a chercher est pire que rien.
-const REF_CART = [{ entity: 'sensor.printer_pgbk', ref: 'PGI-580PGBK' }];
-const SHOP = 'https://shop.example/s?q={ref}';
+// Le panier du coin (forum, post 33). Choix assume: le clic sur une cartouche
+// reste son historique, qui vaut mieux qu'un raccourci vers une boutique. Un
+// seul repere, en haut a droite, vers une recherche que le marchand comprend.
+const BOUTIQUE = 'https://shop.example/s?q={ref}';
+const panier = (cfg, device = { manufacturer: 'Canon', model: 'TS8050 series' }) =>
+  renderWithDevice(cfg, device);
 
-const sansModele = renderInks(CANON_TS, { cartridges: REF_CART });
-check('une reference seule ne fabrique aucun lien',
-  /data-shop=/.test(sansModele), false);
-contains('mais elle se lit au survol', sansModele, 'PGI-580PGBK');
-check('et le clic ouvre toujours l\'entite',
-  /data-entity="sensor\.printer_pgbk"/.test(sansModele), true);
+check('sans adresse, aucun panier',
+  /class="shop"/.test(panier({})), false);
+contains('avec une adresse, un panier dans le coin',
+  panier({ shop_url: BOUTIQUE }), 'class="shop"');
 
-const sansRef = renderInks(CANON_TS, { shop_url: SHOP });
-check('un modele seul ne fabrique aucun lien non plus',
-  /data-shop=/.test(sansRef), false);
+// C'est la marque et le modele que le marchand connait, pas le nom donne a la
+// carte, qui peut tres bien etre "Imprimante du bureau".
+contains('la recherche porte la marque et le modele',
+  panier({ shop_url: BOUTIQUE, name: 'Imprimante du bureau' }),
+  'q=Cartridges%20Canon%20TS8050%20series');
+// Une marque deja presente dans le modele ne doit pas etre servie deux fois.
+contains('une marque deja dans le modele n\'est pas doublee',
+  panier({ shop_url: BOUTIQUE }, { manufacturer: 'Canon', model: 'Canon PIXMA TS8050' }),
+  'q=Cartridges%20Canon%20PIXMA%20TS8050');
+// Sans registre d'appareils exploitable, le nom de la carte fait l'affaire.
+contains('sans modele connu, le nom de la carte sert de repli',
+  panier({ shop_url: BOUTIQUE, name: 'HP 4322e' }, { manufacturer: '', model: '' }),
+  'q=Cartridges%20HP%204322e');
+// Le mot suit la langue de la carte, le reste du libelle aussi.
+contains('le mot cartouches suit la langue', panier({ shop_url: BOUTIQUE, language: 'fr' }),
+  'q=Cartouches%20Canon%20TS8050%20series');
 
-const avecLien = renderInks(CANON_TS, { cartridges: REF_CART, shop_url: SHOP });
-contains('les deux moities donnent le lien', avecLien,
-  'data-shop="https://shop.example/s?q=PGI-580PGBK"');
-// Une cartouche qui porte un lien ne porte plus data-entity: les deux
-// poseraient chacun leur ecouteur et le clic ferait les deux choses.
-check('et le lien remplace l\'ouverture de l\'entite, il ne s\'y ajoute pas',
-  /data-entity="sensor\.printer_pgbk"/.test(avecLien), false);
+// Un modele sans jeton est un lien direct vers la page de votre machine.
+contains('un modele sans jeton est pris tel quel',
+  panier({ shop_url: 'https://shop.example/canon/ts8050' }),
+  'href="https://shop.example/canon/ts8050"');
 
-// Une reference n'est pas garantie propre a coller dans une URL.
-contains('une reference est encodee', renderInks(CANON_TS, {
-  cartridges: [{ entity: 'sensor.printer_pgbk', ref: 'PGI 580 PGBK' }], shop_url: SHOP,
-}), 'q=PGI%20580%20PGBK');
-
-// Confort: un modele qui se termine par le parametre n'a pas besoin du jeton.
-contains('sans jeton, la reference est ajoutee a la fin', renderInks(CANON_TS, {
-  cartridges: REF_CART, shop_url: 'https://shop.example/s?q=',
-}), 'data-shop="https://shop.example/s?q=PGI-580PGBK"');
-
-// C'est le seul endroit ou la carte envoie quelqu'un hors de Home Assistant,
-// et le modele vient d'une config que la carte ne relit pas.
+// C'est le seul endroit ou la carte envoie quelqu'un hors de Home Assistant.
 for (const mauvais of ['javascript:alert(1)', 'data:text/html,x', '/local/pas_une_url']) {
   check(`un modele en ${mauvais.split(':')[0].slice(0, 12)} est refuse`,
-    /data-shop=/.test(renderInks(CANON_TS, { cartridges: REF_CART, shop_url: mauvais })), false);
+    /class="shop"/.test(panier({ shop_url: mauvais })), false);
+}
+contains('le panier ne rend pas la main a la page ouverte',
+  panier({ shop_url: BOUTIQUE }), 'rel="noopener noreferrer"');
+// Le mot est deja dans le libelle du survol, l'y remettre donne
+// "Commander des cartouches : Cartouches Canon", qui se lit mal.
+contains('le survol nomme la machine, pas la recherche',
+  panier({ shop_url: BOUTIQUE }), 'title="Order cartridges : Canon TS8050 series"');
+
+// La correction demandee sur le fil: une cartouche garde son historique.
+{
+  const avec = renderInks(['pgbk', 'bk'], { shop_url: BOUTIQUE }, 'Canon TS8050 series');
+  check('le clic sur une cartouche ouvre toujours son entite',
+    /data-entity="sensor\.printer_pgbk"/.test(avec), true);
+  check('et aucune cartouche ne porte de lien marchand',
+    /class="cart[^"]*"[^>]*href=/.test(avec), false);
 }
 
-// Couper l'ouverture des entites ne doit pas couper un lien ecrit expres:
-// ce sont deux demandes differentes, et more_info ne parle que de la premiere.
-const sansMoreInfo = renderInks(CANON_TS, { cartridges: REF_CART, shop_url: SHOP, more_info: false });
-contains('le lien survit a more_info: false', sansMoreInfo,
-  'data-shop="https://shop.example/s?q=PGI-580PGBK"');
-check('et la cartouche reste cliquable',
-  /class="cart clickable/.test(sansMoreInfo), true);
+// Le panier et la prise se partagent le meme coin, et le panier doit tenir
+// sans elle: le coin n'etait dessine que s'il y avait une prise.
+{
+  const deux = panier({ shop_url: BOUTIQUE, power_entity: 'sensor.printer_power' });
+  check('le panier et la prise cohabitent',
+    /class="corner"[\s\S]*class="shop"/.test(deux), true);
+  check('le panier survit a une carte sans prise',
+    /class="shop"/.test(panier({ shop_url: BOUTIQUE, show_power: false })), true);
+}
 
-// Bout en bout: changer de boutique dans la config doit se voir sur la carte.
-// La signature de rendu n'a pas besoin de porter le lien, setConfig la remet a
-// zero, mais le chemin complet config -> markup merite d'etre tenu.
+// Faible mais pas inutile: le harnais ne calcule aucun style, cette garde ne
+// prouve que la presence des deux regles, pas leur effet. Elle attrape une
+// suppression etourdie, l'oeil a tranche le reste sur la comparaison.
+{
+  const css = panier({ shop_url: BOUTIQUE });
+  contains('l\'en-tete garde sa ligne', css, '.head .corner { position:static; flex:none; flex-direction:row;');
+  contains('le compact empile', css, 'ha-card.compact .corner { position:static; flex:none; align-items:flex-end;');
+}
+
+// Le modele vient du registre d'appareils, donc il peut changer sans que
+// setConfig soit rappele: la signature de rendu doit le porter.
 {
   const c = new Card();
-  const hassOf = () => {
-    const h = makeHass('idle', {
-      'sensor.printer_pgbk': { state: '40', attributes: { unit_of_measurement: '%', friendly_name: 'Canon TS8050 series pgbk' } },
-    }, { friendly_name: 'Canon TS8050 series' });
-    h.entities = { 'sensor.printer': { device_id: 'dev1' }, 'sensor.printer_pgbk': { device_id: 'dev1' } };
-    h.devices = { dev1: { name: 'Canon TS8050 series', via_device_id: null } };
+  c.setConfig({ entity: 'sensor.printer', shop_url: BOUTIQUE });
+  const hassOf = (model) => {
+    const h = makeHass('idle');
+    h.entities = { 'sensor.printer': { device_id: 'dev1' } };
+    h.devices = { dev1: { name: 'Printer', manufacturer: 'Canon', model, via_device_id: null } };
     return h;
   };
-  c.setConfig({ entity: 'sensor.printer', cartridges: REF_CART, shop_url: SHOP });
-  c.hass = hassOf();
-  const avant = markup(c);
-  c.setConfig({ entity: 'sensor.printer', cartridges: REF_CART, shop_url: 'https://autre.example/?q={ref}' });
-  c.hass = hassOf();
-  contains('changer de boutique change la carte', markup(c), 'autre.example');
-  check('et l\'ancienne adresse a bien disparu',
-    avant.includes('shop.example') && !markup(c).includes('shop.example'), true);
+  c.hass = hassOf('TS8050 series');
+  markup(c);
+  c.hass = hassOf('TS9550 series');
+  contains('renommer le modele de l\'appareil redessine le panier', markup(c), 'TS9550');
 }
 
 // La zone de texte de l'editeur ne montre que des identifiants, mais la liste

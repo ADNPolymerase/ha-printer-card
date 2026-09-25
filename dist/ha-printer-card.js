@@ -1,4 +1,4 @@
-const CARD_VERSION = "1.1.0";
+const CARD_VERSION = "1.1.1";
 
 console.info(
   "%c HA-PRINTER-CARD %c v" + CARD_VERSION + " ",
@@ -41,7 +41,8 @@ const T = {
     counters_align: "Counter alignment", align_left: "Left", align_center: "Centred",
     name_position: "Name position", pos_below: "Below the illustration", pos_top: "Top line, next to the socket",
     extras_hint: "Extra entities, one per line (shown under the status)",
-    shop_url: "Shop link, {ref} stands for the cartridge reference",
+    shop_url: "Where to buy cartridges, {ref} is the printer model",
+    shop_tip: "Order cartridges",
     name: "Name", compact: "Compact mode (icon instead of illustration)",
     language: "Language", language_auto: "Follow Home Assistant",
     image: "Photo of your printer (URL or /local/... path)", printer_type: "Printer type", type_mfp: "All-in-one (with scanner)", type_inkjet: "Inkjet (rear feed)",
@@ -82,7 +83,8 @@ const T = {
     counters_align: "Alignement des compteurs", align_left: "\u00c0 gauche", align_center: "Centr\u00e9s",
     name_position: "Position du nom", pos_below: "Sous l'illustration", pos_top: "En haut, \u00e0 c\u00f4t\u00e9 de la prise",
     extras_hint: "Entit\u00e9s suppl\u00e9mentaires, une par ligne (affich\u00e9es sous l'\u00e9tat)",
-    shop_url: "Lien d'achat, {ref} remplace la r\u00e9f\u00e9rence de la cartouche",
+    shop_url: "O\u00f9 acheter les cartouches, {ref} est le mod\u00e8le de l'imprimante",
+    shop_tip: "Commander des cartouches",
     name: "Nom", compact: "Mode compact (ic\u00f4ne au lieu de l'illustration)",
     language: "Langue", language_auto: "Suivre Home Assistant",
     image: "Photo de votre imprimante (URL ou chemin /local/...)", printer_type: "Type d'imprimante", type_mfp: "Multifonction (avec scanner)", type_inkjet: "Jet d'encre (bac arri\u00e8re)",
@@ -123,7 +125,8 @@ const T = {
     counters_align: "Ausrichtung der Z\u00e4hler", align_left: "Links", align_center: "Zentriert",
     name_position: "Position des Namens", pos_below: "Unter der Abbildung", pos_top: "Oben, neben der Steckdose",
     extras_hint: "Zus\u00e4tzliche Entit\u00e4ten, eine pro Zeile (unter dem Status)",
-    shop_url: "Einkaufslink, {ref} steht f\u00fcr die Patronennummer",
+    shop_url: "Wo Patronen kaufen, {ref} ist das Druckermodell",
+    shop_tip: "Patronen bestellen",
     name: "Name", compact: "Kompaktmodus (Symbol statt Illustration)",
     language: "Sprache", language_auto: "Home Assistant folgen",
     image: "Foto Ihres Druckers (URL oder /local/... Pfad)", printer_type: "Druckertyp", type_mfp: "Multifunktionsger\u00e4t (mit Scanner)", type_inkjet: "Tintenstrahl (hintere Zufuhr)",
@@ -164,7 +167,8 @@ const T = {
     counters_align: "Alineaci\u00f3n de los contadores", align_left: "A la izquierda", align_center: "Centrados",
     name_position: "Posici\u00f3n del nombre", pos_below: "Debajo de la ilustraci\u00f3n", pos_top: "Arriba, junto al enchufe",
     extras_hint: "Entidades adicionales, una por l\u00ednea (bajo el estado)",
-    shop_url: "Enlace de compra, {ref} sustituye la referencia del cartucho",
+    shop_url: "D\u00f3nde comprar cartuchos, {ref} es el modelo de impresora",
+    shop_tip: "Pedir cartuchos",
     name: "Nombre", compact: "Modo compacto (icono en vez de ilustraci\u00f3n)",
     language: "Idioma", language_auto: "Seguir a Home Assistant",
     image: "Foto de su impresora (URL o ruta /local/...)", printer_type: "Tipo de impresora", type_mfp: "Multifunci\u00f3n (con esc\u00e1ner)", type_inkjet: "Inyecci\u00f3n de tinta (bandeja trasera)",
@@ -205,7 +209,8 @@ const T = {
     counters_align: "Allineamento dei contatori", align_left: "A sinistra", align_center: "Centrati",
     name_position: "Posizione del nome", pos_below: "Sotto l'illustrazione", pos_top: "In alto, accanto alla presa",
     extras_hint: "Entit\u00e0 aggiuntive, una per riga (sotto lo stato)",
-    shop_url: "Link di acquisto, {ref} sostituisce il codice della cartuccia",
+    shop_url: "Dove comprare le cartucce, {ref} \u00e8 il modello di stampante",
+    shop_tip: "Ordinare cartucce",
     name: "Nome", compact: "Modalit\u00e0 compatta (icona invece dell'illustrazione)",
     language: "Lingua", language_auto: "Segui Home Assistant",
     image: "Foto della vostra stampante (URL o percorso /local/...)", printer_type: "Tipo di stampante", type_mfp: "Multifunzione (con scanner)", type_inkjet: "Getto d'inchiostro (vassoio posteriore)",
@@ -246,7 +251,8 @@ const T = {
     counters_align: "Uitlijning van de tellers", align_left: "Links", align_center: "Gecentreerd",
     name_position: "Positie van de naam", pos_below: "Onder de afbeelding", pos_top: "Bovenaan, naast het stopcontact",
     extras_hint: "Extra entiteiten, \u00e9\u00e9n per regel (onder de status)",
-    shop_url: "Winkellink, {ref} staat voor het cartridgenummer",
+    shop_url: "Waar cartridges kopen, {ref} is het printermodel",
+    shop_tip: "Cartridges bestellen",
     name: "Naam", compact: "Compacte modus (pictogram in plaats van illustratie)",
     language: "Taal", language_auto: "Home Assistant volgen",
     image: "Foto van uw printer (URL of /local/... pad)", printer_type: "Type printer", type_mfp: "All-in-one (met scanner)", type_inkjet: "Inkjet (invoer achter)",
@@ -287,7 +293,8 @@ const T = {
     counters_align: "Alinhamento dos contadores", align_left: "\u00c0 esquerda", align_center: "Centrados",
     name_position: "Posi\u00e7\u00e3o do nome", pos_below: "Abaixo da ilustra\u00e7\u00e3o", pos_top: "No topo, ao lado da tomada",
     extras_hint: "Entidades adicionais, uma por linha (abaixo do estado)",
-    shop_url: "Liga\u00e7\u00e3o de compra, {ref} substitui a refer\u00eancia do tinteiro",
+    shop_url: "Onde comprar tinteiros, {ref} \u00e9 o modelo da impressora",
+    shop_tip: "Encomendar tinteiros",
     name: "Nome", compact: "Modo compacto (\u00edcone em vez da ilustra\u00e7\u00e3o)",
     language: "Idioma", language_auto: "Seguir o Home Assistant",
     image: "Foto da sua impressora (URL ou caminho /local/...)", printer_type: "Tipo de impressora", type_mfp: "Multifun\u00e7\u00f5es (com scanner)", type_inkjet: "Jato de tinta (alimenta\u00e7\u00e3o traseira)",
@@ -328,7 +335,8 @@ const T = {
     counters_align: "R\u00e4knarnas justering", align_left: "V\u00e4nster", align_center: "Centrerade",
     name_position: "Namnets placering", pos_below: "Under bilden", pos_top: "\u00d6verst, bredvid uttaget",
     extras_hint: "Extra entiteter, en per rad (under statusen)",
-    shop_url: "K\u00f6pl\u00e4nk, {ref} ers\u00e4tts med patronens beteckning",
+    shop_url: "Var patroner k\u00f6ps, {ref} \u00e4r skrivarmodellen",
+    shop_tip: "Best\u00e4ll patroner",
     name: "Namn", compact: "Kompakt l\u00e4ge (ikon i st\u00e4llet f\u00f6r illustration)",
     language: "Spr\u00e5k", language_auto: "F\u00f6lj Home Assistant",
     image: "Foto p\u00e5 din skrivare (URL eller /local/... s\u00f6kv\u00e4g)", printer_type: "Skrivartyp", type_mfp: "Allt-i-ett (med skanner)", type_inkjet: "Bl\u00e4ckstr\u00e5le (bakre inmatning)",
@@ -369,7 +377,8 @@ const T = {
     counters_align: "Justering av tellere", align_left: "Venstre", align_center: "Sentrert",
     name_position: "Navnets plassering", pos_below: "Under illustrasjonen", pos_top: "\u00d8verst, ved siden av stikkontakten",
     extras_hint: "Ekstra entiteter, \u00e9n per linje (under statusen)",
-    shop_url: "Kj\u00f8pslenke, {ref} erstattes med patronens referanse",
+    shop_url: "Hvor patroner kj\u00f8pes, {ref} er skrivermodellen",
+    shop_tip: "Bestill patroner",
     name: "Navn", compact: "Kompakt modus (ikon i stedet for illustrasjon)",
     language: "Spr\u00e5k", language_auto: "F\u00f8lg Home Assistant",
     image: "Bilde av skriveren din (URL eller /local/... bane)", printer_type: "Skrivertype", type_mfp: "Alt-i-ett (med skanner)", type_inkjet: "Blekk (bakre mating)",
@@ -410,7 +419,8 @@ const T = {
     counters_align: "Justering af t\u00e6llere", align_left: "Venstre", align_center: "Centreret",
     name_position: "Navnets placering", pos_below: "Under illustrationen", pos_top: "\u00d8verst, ved siden af stikkontakten",
     extras_hint: "Ekstra entiteter, \u00e9n pr. linje (under status)",
-    shop_url: "K\u00f8bslink, {ref} erstattes med patronens reference",
+    shop_url: "Hvor patroner k\u00f8bes, {ref} er printermodellen",
+    shop_tip: "Bestil patroner",
     name: "Navn", compact: "Kompakt tilstand (ikon i stedet for illustration)",
     language: "Sprog", language_auto: "F\u00f8lg Home Assistant",
     image: "Foto af din printer (URL eller /local/... sti)", printer_type: "Printertype", type_mfp: "Alt-i-en (med scanner)", type_inkjet: "Bl\u00e6k (bagerste indf\u00f8ring)",
@@ -451,7 +461,8 @@ const T = {
     counters_align: "Wyr\u00f3wnanie licznik\u00f3w", align_left: "Do lewej", align_center: "Wy\u015brodkowane",
     name_position: "Pozycja nazwy", pos_below: "Pod ilustracj\u0105", pos_top: "U g\u00f3ry, obok gniazdka",
     extras_hint: "Dodatkowe encje, jedna w wierszu (pod stanem)",
-    shop_url: "Link do sklepu, {ref} zast\u0119puje oznaczenie kartrid\u017ca",
+    shop_url: "Gdzie kupi\u0107 kartrid\u017ce, {ref} to model drukarki",
+    shop_tip: "Zam\u00f3w kartrid\u017ce",
     name: "Nazwa", compact: "Tryb kompaktowy (ikona zamiast ilustracji)",
     language: "J\u0119zyk", language_auto: "Zgodnie z Home Assistant",
     image: "Zdj\u0119cie drukarki (URL lub \u015bcie\u017cka /local/...)", printer_type: "Typ drukarki", type_mfp: "Urz\u0105dzenie wielofunkcyjne (ze skanerem)", type_inkjet: "Atramentowa (podajnik z ty\u0142u)",
@@ -492,7 +503,8 @@ const T = {
     counters_align: "\u0412\u044b\u0440\u0430\u0432\u043d\u0438\u0432\u0430\u043d\u0438\u0435 \u0441\u0447\u0451\u0442\u0447\u0438\u043a\u043e\u0432", align_left: "\u041f\u043e \u043b\u0435\u0432\u043e\u043c\u0443 \u043a\u0440\u0430\u044e", align_center: "\u041f\u043e \u0446\u0435\u043d\u0442\u0440\u0443",
     name_position: "\u041f\u043e\u043b\u043e\u0436\u0435\u043d\u0438\u0435 \u043d\u0430\u0437\u0432\u0430\u043d\u0438\u044f", pos_below: "\u041f\u043e\u0434 \u0438\u0437\u043e\u0431\u0440\u0430\u0436\u0435\u043d\u0438\u0435\u043c", pos_top: "\u0421\u0432\u0435\u0440\u0445\u0443, \u0440\u044f\u0434\u043e\u043c \u0441 \u0440\u043e\u0437\u0435\u0442\u043a\u043e\u0439",
     extras_hint: "\u0414\u043e\u043f\u043e\u043b\u043d\u0438\u0442\u0435\u043b\u044c\u043d\u044b\u0435 \u043e\u0431\u044a\u0435\u043a\u0442\u044b, \u043f\u043e \u043e\u0434\u043d\u043e\u043c\u0443 \u0432 \u0441\u0442\u0440\u043e\u043a\u0435 (\u043f\u043e\u0434 \u0441\u043e\u0441\u0442\u043e\u044f\u043d\u0438\u0435\u043c)",
-    shop_url: "\u0421\u0441\u044b\u043b\u043a\u0430 \u043d\u0430 \u043c\u0430\u0433\u0430\u0437\u0438\u043d, {ref} \u0437\u0430\u043c\u0435\u043d\u044f\u0435\u0442\u0441\u044f \u0430\u0440\u0442\u0438\u043a\u0443\u043b\u043e\u043c \u043a\u0430\u0440\u0442\u0440\u0438\u0434\u0436\u0430",
+    shop_url: "\u0413\u0434\u0435 \u043a\u0443\u043f\u0438\u0442\u044c \u043a\u0430\u0440\u0442\u0440\u0438\u0434\u0436\u0438, {ref} \u2014 \u043c\u043e\u0434\u0435\u043b\u044c \u043f\u0440\u0438\u043d\u0442\u0435\u0440\u0430",
+    shop_tip: "\u0417\u0430\u043a\u0430\u0437\u0430\u0442\u044c \u043a\u0430\u0440\u0442\u0440\u0438\u0434\u0436\u0438",
     name: "\u041d\u0430\u0437\u0432\u0430\u043d\u0438\u0435", compact: "\u041a\u043e\u043c\u043f\u0430\u043a\u0442\u043d\u044b\u0439 \u0440\u0435\u0436\u0438\u043c (\u0437\u043d\u0430\u0447\u043e\u043a \u0432\u043c\u0435\u0441\u0442\u043e \u0438\u043b\u043b\u044e\u0441\u0442\u0440\u0430\u0446\u0438\u0438)",
     language: "\u042f\u0437\u044b\u043a", language_auto: "\u0421\u043b\u0435\u0434\u043e\u0432\u0430\u0442\u044c Home Assistant",
     image: "\u0424\u043e\u0442\u043e \u0432\u0430\u0448\u0435\u0433\u043e \u043f\u0440\u0438\u043d\u0442\u0435\u0440\u0430 (URL \u0438\u043b\u0438 \u043f\u0443\u0442\u044c /local/...)", printer_type: "\u0422\u0438\u043f \u043f\u0440\u0438\u043d\u0442\u0435\u0440\u0430", type_mfp: "\u041c\u0424\u0423 (\u0441\u043e \u0441\u043a\u0430\u043d\u0435\u0440\u043e\u043c)", type_inkjet: "\u0421\u0442\u0440\u0443\u0439\u043d\u044b\u0439 (\u0437\u0430\u0434\u043d\u044f\u044f \u043f\u043e\u0434\u0430\u0447\u0430)",
@@ -533,7 +545,8 @@ const T = {
     counters_align: "\u8ba1\u6570\u5668\u5bf9\u9f50", align_left: "\u5de6\u5bf9\u9f50", align_center: "\u5c45\u4e2d",
     name_position: "\u540d\u79f0\u4f4d\u7f6e", pos_below: "\u56fe\u793a\u4e0b\u65b9", pos_top: "\u9876\u90e8\uff0c\u63d2\u5ea7\u65c1",
     extras_hint: "\u989d\u5916\u5b9e\u4f53\uff0c\u6bcf\u884c\u4e00\u4e2a\uff08\u663e\u793a\u5728\u72b6\u6001\u4e0b\u65b9\uff09",
-    shop_url: "\u8d2d\u4e70\u94fe\u63a5\uff0c{ref} \u66ff\u6362\u4e3a\u58a8\u76d2\u578b\u53f7",
+    shop_url: "\u5728\u54ea\u91cc\u8d2d\u4e70\u58a8\u76d2\uff0c{ref} \u4e3a\u6253\u5370\u673a\u578b\u53f7",
+    shop_tip: "\u8ba2\u8d2d\u58a8\u76d2",
     name: "\u540d\u79f0", compact: "\u7d27\u51d1\u6a21\u5f0f\uff08\u7528\u56fe\u6807\u4ee3\u66ff\u63d2\u56fe\uff09",
     language: "\u8bed\u8a00", language_auto: "\u8ddf\u968f Home Assistant",
     image: "\u6253\u5370\u673a\u7167\u7247\uff08URL \u6216 /local/... \u8def\u5f84\uff09", printer_type: "\u6253\u5370\u673a\u7c7b\u578b", type_mfp: "\u4e00\u4f53\u673a\uff08\u542b\u626b\u63cf\u4eea\uff09", type_inkjet: "\u55b7\u58a8\uff08\u540e\u8fdb\u7eb8\uff09",
@@ -1054,9 +1067,6 @@ function readCartridges(hass, cfg) {
         : COLOR_SWATCH[color]) || (entry.color && /^#|^rgb|^var\(/.test(entry.color) ? entry.color : COLOR_SWATCH.other),
       bands: color === "color" ? TRI_BANDS.map((c) => COLOR_SWATCH[c]) : null,
       name: entry.name || null,
-      // The part number to buy. Two black cartridges on a Canon are a PGBK and
-      // a BK, and no amount of reading the name tells the card which is which.
-      ref: entry.ref ? String(entry.ref) : null,
       // The integration said what this is, so "other" is an answer and not a
       // gap to be filled by the mono-printer guess below.
       described: !!(attrs.description || (Array.isArray(attrs.rgb_color) && attrs.rgb_color.length === 3)),
@@ -1346,17 +1356,35 @@ function cartridgeLabel(hass, c) {
   return t(hass, `c_${c.color}`);
 }
 
-// Asked for on the forum: a tap that leads to the cartridge rather than to its
-// own history. It takes two halves, a template on the card and a reference on
-// the supply, because a search box handed nothing to search for is worse than
-// no link at all. The scheme is checked here, once, this being the only string
-// in a dashboard config that the card ever hands the browser as a destination.
-function shopLink(cfg, c) {
+// The name on the card may well be "Printer downstairs", which no retailer
+// has ever heard of. Manufacturer and model are what a search needs, and a
+// model already carrying its brand is not handed it twice.
+function printerModel(hass, entityId) {
+  const entry = hass.entities ? hass.entities[entityId] : null;
+  const device = entry && entry.device_id && hass.devices ? hass.devices[entry.device_id] : null;
+  if (!device) return null;
+  const model = String(device.model || "").trim();
+  const make = String(device.manufacturer || "").trim();
+  if (!model) return make || null;
+  return !make || model.toLowerCase().includes(make.toLowerCase()) ? model : `${make} ${model}`;
+}
+
+// Asked for on the forum, and deliberately not a link per cartridge: tapping a
+// cartridge is how you reach its history, which is worth more than a shortcut
+// to a shop. One basket in the corner instead, carrying the search a retailer
+// understands, the word for cartridges in the card's language followed by the
+// machine. A template with no token is taken as it stands, so a direct link to
+// the page for your own printer works too. Only http and https are followed:
+// this is the one address in a dashboard config the card hands the browser.
+function shopLink(hass, cfg, entityId, printerName) {
   const tpl = String((cfg && cfg.shop_url) || "").trim();
-  if (!tpl || !c || !c.ref) return null;
-  const ref = encodeURIComponent(String(c.ref));
-  const url = tpl.includes("{ref}") ? tpl.replace(/\{ref\}/g, ref) : tpl + ref;
-  return /^https?:\/\//i.test(url) ? url : null;
+  if (!tpl) return null;
+  // The search needs the word for cartridges; the tooltip does not, it is
+  // already in the label, and "Order cartridges: Cartridges Canon" reads badly.
+  const who = printerModel(hass, entityId) || printerName || "";
+  const what = `${t(hass, "style_cartridges")} ${who}`.trim();
+  const url = tpl.includes("{ref}") ? tpl.replace(/\{ref\}/g, encodeURIComponent(what)) : tpl;
+  return /^https?:\/\//i.test(url) ? { url, who } : null;
 }
 
 // ---------------------------------------------------------------------------
@@ -1538,8 +1566,8 @@ function inkBay(carts, bay, tappable) {
     const fy = +(top + inner - 1 - fh).toFixed(1);
     const ww = +w.toFixed(1);
     return `
-    <g class="ink${c.shop || tappable ? " clickable" : ""}${c.low ? " low" : ""}"${c.shop ? ` data-shop="${escapeHtml(c.shop)}"` : (tappable && c.entity ? ` data-entity="${escapeHtml(c.entity)}"` : "")}>
-      <title>${escapeHtml(c.label || c.title)}${c.ref ? ` \u00b7 ${escapeHtml(c.ref)}` : ""} ${c.level === null ? "?" : Math.round(c.level)}%</title>
+    <g class="ink${tappable ? " clickable" : ""}${c.low ? " low" : ""}"${tappable && c.entity ? ` data-entity="${escapeHtml(c.entity)}"` : ""}>
+      <title>${escapeHtml(c.label || c.title)} ${c.level === null ? "?" : Math.round(c.level)}%</title>
       <rect class="ink-cap" x="${+(x + w * 0.3).toFixed(1)}" y="${+rowTop.toFixed(1)}" width="${+(w * 0.4).toFixed(1)}" height="${capH}" rx="1"/>
       <rect class="ink-track" x="${x}" y="${top}" width="${ww}" height="${inner}" rx="2"/>
       ${fh > 0 ? (c.bands
@@ -1818,10 +1846,7 @@ class PrinterCard extends HTMLElement {
       }
     }
     const supplies = cfg.show_supplies === false ? [] : readCartridges(hass, cfg);
-    supplies.forEach((c) => {
-      c.label = supplyLabel(hass, c, name);
-      c.shop = shopLink(cfg, c);
-    });
+    supplies.forEach((c) => { c.label = supplyLabel(hass, c, name); });
     const color = STATE_COLORS[norm];
     const carts = supplies.filter((c) => c.kind === "ink");
     const parts = cfg.show_parts === false ? [] : supplies.filter((c) => c.kind !== "ink");
@@ -1857,13 +1882,14 @@ class PrinterCard extends HTMLElement {
     // instead of sitting under the picture. Compact mode already puts the two
     // side by side, so it has nothing to gain and keeps its own layout.
     const topName = cfg.name_position === "top" && !cfg.compact;
+    const shop = shopLink(hass, cfg, cfg.entity, name);
 
 
     const signature = JSON.stringify([
       norm, name, msg, url, lang(hass), cfg.compact, cfg.printer_type,
       cfg.cartridge_style, showPower, plugOn, watts, !!cfg.print_entity,
       inside, noPaper, counters, cfg.cartridge_rows, photo, cfg.counters_align,
-      topName, extras.map((e) => [e.entity, e.label, e.value]),
+      topName, shop && shop.url, extras.map((e) => [e.entity, e.label, e.value]),
       supplies.map((c) => [c.entity, c.level, c.low, c.color, c.kind]),
     ]);
     if (signature === this._signature) return;
@@ -1875,31 +1901,31 @@ class PrinterCard extends HTMLElement {
     const tappable = cfg.more_info !== false;
     const clk = tappable ? " clickable" : "";
     const ent = (id) => (tappable && id ? ` data-entity="${escapeHtml(id)}"` : "");
-    // Opt-in twice over, so a card without a shop link behaves exactly as it
-    // always has. Where there is one it takes the tap: having written both the
-    // template and the reference is not an ambiguous request.
-    const tap = (c) => (c.shop ? ` data-shop="${escapeHtml(c.shop)}"` : ent(c.entity));
-    const tapClk = (c) => (c.shop || tappable ? " clickable" : "");
-    const tip = (c) => escapeHtml(c.ref ? `${c.title} \u00b7 ${c.ref}` : c.title);
 
     const cartMarkup = carts.length === 0 || inside ? "" : bars
       ? `<div class="supplies bars">${carts.map((c) => `
-          <div class="row-b${tapClk(c)} ${c.low ? "low" : ""}"${tap(c)} title="${tip(c)}">
+          <div class="row-b${clk} ${c.low ? "low" : ""}"${ent(c.entity)} title="${escapeHtml(c.title)}">
             <span class="lbl">${escapeHtml(c.label)}</span>
             ${cartridgeBar(c.level, c.swatch, c.bands)}
             <span class="pct">${c.level === null ? "?" : Math.round(c.level)}%</span>
           </div>`).join("")}</div>`
       : `<div class="supplies" style="grid-template-columns:repeat(${supplyColumns(carts.length, cfg.cartridge_rows)},minmax(0,1fr))">${carts.map((c, i) => `
-          <div class="cart${tapClk(c)} ${c.low ? "low" : ""}"${tap(c)} title="${tip(c)}">
+          <div class="cart${clk} ${c.low ? "low" : ""}"${ent(c.entity)} title="${escapeHtml(c.title)}">
             <span class="wrap">${cartridgeSvg(c.level, c.swatch, i, c.bands)}${c.low ? '<span class="lowdot">!</span>' : ""}</span>
             <span class="pct">${c.level === null ? "?" : Math.round(c.level)}%</span>
             <span class="lbl">${escapeHtml(c.label)}</span>
           </div>`).join("")}</div>`;
 
-    const corner = showPower ? `<div class="corner${clk} ${plugOn ? "on" : ""}"${ent(cfg.power_entity || cfg.plug_entity)}>
+    // The basket shares the corner with the socket rather than claiming one of
+    // its own: both belong top right, and the corner is one absolutely
+    // positioned cluster that the compact and header layouts already move.
+    const basket = shop ? `<a class="shop" href="${escapeHtml(shop.url)}" target="_blank" rel="noopener noreferrer"
+          title="${escapeHtml(shop.who ? `${t(hass, "shop_tip")} : ${shop.who}` : t(hass, "shop_tip"))}"><ha-icon icon="mdi:cart-outline"></ha-icon></a>` : "";
+    const socket = showPower ? `<span class="pw${clk} ${plugOn ? "on" : ""}"${ent(cfg.power_entity || cfg.plug_entity)}>
           ${plugOn !== null ? `<ha-icon icon="${plugOn ? "mdi:power-plug" : "mdi:power-plug-off"}"></ha-icon>` : ""}
           ${watts !== null ? `${watts.toFixed(watts >= 100 ? 0 : 1)} W` : ""}
-        </div>` : "";
+        </span>` : "";
+    const corner = basket || socket ? `<div class="corner">${socket}${basket}</div>` : "";
 
     const extrasMarkup = extras.length === 0 ? "" : `<div class="extras">${extras.map((e) => `
           <span class="extra${clk}"${ent(e.entity)} title="${escapeHtml(e.label)}">
@@ -1916,7 +1942,7 @@ class PrinterCard extends HTMLElement {
 
     const nf = new Intl.NumberFormat(lang(hass));
     const partsMarkup = parts.length === 0 ? "" : `<div class="parts">${parts.map((c) => `
-          <span class="part${tapClk(c)} ${c.low ? "low" : ""}"${tap(c)} title="${tip(c)}">
+          <span class="part${clk} ${c.low ? "low" : ""}"${ent(c.entity)} title="${escapeHtml(c.title)}">
             <span class="pname">${escapeHtml(c.label)}</span>
             <span class="pval">${c.level === null ? "?" : Math.round(c.level)}%</span>
             <i style="width:${Math.max(0, Math.min(100, c.level === null ? 0 : c.level)) * 0.42}px"></i>
@@ -2001,7 +2027,7 @@ ha-card.offline .illu { opacity:.55; }
 @keyframes pc-pulse { 50% { opacity:.55; } }
 .head { display:flex; align-items:center; gap:10px; }
 .head .name { flex:1 1 auto; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-.head .corner { position:static; flex:none; }
+.head .corner { position:static; flex:none; flex-direction:row; align-items:center; gap:5px; }
 .bottom { display:flex; align-items:flex-end; justify-content:space-between; gap:12px; }
 ha-card.compact .bottom { align-items:center; flex:1; }
 .body { min-width:0; flex:1 1 auto; }
@@ -2015,10 +2041,13 @@ ha-card.compact .bottom { align-items:center; flex:1; }
 .xval { font-weight:500; color:var(--primary-text-color); flex:none; }
 .alert { display:flex; align-items:center; gap:6px; font-size:12.5px; color:var(--warning-color, #ff9800); }
 .alert ha-icon { --mdc-icon-size:17px; }
-.corner { position:absolute; top:10px; right:12px; display:flex; align-items:center; gap:5px; font-size:12px; color:var(--secondary-text-color); z-index:2; }
+.corner { position:absolute; top:10px; right:12px; display:flex; flex-direction:column; align-items:flex-end; gap:6px; font-size:12px; color:var(--secondary-text-color); z-index:2; }
 .corner ha-icon { --mdc-icon-size:16px; }
-.corner.on { color:var(--success-color, #4caf50); }
-ha-card.compact .corner { position:static; flex:none; white-space:nowrap; }
+.corner .pw { display:flex; align-items:center; gap:5px; }
+.corner .pw.on { color:var(--success-color, #4caf50); }
+.shop { display:inline-flex; align-items:center; color:var(--secondary-text-color); text-decoration:none; opacity:.7; }
+.shop:hover { color:var(--primary-color); opacity:1; }
+ha-card.compact .corner { position:static; flex:none; align-items:flex-end; gap:4px; white-space:nowrap; }
 /* A flex child with min-width:0 collapses to nothing on an over-full row and
    its text then paints over its neighbours. Compact rows are the ones that
    overflow, so there the text truncates and the buttons keep icons only. */
@@ -2120,16 +2149,6 @@ svg .clickable { cursor:pointer; }
         this._imageFailed = cfg.image;
         this._signature = null;
         this._render();
-      });
-    });
-    // The one place the card sends anyone outside Home Assistant. The scheme
-    // was checked when the link was built; the new window gets no handle back.
-    this._root.querySelectorAll("[data-shop]").forEach((el) => {
-      const url = el.getAttribute("data-shop");
-      if (!url) return;
-      el.addEventListener("click", (ev) => {
-        ev.stopPropagation();
-        window.open(url, "_blank", "noopener,noreferrer");
       });
     });
     this._root.querySelectorAll("[data-entity]").forEach((el) => {
