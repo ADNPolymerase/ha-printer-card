@@ -1,4 +1,4 @@
-const CARD_VERSION = "1.1.1";
+const CARD_VERSION = "1.1.1-beta.1";
 
 console.info(
   "%c HA-PRINTER-CARD %c v" + CARD_VERSION + " ",
@@ -2046,6 +2046,7 @@ ha-card.compact .bottom { align-items:center; flex:1; }
 .corner .pw { display:flex; align-items:center; gap:5px; }
 .corner .pw.on { color:var(--success-color, #4caf50); }
 .shop { display:inline-flex; align-items:center; color:var(--secondary-text-color); text-decoration:none; opacity:.7; }
+.shop ha-icon { --mdc-icon-size:19px; }
 .shop:hover { color:var(--primary-color); opacity:1; }
 ha-card.compact .corner { position:static; flex:none; align-items:flex-end; gap:4px; white-space:nowrap; }
 /* A flex child with min-width:0 collapses to nothing on an over-full row and
