@@ -1,5 +1,6 @@
 # HA Printer Card
 
+[![hacs_badge](https://img.shields.io/badge/HACS-Default-blue.svg)](https://github.com/hacs/default)
 [![GitHub Release](https://img.shields.io/github/v/release/ADNPolymerase/ha-printer-card?sort=semver)](https://github.com/ADNPolymerase/ha-printer-card/releases)
 [![HACS Action](https://github.com/ADNPolymerase/ha-printer-card/actions/workflows/hacs.yml/badge.svg)](https://github.com/ADNPolymerase/ha-printer-card/actions/workflows/hacs.yml)
 [![Tests](https://github.com/ADNPolymerase/ha-printer-card/actions/workflows/test.yml/badge.svg)](https://github.com/ADNPolymerase/ha-printer-card/actions/workflows/test.yml)
@@ -59,13 +60,18 @@ Les imprimantes 3D sont une autre machine avec un autre tableau de bord : cette 
 
 ## Installation (HACS)
 
-1. Ajouter `https://github.com/ADNPolymerase/ha-printer-card` en **dépôt personnalisé** (catégorie *Tableau de bord*), puis installer **HA Printer Card**.
-2. Ajouter une carte `custom:ha-printer-card` (YAML ou éditeur visuel).
+Disponible directement dans HACS, aucun dépôt personnalisé n'est nécessaire.
+
+1. Ouvrir **HACS**, chercher **HA Printer Card** et l'installer
+2. Rafraîchir le navigateur sans cache (Ctrl+Maj+R / Cmd+Maj+R)
+3. Ajouter une carte `custom:ha-printer-card` (YAML ou éditeur visuel)
+
+Si la recherche ne trouve rien, c'est que HACS n'a pas encore rafraîchi sa liste. L'ajouter en dépôt personnalisé : HACS -> trois points -> **Dépôts personnalisés** -> ajouter `https://github.com/ADNPolymerase/ha-printer-card` en catégorie **Tableau de bord**.
 
 <details>
 <summary>Installation manuelle</summary>
 
-Copier `dist/ha-printer-card.js` dans `/config/www/`, puis l'ajouter en ressource de tableau de bord, type *module JavaScript*, pointant sur `/local/ha-printer-card.js`.
+Copier `ha-printer-card.js` depuis la [dernière release](https://github.com/ADNPolymerase/ha-printer-card/releases) dans `/config/www/`, puis l'ajouter en ressource de tableau de bord, type *module JavaScript*, pointant sur `/local/ha-printer-card.js`.
 </details>
 
 ## Configuration

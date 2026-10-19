@@ -1,5 +1,6 @@
 # HA Printer Card
 
+[![hacs_badge](https://img.shields.io/badge/HACS-Default-blue.svg)](https://github.com/hacs/default)
 [![GitHub Release](https://img.shields.io/github/v/release/ADNPolymerase/ha-printer-card?sort=semver)](https://github.com/ADNPolymerase/ha-printer-card/releases)
 [![HACS Action](https://github.com/ADNPolymerase/ha-printer-card/actions/workflows/hacs.yml/badge.svg)](https://github.com/ADNPolymerase/ha-printer-card/actions/workflows/hacs.yml)
 [![Tests](https://github.com/ADNPolymerase/ha-printer-card/actions/workflows/test.yml/badge.svg)](https://github.com/ADNPolymerase/ha-printer-card/actions/workflows/test.yml)
@@ -59,13 +60,18 @@ Nothing to configure: point the card at the printer's status sensor and it reads
 
 ## Installation (HACS)
 
-1. Add `https://github.com/ADNPolymerase/ha-printer-card` as a **custom repository** (category *Dashboard*), then install **HA Printer Card**.
-2. Add a `custom:ha-printer-card` card (YAML or visual editor).
+Available directly in HACS, no custom repository needed.
+
+1. Open **HACS**, search for **HA Printer Card** and install it
+2. Hard-refresh your browser (Ctrl+Shift+R / Cmd+Shift+R)
+3. Add a `custom:ha-printer-card` card (YAML or visual editor)
+
+If the search finds nothing, HACS has not refreshed its list yet. Add it as a custom repository: HACS -> three dots -> **Custom repositories** -> add `https://github.com/ADNPolymerase/ha-printer-card` with category **Dashboard**.
 
 <details>
 <summary>Manual installation</summary>
 
-Copy `dist/ha-printer-card.js` into `/config/www/`, then add it as a dashboard resource of type *JavaScript module* pointing at `/local/ha-printer-card.js`.
+Copy `ha-printer-card.js` from the [latest release](https://github.com/ADNPolymerase/ha-printer-card/releases) into `/config/www/`, then add it as a dashboard resource of type *JavaScript module* pointing at `/local/ha-printer-card.js`.
 </details>
 
 ## Configuration
