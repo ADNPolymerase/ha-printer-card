@@ -1,4 +1,4 @@
-const CARD_VERSION = "1.1.2";
+const CARD_VERSION = "1.2.0";
 
 console.info(
   "%c HA-PRINTER-CARD %c v" + CARD_VERSION + " ",
@@ -17,6 +17,7 @@ const T = {
   en: {
     printing: "Printing\u2026", idle: "Ready", sleep: "Sleep", stopped: "Stopped", warning: "Attention needed",
     offline: "Offline", unknown: "Unknown state",
+    last_reading: "Last reading {when}",
     low: "Low", alert_low: "Cartridge low", alert_part: "Wear part low",
     pages: "pages", pages_bw: "B&W", pages_color: "colour",
     fn_print: "Printed", fn_scan: "Scanned", fn_copy: "Copied", fn_fax: "Faxed",
@@ -59,6 +60,7 @@ const T = {
   fr: {
     printing: "Impression\u2026", idle: "Pr\u00eate", sleep: "Veille", stopped: "Arr\u00eat\u00e9e", warning: "Attention requise",
     offline: "Hors ligne", unknown: "\u00c9tat inconnu",
+    last_reading: "Dernier relev\u00e9 {when}",
     low: "Bas", alert_low: "Cartouche presque vide", alert_part: "Pi\u00e8ce d'usure en fin de vie",
     pages: "pages", pages_bw: "N&B", pages_color: "couleur",
     fn_print: "Impression", fn_scan: "Num\u00e9risation", fn_copy: "Copie", fn_fax: "Fax",
@@ -101,6 +103,7 @@ const T = {
   de: {
     printing: "Druckt\u2026", idle: "Bereit", sleep: "Ruhezustand", stopped: "Gestoppt", warning: "Achtung",
     offline: "Offline", unknown: "Unbekannter Zustand",
+    last_reading: "Letzter Messwert {when}",
     low: "Niedrig", alert_low: "Patrone fast leer", alert_part: "Verschlei\u00dfteil fast am Ende",
     pages: "Seiten", pages_bw: "S/W", pages_color: "Farbe",
     fn_print: "Gedruckt", fn_scan: "Gescannt", fn_copy: "Kopiert", fn_fax: "Fax",
@@ -143,6 +146,7 @@ const T = {
   es: {
     printing: "Imprimiendo\u2026", idle: "Lista", sleep: "Reposo", stopped: "Detenida", warning: "Requiere atenci\u00f3n",
     offline: "Sin conexi\u00f3n", unknown: "Estado desconocido",
+    last_reading: "\u00daltima lectura {when}",
     low: "Bajo", alert_low: "Cartucho casi vac\u00edo", alert_part: "Pieza de desgaste al l\u00edmite",
     pages: "p\u00e1ginas", pages_bw: "B/N", pages_color: "color",
     fn_print: "Impresi\u00f3n", fn_scan: "Escaneo", fn_copy: "Copia", fn_fax: "Fax",
@@ -185,6 +189,7 @@ const T = {
   it: {
     printing: "Stampa in corso\u2026", idle: "Pronta", sleep: "Sospensione", stopped: "Ferma", warning: "Richiede attenzione",
     offline: "Non in linea", unknown: "Stato sconosciuto",
+    last_reading: "Ultima lettura {when}",
     low: "Basso", alert_low: "Cartuccia quasi esaurita", alert_part: "Parte di consumo quasi esaurita",
     pages: "pagine", pages_bw: "B/N", pages_color: "colore",
     fn_print: "Stampa", fn_scan: "Scansione", fn_copy: "Copia", fn_fax: "Fax",
@@ -227,6 +232,7 @@ const T = {
   nl: {
     printing: "Bezig met afdrukken\u2026", idle: "Gereed", sleep: "Slaapstand", stopped: "Gestopt", warning: "Aandacht nodig",
     offline: "Offline", unknown: "Onbekende status",
+    last_reading: "Laatste meting {when}",
     low: "Laag", alert_low: "Cartridge bijna leeg", alert_part: "Slijtdeel bijna op",
     pages: "pagina's", pages_bw: "Z/W", pages_color: "kleur",
     fn_print: "Afgedrukt", fn_scan: "Gescand", fn_copy: "Gekopieerd", fn_fax: "Fax",
@@ -269,6 +275,7 @@ const T = {
   pt: {
     printing: "A imprimir\u2026", idle: "Pronta", sleep: "Suspensa", stopped: "Parada", warning: "Requer aten\u00e7\u00e3o",
     offline: "Offline", unknown: "Estado desconhecido",
+    last_reading: "\u00daltima leitura {when}",
     low: "Baixo", alert_low: "Cartucho quase vazio", alert_part: "Pe\u00e7a de desgaste no fim",
     pages: "p\u00e1ginas", pages_bw: "P/B", pages_color: "cor",
     fn_print: "Impress\u00e3o", fn_scan: "Digitaliza\u00e7\u00e3o", fn_copy: "C\u00f3pia", fn_fax: "Fax",
@@ -311,6 +318,7 @@ const T = {
   sv: {
     printing: "Skriver ut\u2026", idle: "Redo", sleep: "Vilol\u00e4ge", stopped: "Stoppad", warning: "Kr\u00e4ver \u00e5tg\u00e4rd",
     offline: "Offline", unknown: "Ok\u00e4nt tillst\u00e5nd",
+    last_reading: "Senaste m\u00e4tning {when}",
     low: "L\u00e5g", alert_low: "Patron n\u00e4stan tom", alert_part: "Slitdel n\u00e4stan slut",
     pages: "sidor", pages_bw: "S/V", pages_color: "f\u00e4rg",
     fn_print: "Utskrift", fn_scan: "Skanning", fn_copy: "Kopiering", fn_fax: "Fax",
@@ -353,6 +361,7 @@ const T = {
   no: {
     printing: "Skriver ut\u2026", idle: "Klar", sleep: "Hvilemodus", stopped: "Stoppet", warning: "Krever tilsyn",
     offline: "Frakoblet", unknown: "Ukjent tilstand",
+    last_reading: "Siste m\u00e5ling {when}",
     low: "Lav", alert_low: "Patron nesten tom", alert_part: "Slitedel nesten oppbrukt",
     pages: "sider", pages_bw: "S/H", pages_color: "farge",
     fn_print: "Utskrift", fn_scan: "Skanning", fn_copy: "Kopiering", fn_fax: "Faks",
@@ -395,6 +404,7 @@ const T = {
   da: {
     printing: "Udskriver\u2026", idle: "Klar", sleep: "Dvale", stopped: "Stoppet", warning: "Kr\u00e6ver opm\u00e6rksomhed",
     offline: "Offline", unknown: "Ukendt tilstand",
+    last_reading: "Seneste m\u00e5ling {when}",
     low: "Lav", alert_low: "Patron n\u00e6sten tom", alert_part: "Sliddel n\u00e6sten opbrugt",
     pages: "sider", pages_bw: "S/H", pages_color: "farve",
     fn_print: "Udskrift", fn_scan: "Scanning", fn_copy: "Kopiering", fn_fax: "Fax",
@@ -437,6 +447,7 @@ const T = {
   pl: {
     printing: "Drukowanie\u2026", idle: "Gotowa", sleep: "U\u015bpienie", stopped: "Zatrzymana", warning: "Wymaga uwagi",
     offline: "Offline", unknown: "Nieznany stan",
+    last_reading: "Ostatni odczyt {when}",
     low: "Niski", alert_low: "Ko\u0144czy si\u0119 tusz", alert_part: "Cz\u0119\u015b\u0107 eksploatacyjna na wyczerpaniu",
     pages: "stron", pages_bw: "Cz/B", pages_color: "kolor",
     fn_print: "Wydruk", fn_scan: "Skanowanie", fn_copy: "Kopiowanie", fn_fax: "Faks",
@@ -479,6 +490,7 @@ const T = {
   ru: {
     printing: "\u041f\u0435\u0447\u0430\u0442\u044c\u2026", idle: "\u0413\u043e\u0442\u043e\u0432", sleep: "\u0421\u043f\u044f\u0449\u0438\u0439 \u0440\u0435\u0436\u0438\u043c", stopped: "\u041e\u0441\u0442\u0430\u043d\u043e\u0432\u043b\u0435\u043d", warning: "\u0422\u0440\u0435\u0431\u0443\u0435\u0442 \u0432\u043d\u0438\u043c\u0430\u043d\u0438\u044f",
     offline: "\u041d\u0435 \u0432 \u0441\u0435\u0442\u0438", unknown: "\u041d\u0435\u0438\u0437\u0432\u0435\u0441\u0442\u043d\u043e\u0435 \u0441\u043e\u0441\u0442\u043e\u044f\u043d\u0438\u0435",
+    last_reading: "\u041f\u043e\u0441\u043b\u0435\u0434\u043d\u0435\u0435 \u0437\u043d\u0430\u0447\u0435\u043d\u0438\u0435 {when}",
     low: "\u041c\u0430\u043b\u043e", alert_low: "\u041a\u0430\u0440\u0442\u0440\u0438\u0434\u0436 \u0437\u0430\u043a\u0430\u043d\u0447\u0438\u0432\u0430\u0435\u0442\u0441\u044f", alert_part: "\u0420\u0430\u0441\u0445\u043e\u0434\u043d\u0430\u044f \u0434\u0435\u0442\u0430\u043b\u044c \u043d\u0430 \u0438\u0441\u0445\u043e\u0434\u0435",
     pages: "\u0441\u0442\u0440\u0430\u043d\u0438\u0446", pages_bw: "\u0427/\u0411", pages_color: "\u0446\u0432\u0435\u0442",
     fn_print: "\u041f\u0435\u0447\u0430\u0442\u044c", fn_scan: "\u0421\u043a\u0430\u043d\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u0435", fn_copy: "\u041a\u043e\u043f\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u0435", fn_fax: "\u0424\u0430\u043a\u0441",
@@ -521,6 +533,7 @@ const T = {
   zh: {
     printing: "\u6253\u5370\u4e2d\u2026", idle: "\u5c31\u7eea", sleep: "\u7761\u7720", stopped: "\u5df2\u505c\u6b62", warning: "\u9700\u8981\u6ce8\u610f",
     offline: "\u79bb\u7ebf", unknown: "\u72b6\u6001\u672a\u77e5",
+    last_reading: "\u6700\u540e\u4e00\u6b21\u8bfb\u6570 {when}",
     low: "\u4e0d\u8db3", alert_low: "\u58a8\u76d2\u5373\u5c06\u8017\u5c3d", alert_part: "\u8017\u6750\u90e8\u4ef6\u5373\u5c06\u8017\u5c3d",
     pages: "\u9875", pages_bw: "\u9ed1\u767d", pages_color: "\u5f69\u8272",
     fn_print: "\u6253\u5370", fn_scan: "\u626b\u63cf", fn_copy: "\u590d\u5370", fn_fax: "\u4f20\u771f",
@@ -1029,11 +1042,35 @@ function autoCartridgeIds(hass, printerEntity, printerName) {
 // Normalizes both spellings of the option: a plain entity id, or an object
 // overriding the label, the colour or the kind for printers whose sensors are
 // named after the part number and nothing else.
-function readCartridges(hass, cfg) {
+// A supply whose entity reads neither a number nor a state: nothing to show
+// from the live state machine, and the point at which a remembered level is
+// worth more than a question mark.
+const UNREADABLE = ["unavailable", "unknown", "none", ""];
+
+// `memory` is what the card has already seen of these supplies: the last
+// numeric level per entity, and the ids it detected while the printer was
+// answering. Both exist for the same reason -- an offline printer tells you
+// nothing, and nothing is not what a card should draw when it knew better a
+// minute ago. Reported as #3.
+function readCartridges(hass, cfg, memory) {
   const printerName = printerLabel(hass, cfg);
-  const raw = Array.isArray(cfg.cartridges) && cfg.cartridges.length
-    ? cfg.cartridges
-    : autoCartridgeIds(hass, cfg.entity, printerName);
+  const explicit = Array.isArray(cfg.cartridges) && cfg.cartridges.length;
+  let raw = explicit ? cfg.cartridges : autoCartridgeIds(hass, cfg.entity, printerName);
+  // Auto-detection reads `marker_type` and the percent unit off the state, and
+  // Home Assistant drops an entity's own attributes while it is unavailable.
+  // With some integrations that is enough to make every cartridge vanish from
+  // the card, so a supply seen earlier is kept as long as its entity is still
+  // in the registry and merely unreadable. An explicit `cartridges` list needs
+  // none of this: it never depended on the attributes in the first place.
+  if (!explicit && memory && memory.ids && memory.ids.length) {
+    const seen = new Set(raw.map((r) => (typeof r === "string" ? r : (r || {}).entity)));
+    for (const held of memory.ids) {
+      if (!held || seen.has(held.entity)) continue;
+      const st = hass.states[held.entity];
+      if (!st || !UNREADABLE.includes(String(st.state).toLowerCase())) continue;
+      raw = raw.concat([held]);
+    }
+  }
   let out = [];
   for (const item of raw) {
     const entry = typeof item === "string" ? { entity: item } : (item || {});
@@ -1041,7 +1078,19 @@ function readCartridges(hass, cfg) {
     const st = entry.entity ? hass.states[entry.entity] : null;
     if (!st) continue;
     const attrs = st.attributes || {};
-    const level = toNumber(st.state);
+    let level = toNumber(st.state);
+    // The reading the card last had, with the time the printer gave it, so the
+    // tooltip can say when rather than just claim a number.
+    let stale = null;
+    let at = st.last_changed || st.last_updated || null;
+    if (level === null && memory && memory.levels) {
+      const held = memory.levels.get(entry.entity);
+      if (held && toNumber(held.level) !== null) {
+        level = toNumber(held.level);
+        stale = held.at || true;
+        at = held.at || null;
+      }
+    }
     // Some integrations hand over what this card otherwise has to guess: the
     // SNMP one publishes the supply's colour, its full description and its
     // type as attributes. Read them before falling back to the name.
@@ -1060,6 +1109,9 @@ function readCartridges(hass, cfg) {
       entity: entry.entity,
       rank,
       level,
+      // Truthy only when the number predates the printer going quiet.
+      stale,
+      at,
       kind,
       color,
       swatch: (color === "other" && Array.isArray(attrs.rgb_color) && attrs.rgb_color.length === 3
@@ -1346,6 +1398,15 @@ function paperEntityEmpty(hass, cfg) {
   if (n !== null) return n <= 0;
   if (["empty", "vide", "leer", "vacio", "vuoto", "leeg", "vazio", "tom", "pusty"].includes(raw)) return true;
   return PAPER_OUT_PATTERNS.some((re) => re.test(stripAccents(raw)));
+}
+
+// A remembered level says so in its tooltip, with the time it was read. Any
+// other wording would have the card quietly state a number as current.
+function supplyTitle(hass, c) {
+  if (!c.stale) return c.title;
+  const when = typeof c.stale === "string" ? new Date(c.stale) : null;
+  const stamp = when && !Number.isNaN(when.getTime()) ? when.toLocaleString(lang(hass)) : "";
+  return `${c.title} (${t(hass, "last_reading").replace("{when}", stamp).trim()})`;
 }
 
 function cartridgeLabel(hass, c) {
@@ -1747,6 +1808,11 @@ class PrinterCard extends HTMLElement {
     if (!config || !config.entity) {
       throw new Error("ha-printer-card: 'entity' (the printer sensor) is required");
     }
+    // Remembered readings belong to one printer: pointing the card at another
+    // machine must not show it the previous one's levels.
+    if (!this._memory || !this._config || this._config.entity !== config.entity) {
+      this._memory = { levels: new Map(), ids: [], asked: new Set() };
+    }
     this._config = config;
     this._signature = null;
     if (!this._root) {
@@ -1801,6 +1867,59 @@ class PrinterCard extends HTMLElement {
     }
   }
 
+  // What the live state machine cannot answer, the recorder can: the last
+  // numeric level each supply reported before the printer went quiet. One
+  // request covers every unreadable supply, and only the first time each is
+  // seen -- once the printer answers again the live reading takes over and
+  // fills the memory by itself.
+  _recall(hass, supplies) {
+    if (!hass || typeof hass.callWS !== "function" || !this._memory) return;
+    const wanted = supplies
+      .filter((c) => c.level === null)
+      .map((c) => c.entity)
+      .filter((id) => id && !this._memory.asked.has(id));
+    if (!wanted.length) return;
+    // Marked before the call, not after: a failure is not retried. A supply
+    // the recorder has nothing on would otherwise be asked for again at every
+    // state change, which is several times a minute on a busy instance.
+    wanted.forEach((id) => this._memory.asked.add(id));
+    const end = new Date();
+    // A toner holds its level for weeks, so a week back is the window that
+    // answers for a printer unplugged over a holiday. `include_start_time_state`
+    // is what returns a value when nothing changed inside the window at all.
+    const start = new Date(end.getTime() - 7 * 24 * 3600 * 1000);
+    hass.callWS({
+      type: "history/history_during_period",
+      start_time: start.toISOString(),
+      end_time: end.toISOString(),
+      entity_ids: wanted,
+      include_start_time_state: true,
+      significant_changes_only: true,
+      minimal_response: true,
+      no_attributes: true,
+    }).then((res) => {
+      let found = false;
+      for (const [id, rows] of Object.entries(res || {})) {
+        if (!Array.isArray(rows)) continue;
+        // Newest first: the last row carrying a number is the reading wanted.
+        for (let i = rows.length - 1; i >= 0; i--) {
+          const row = rows[i] || {};
+          const n = toNumber(row.s !== undefined ? row.s : row.state);
+          if (n === null) continue;
+          const lu = row.lu !== undefined ? row.lu : row.last_updated;
+          const at = typeof lu === "number" ? new Date(lu * 1000).toISOString() : (lu || null);
+          this._memory.levels.set(id, { level: n, at });
+          found = true;
+          break;
+        }
+      }
+      // The levels arrive after the render that asked for them, so that render
+      // has to be redone -- and its signature forgotten, or it would be taken
+      // for unchanged.
+      if (found) { this._signature = null; this._render(); }
+    }).catch(() => {});
+  }
+
   _render() {
     const rawHass = this._hass;
     const cfg = this._config;
@@ -1845,8 +1964,18 @@ class PrinterCard extends HTMLElement {
         msgSevere = fromMsg !== "offline";
       }
     }
-    const supplies = cfg.show_supplies === false ? [] : readCartridges(hass, cfg);
+    const supplies = cfg.show_supplies === false ? [] : readCartridges(hass, cfg, this._memory);
     supplies.forEach((c) => { c.label = supplyLabel(hass, c, name); });
+    // Every live reading is worth keeping: it is what the card will draw once
+    // the printer stops answering. Remembered ones are skipped so a level
+    // cannot be re-dated on every render.
+    for (const c of supplies) {
+      if (!c.stale && c.level !== null) this._memory.levels.set(c.entity, { level: c.level, at: c.at });
+    }
+    if (supplies.length) this._memory.ids = supplies.map((c) => ({ entity: c.entity, rank: c.rank }));
+    // A card opened while the printer is already off has never seen a reading,
+    // so the only place left to look is the recorder.
+    this._recall(rawHass, supplies);
     const color = STATE_COLORS[norm];
     const carts = supplies.filter((c) => c.kind === "ink");
     const parts = cfg.show_parts === false ? [] : supplies.filter((c) => c.kind !== "ink");
@@ -1890,7 +2019,7 @@ class PrinterCard extends HTMLElement {
       cfg.cartridge_style, showPower, plugOn, watts, !!cfg.print_entity,
       inside, noPaper, counters, cfg.cartridge_rows, photo, cfg.counters_align,
       topName, shop && shop.url, extras.map((e) => [e.entity, e.label, e.value]),
-      supplies.map((c) => [c.entity, c.level, c.low, c.color, c.kind]),
+      supplies.map((c) => [c.entity, c.level, c.low, c.color, c.kind, c.stale]),
     ]);
     if (signature === this._signature) return;
     this._signature = signature;
@@ -1904,13 +2033,13 @@ class PrinterCard extends HTMLElement {
 
     const cartMarkup = carts.length === 0 || inside ? "" : bars
       ? `<div class="supplies bars">${carts.map((c) => `
-          <div class="row-b${clk} ${c.low ? "low" : ""}"${ent(c.entity)} title="${escapeHtml(c.title)}">
+          <div class="row-b${clk} ${c.low ? "low" : ""}${c.stale ? " stale" : ""}"${ent(c.entity)} title="${escapeHtml(supplyTitle(hass, c))}">
             <span class="lbl">${escapeHtml(c.label)}</span>
             ${cartridgeBar(c.level, c.swatch, c.bands)}
             <span class="pct">${c.level === null ? "?" : Math.round(c.level)}%</span>
           </div>`).join("")}</div>`
       : `<div class="supplies" style="grid-template-columns:repeat(${supplyColumns(carts.length, cfg.cartridge_rows)},minmax(0,1fr))">${carts.map((c, i) => `
-          <div class="cart${clk} ${c.low ? "low" : ""}"${ent(c.entity)} title="${escapeHtml(c.title)}">
+          <div class="cart${clk} ${c.low ? "low" : ""}${c.stale ? " stale" : ""}"${ent(c.entity)} title="${escapeHtml(supplyTitle(hass, c))}">
             <span class="wrap">${cartridgeSvg(c.level, c.swatch, i, c.bands)}${c.low ? '<span class="lowdot">!</span>' : ""}</span>
             <span class="pct">${c.level === null ? "?" : Math.round(c.level)}%</span>
             <span class="lbl">${escapeHtml(c.label)}</span>
@@ -1942,7 +2071,7 @@ class PrinterCard extends HTMLElement {
 
     const nf = new Intl.NumberFormat(lang(hass));
     const partsMarkup = parts.length === 0 ? "" : `<div class="parts">${parts.map((c) => `
-          <span class="part${clk} ${c.low ? "low" : ""}"${ent(c.entity)} title="${escapeHtml(c.title)}">
+          <span class="part${clk} ${c.low ? "low" : ""}${c.stale ? " stale" : ""}"${ent(c.entity)} title="${escapeHtml(supplyTitle(hass, c))}">
             <span class="pname">${escapeHtml(c.label)}</span>
             <span class="pval">${c.level === null ? "?" : Math.round(c.level)}%</span>
             <i style="width:${Math.max(0, Math.min(100, c.level === null ? 0 : c.level)) * 0.42}px"></i>
@@ -2078,6 +2207,10 @@ svg .clickable { cursor:pointer; }
 .pct { font-size:12.5px; font-weight:600; color:var(--primary-text-color); }
 .lbl { font-size:11px; color:var(--secondary-text-color); text-align:center; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:100%; }
 .low .pct { color:var(--error-color, #f44336); }
+/* A level the printer is no longer reporting: shown, because it is still the
+   amount of ink in the machine, but faded so it is not read as a live one. */
+.stale .pct, .stale .pval { opacity:.6; }
+.stale .wrap, .stale .bar, .stale i { opacity:.75; }
 .parts { display:flex; flex-wrap:wrap; gap:6px; }
 .part { position:relative; display:flex; align-items:baseline; gap:5px; padding:4px 8px 7px; border-radius:8px; background:var(--secondary-background-color); font-size:11.5px; color:var(--secondary-text-color); }
 .part .pval { font-weight:600; color:var(--primary-text-color); }

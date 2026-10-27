@@ -1697,6 +1697,113 @@ contains('le survol nomme la machine, pas la recherche',
     ed._mergeList('counters', 'sensor.a\n  sensor.b  \n\n').join(','), 'sensor.a,sensor.b');
 }
 
+// == Levels while the printer is offline (#3) =================================
+// Two separate failures hide behind "the levels disappear": the number goes
+// (every integration blanks the state) and sometimes the cartridge itself
+// goes, because auto-detection reads attributes that Home Assistant drops
+// along with the state.
+
+const OFF_KEEP = {};   // unavailable, unit still there: ipp, hpprinter
+const OFF_BARE = {};   // unavailable, attributes blanked: detection goes blind
+for (const [id, st] of Object.entries(TONERS)) {
+  OFF_KEEP[id] = { state: 'unavailable', attributes: st.attributes, last_changed: '2026-09-02T12:00:00Z' };
+  OFF_BARE[id] = { state: 'unavailable', attributes: {}, last_changed: '2026-09-02T12:00:00Z' };
+}
+
+const STALE_CLASS = /class="(cart|row-b|part)[^"]*stale"/;
+check('un niveau frais n\'est jamais marque stale', STALE_CLASS.test(auto), false);
+
+// A card that saw the readings keeps drawing them once the printer goes quiet.
+const seen = new Card();
+seen.setConfig({ entity: 'sensor.printer' });
+seen.hass = makeHass('idle', TONERS);
+seen.hass = makeHass('offline', OFF_KEEP);
+const seenHtml = markup(seen);
+contains('niveau memorise affiche hors ligne', seenHtml, '34%');
+contains('les 4 niveaux memorises sont la', seenHtml, '89%');
+check('le niveau memorise est marque stale', STALE_CLASS.test(seenHtml), true);
+contains('le tooltip annonce un dernier releve', seenHtml, 'Last reading');
+check('pas de point d\'interrogation a la place', /">\?%/.test(seenHtml), false);
+
+// Same, with the attributes blanked: the cartridge itself must survive.
+const bared = new Card();
+bared.setConfig({ entity: 'sensor.printer' });
+bared.hass = makeHass('idle', TONERS);
+bared.hass = makeHass('offline', OFF_BARE);
+const baredHtml = markup(bared);
+contains('cartouche gardee malgre les attributs effaces', baredHtml, '34%');
+check('la cartouche d\'une autre imprimante ne revient pas', /7%/.test(baredHtml), false);
+
+// Nothing seen and nothing to read: the card still must not invent a level.
+check('sans memoire ni attributs, aucune cartouche',
+  /class="cart /.test(render('offline', {}, OFF_BARE)), false);
+
+// A card opened while the printer is already off asks the recorder once.
+const fromDb = new Card();
+fromDb.setConfig({ entity: 'sensor.printer' });
+let asked = 0, askedFor = null, windowDays = null;
+const dbHass = makeHass('offline', OFF_KEEP);
+dbHass.callWS = (msg) => {
+  asked++;
+  askedFor = msg.entity_ids;
+  windowDays = Math.round((Date.parse(msg.end_time) - Date.parse(msg.start_time)) / 86400000);
+  const res = {};
+  for (const id of msg.entity_ids) res[id] = [{ s: '12', lu: Date.parse('2026-09-01T08:00:00Z') / 1000 }];
+  return Promise.resolve(res);
+};
+fromDb.hass = dbHass;
+contains('avant la reponse, le niveau est inconnu', markup(fromDb), '?%');
+check('un seul appel pour toutes les cartouches', asked, 1);
+check('les 4 cartouches sont demandees ensemble', askedFor.length, 4);
+check('la fenetre interrogee fait une semaine', windowDays, 7);
+await new Promise((r) => setTimeout(r, 0));
+const dbHtml = markup(fromDb);
+contains('niveau relu dans le recorder', dbHtml, '12%');
+check('un niveau relu bas reste une alerte', /class="cart[^"]*low stale"/.test(dbHtml), true);
+fromDb.hass = makeHass('offline', OFF_KEEP);
+check('le recorder n\'est pas re-interroge', asked, 1);
+
+// A recorder that answers nothing is not asked again either: a card rendering
+// several times a minute would otherwise hammer it.
+const dbFail = new Card();
+dbFail.setConfig({ entity: 'sensor.printer' });
+let tries = 0;
+const failHass = makeHass('offline', OFF_KEEP);
+failHass.callWS = () => { tries++; return Promise.reject(new Error('recorder busy')); };
+dbFail.hass = failHass;
+await new Promise((r) => setTimeout(r, 0));
+dbFail.hass = failHass;
+check('un echec du recorder n\'est pas rejoue', tries, 1);
+contains('et la carte reste affichable', markup(dbFail), '?%');
+
+// The live reading always wins: a printer back online must not keep showing
+// the remembered number.
+const back = new Card();
+back.setConfig({ entity: 'sensor.printer' });
+back.hass = makeHass('idle', TONERS);
+back.hass = makeHass('offline', OFF_KEEP);
+back.hass = makeHass('idle', { ...TONERS, 'sensor.printer_black_cartridge_hp_cf400x': toner(31) });
+const backHtml = markup(back);
+contains('le niveau frais remplace le memorise', backHtml, '31%');
+check('et il n\'est plus marque stale', STALE_CLASS.test(backHtml), false);
+
+// Pointing the card at another printer must not show it the first one's ink.
+const moved = new Card();
+moved.setConfig({ entity: 'sensor.printer' });
+moved.hass = makeHass('idle', TONERS);
+moved.setConfig({ entity: 'sensor.other_printer' });
+// The first printer's sensors are still registered and still unreadable, so
+// only forgetting them keeps them off the second printer's card.
+moved.hass = {
+  language: 'en',
+  states: {
+    'sensor.other_printer': { state: 'offline', attributes: { friendly_name: 'Other', uri_supported: URI }, last_changed: '2026-09-02T10:00:00Z' },
+    ...OFF_BARE,
+  },
+  callService() {},
+};
+check('changer d\'imprimante oublie les niveaux', /34%/.test(markup(moved)), false);
+
 // ── Config guards ────────────────────────────────────────────────────────────
 
 let threw = false;
