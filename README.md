@@ -42,6 +42,10 @@ The four models, here with `cartridge_style: inside`:
 
 [![The four models](https://raw.githubusercontent.com/ADNPolymerase/ha-printer-card/main/docs/models.png)](https://raw.githubusercontent.com/ADNPolymerase/ha-printer-card/main/docs/models.png)
 
+The three layouts, set with `compact`:
+
+[![The three layouts](https://raw.githubusercontent.com/ADNPolymerase/ha-printer-card/main/docs/layouts.png)](https://raw.githubusercontent.com/ADNPolymerase/ha-printer-card/main/docs/layouts.png)
+
 ## Integrations
 
 Nothing to configure: point the card at the printer's status sensor and it reads the rest off the same device.

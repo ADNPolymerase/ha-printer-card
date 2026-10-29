@@ -42,6 +42,10 @@ Les quatre modèles, ici avec `cartridge_style: inside` :
 
 [![Les quatre modèles](https://raw.githubusercontent.com/ADNPolymerase/ha-printer-card/main/docs/models.fr.png)](https://raw.githubusercontent.com/ADNPolymerase/ha-printer-card/main/docs/models.fr.png)
 
+Les trois dispositions, réglées avec `compact` :
+
+[![Les trois dispositions](https://raw.githubusercontent.com/ADNPolymerase/ha-printer-card/main/docs/layouts.fr.png)](https://raw.githubusercontent.com/ADNPolymerase/ha-printer-card/main/docs/layouts.fr.png)
+
 ## Intégrations
 
 Rien à configurer : désignez le capteur d'état de l'imprimante et la carte lit le reste sur le même appareil.
