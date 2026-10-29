@@ -1056,6 +1056,59 @@ contains('compact: les libelles de boutons sont masques', compactPower,
 contains('les boutons portent leur libelle en infobulle', compactPower, 'title="Off"');
 contains('le lien web aussi', render('idle', { web_url: 'auto' }), 'title="Web"');
 
+// ── #4: the "side" layout ────────────────────────────────────────────────────
+// Asked for on #4: the icon badge drops the one thing this card draws well, so
+// compact gains a third value that keeps the drawing and puts it next to the
+// name, the way ha-appliance-card does.
+const side = render('printing', { compact: 'side' }, TONERS);
+contains('side: le dessin est conserve', side, 'class="illu"');
+check('side: pas de badge', /class="badge"/.test(side), false);
+contains('side: la carte porte la classe side', cardClass(side), 'side');
+contains('side: elle garde aussi les regles compactes', cardClass(side), 'compact');
+contains('side: cartouches en barres comme en compact', side, 'class="supplies bars"');
+contains('side: le dessin est reduit', side, 'ha-card.side .illu');
+// .badge is already a 50% circle, so the needle has to name the rule:
+// 'border-radius:50%' alone passes even with the side rule deleted.
+contains('side: les boutons sont ronds', side,
+  'ha-card.side button, ha-card.side .btn {');
+contains('side: et de la bonne taille', side, 'width:34px; height:34px;');
+// true has meant the icon badge since 1.0: a card saved before #4 must not
+// change layout under the user.
+contains('compact: true reste le badge', render('printing', { compact: true }, TONERS), 'class="badge"');
+contains('compact: "icon" est accepte comme true', render('printing', { compact: 'icon' }, TONERS), 'class="badge"');
+check('compact: "off" rend la carte pleine',
+  /class="illu"/.test(render('printing', { compact: 'off' }, TONERS)), true);
+// The socket joins the action row here too, so it cannot land on the drawing.
+const sidePower = render('printing', { compact: 'side', plug_entity: 'switch.plug', power_entity: 'sensor.w' },
+  { ...plugOn, ...w(318) });
+check('side: la prise est apres le texte et avant les boutons',
+  sidePower.indexOf('class="body"') < sidePower.indexOf('class="corner')
+  && sidePower.indexOf('class="corner') < sidePower.indexOf('class="actions"'), true);
+const sizeOf = (cfg) => { const c = new Card(); c.setConfig({ entity: 'sensor.printer', ...cfg }); return c.getCardSize(); };
+check('side: une rangee de plus que le badge, puisqu\'il y a un dessin', sizeOf({ compact: 'side' }), 3);
+check('compact: le badge reste a deux rangees', sizeOf({ compact: true }), 2);
+// The editor offers the three layouts and preselects the one in the config.
+const edSide = editorHtml({ compact: 'side' });
+contains('editeur: les trois dispositions sont proposees', edSide, 'value="side"');
+check('editeur: side est preselectionne', /value="side" selected/.test(edSide), true);
+check('editeur: true preselectionne l\'icone', /value="icon" selected/.test(editorHtml({ compact: true })), true);
+check('editeur: sans option, c\'est la carte pleine', /value="off" selected/.test(editorHtml({})), true);
+
+// ── #4: relief on the drawings ───────────────────────────────────────────────
+// Also asked for on #4: the four machines were flat fills next to a card that
+// models light. Gradients do it without touching a single path.
+const lit = render('printing', {}, TONERS);
+contains('les coques sont dessinees avec un degrade', lit, 'fill:url(#pc-g-fill)');
+contains('et le degrade est defini dans le meme svg', lit, 'id="pc-g-fill"');
+contains('les creux ont le leur', lit, 'fill:url(#pc-g-recess)');
+contains('la pile de papier aussi', render('printing', { printer_type: 'inkjet' }), 'fill:url(#pc-g-paper)');
+contains('la machine pose une ombre au sol', lit, 'class="ground"');
+// The four models do not share a baseline: one shadow for all of them would
+// float under two.
+const groundCy = (html) => (String(html).match(/class="ground" cx="100" cy="([\d.]+)"/) || [])[1];
+check('l\'ombre suit la base de chaque modele',
+  groundCy(render('idle', { printer_type: 'inkjet' })) !== groundCy(render('idle', { printer_type: 'mfp' })), true);
+
 // A printer sits idle for days and never prints for hours: the state's age was
 // noise, and it was hidden on the one state where it would have meant something.
 check('plus de ligne de duree', /class="since"/.test(render('idle')), false);

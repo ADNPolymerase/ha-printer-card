@@ -36,7 +36,7 @@ No integration is privileged. The state goes through a keyword table rather than
 - **Six states, not five.** A printer saying "toner low" still prints: that is a **warning**, in orange, not a stop. `idle`, `Ready to print`, `Sleep mode`, `Bourrage papier`, `Druckt` and the rest are auto-detected (accent-insensitive, 13 languages) and mapped to ready / printing / sleep / warning / stopped / offline. `state_map` covers anything else.
 - **The socket is the outer truth**: a printer with no mains is offline whatever the last poll said, and with `printing_watts` a wattmeter promotes the state to *printing* for the short jobs that fit between two 60-second polls.
 - **Three cartridge layouts**: cartridge shapes, bars, or `inside`, drawn in the machine itself for a card two rows shorter.
-- **Visual editor** for every option, a **compact mode**, and a `language` option to pin the card to one language whatever Home Assistant is set to.
+- **Visual editor** for every option, **two compact layouts**, and a `language` option to pin the card to one language whatever Home Assistant is set to.
 
 The four models, here with `cartridge_style: inside`:
 
@@ -100,8 +100,8 @@ Copy `ha-printer-card.js` from the [latest release](https://github.com/ADNPolyme
 | `more_info` | `false` to stop values from opening their entity when tapped. Default `true`. |
 | `state_map` | Optional map: raw state → `printing`\|`idle`\|`sleep`\|`warning`\|`stopped`\|`offline`\|`unknown`. |
 | `name` | Card title. Defaults to the device name, then to the entity's friendly name. |
-| `name_position` | `below` (default) keeps the name under the illustration. `top` moves it to a header line at the top left, sharing that line with the socket and its power draw. Compact mode already puts the name beside the icon, so it ignores this. |
-| `compact` | `true` for a colored icon instead of the illustration (cartridges switch to bars, buttons to icons). |
+| `name_position` | `below` (default) keeps the name under the illustration. `top` moves it to a header line at the top left, sharing that line with the socket and its power draw. The compact layouts already put the name beside the drawing, so they ignore this. |
+| `compact` | Layout. `true` for a colored icon instead of the illustration, `side` to keep the drawing and put it next to the name, omitted for the full card. Both compact layouts switch cartridges to bars and buttons to icons. |
 | `show_supplies` / `show_parts` / `show_counters` / `show_message` / `show_power` | `false` to hide the cartridges, the wear parts, the page counters, the printer message, or the socket corner. All default to `true`, and none of them shows if the printer has nothing to put there. |
 | `language` | Pin the card to one language: `en`, `fr`, `de`, `es`, `it`, `nl`, `pt`, `sv`, `no`, `da`, `pl`, `ru`, `zh`. Default: follow Home Assistant. |
 

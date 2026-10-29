@@ -1,4 +1,4 @@
-const CARD_VERSION = "1.2.0";
+const CARD_VERSION = "1.3.0";
 
 console.info(
   "%c HA-PRINTER-CARD %c v" + CARD_VERSION + " ",
@@ -44,7 +44,7 @@ const T = {
     extras_hint: "Extra entities, one per line (shown under the status)",
     shop_url: "Where to buy cartridges, {ref} is the printer model",
     shop_tip: "Order cartridges",
-    name: "Name", compact: "Compact mode (icon instead of illustration)",
+    name: "Name", compact: "Layout", compact_off: "Full", compact_icon: "Compact (icon)", compact_side: "Compact (drawing on the side)",
     language: "Language", language_auto: "Follow Home Assistant",
     image: "Photo of your printer (URL or /local/... path)", printer_type: "Printer type", type_mfp: "All-in-one (with scanner)", type_inkjet: "Inkjet (rear feed)",
     type_laser: "Laser (top output)", type_office: "Office multifunction",
@@ -87,7 +87,7 @@ const T = {
     extras_hint: "Entit\u00e9s suppl\u00e9mentaires, une par ligne (affich\u00e9es sous l'\u00e9tat)",
     shop_url: "O\u00f9 acheter les cartouches, {ref} est le mod\u00e8le de l'imprimante",
     shop_tip: "Commander des cartouches",
-    name: "Nom", compact: "Mode compact (ic\u00f4ne au lieu de l'illustration)",
+    name: "Nom", compact: "Disposition", compact_off: "Compl\u00e8te", compact_icon: "Compacte (ic\u00f4ne)", compact_side: "Compacte (dessin \u00e0 gauche)",
     language: "Langue", language_auto: "Suivre Home Assistant",
     image: "Photo de votre imprimante (URL ou chemin /local/...)", printer_type: "Type d'imprimante", type_mfp: "Multifonction (avec scanner)", type_inkjet: "Jet d'encre (bac arri\u00e8re)",
     type_laser: "Laser (sortie dessus)", type_office: "Multifonction de bureau",
@@ -130,7 +130,7 @@ const T = {
     extras_hint: "Zus\u00e4tzliche Entit\u00e4ten, eine pro Zeile (unter dem Status)",
     shop_url: "Wo Patronen kaufen, {ref} ist das Druckermodell",
     shop_tip: "Patronen bestellen",
-    name: "Name", compact: "Kompaktmodus (Symbol statt Illustration)",
+    name: "Name", compact: "Layout", compact_off: "Vollst\u00e4ndig", compact_icon: "Kompakt (Symbol)", compact_side: "Kompakt (Zeichnung seitlich)",
     language: "Sprache", language_auto: "Home Assistant folgen",
     image: "Foto Ihres Druckers (URL oder /local/... Pfad)", printer_type: "Druckertyp", type_mfp: "Multifunktionsger\u00e4t (mit Scanner)", type_inkjet: "Tintenstrahl (hintere Zufuhr)",
     type_laser: "Laser (Ausgabe oben)", type_office: "B\u00fcro-Multifunktionsger\u00e4t",
@@ -173,7 +173,7 @@ const T = {
     extras_hint: "Entidades adicionales, una por l\u00ednea (bajo el estado)",
     shop_url: "D\u00f3nde comprar cartuchos, {ref} es el modelo de impresora",
     shop_tip: "Pedir cartuchos",
-    name: "Nombre", compact: "Modo compacto (icono en vez de ilustraci\u00f3n)",
+    name: "Nombre", compact: "Disposici\u00f3n", compact_off: "Completa", compact_icon: "Compacta (icono)", compact_side: "Compacta (dibujo al lado)",
     language: "Idioma", language_auto: "Seguir a Home Assistant",
     image: "Foto de su impresora (URL o ruta /local/...)", printer_type: "Tipo de impresora", type_mfp: "Multifunci\u00f3n (con esc\u00e1ner)", type_inkjet: "Inyecci\u00f3n de tinta (bandeja trasera)",
     type_laser: "L\u00e1ser (salida superior)", type_office: "Multifunci\u00f3n de oficina",
@@ -216,7 +216,7 @@ const T = {
     extras_hint: "Entit\u00e0 aggiuntive, una per riga (sotto lo stato)",
     shop_url: "Dove comprare le cartucce, {ref} \u00e8 il modello di stampante",
     shop_tip: "Ordinare cartucce",
-    name: "Nome", compact: "Modalit\u00e0 compatta (icona invece dell'illustrazione)",
+    name: "Nome", compact: "Layout", compact_off: "Completo", compact_icon: "Compatto (icona)", compact_side: "Compatto (disegno a lato)",
     language: "Lingua", language_auto: "Segui Home Assistant",
     image: "Foto della vostra stampante (URL o percorso /local/...)", printer_type: "Tipo di stampante", type_mfp: "Multifunzione (con scanner)", type_inkjet: "Getto d'inchiostro (vassoio posteriore)",
     type_laser: "Laser (uscita superiore)", type_office: "Multifunzione da ufficio",
@@ -259,7 +259,7 @@ const T = {
     extras_hint: "Extra entiteiten, \u00e9\u00e9n per regel (onder de status)",
     shop_url: "Waar cartridges kopen, {ref} is het printermodel",
     shop_tip: "Cartridges bestellen",
-    name: "Naam", compact: "Compacte modus (pictogram in plaats van illustratie)",
+    name: "Naam", compact: "Indeling", compact_off: "Volledig", compact_icon: "Compact (pictogram)", compact_side: "Compact (tekening ernaast)",
     language: "Taal", language_auto: "Home Assistant volgen",
     image: "Foto van uw printer (URL of /local/... pad)", printer_type: "Type printer", type_mfp: "All-in-one (met scanner)", type_inkjet: "Inkjet (invoer achter)",
     type_laser: "Laser (uitvoer boven)", type_office: "Kantoormultifunctional",
@@ -302,7 +302,7 @@ const T = {
     extras_hint: "Entidades adicionais, uma por linha (abaixo do estado)",
     shop_url: "Onde comprar tinteiros, {ref} \u00e9 o modelo da impressora",
     shop_tip: "Encomendar tinteiros",
-    name: "Nome", compact: "Modo compacto (\u00edcone em vez da ilustra\u00e7\u00e3o)",
+    name: "Nome", compact: "Disposi\u00e7\u00e3o", compact_off: "Completa", compact_icon: "Compacta (\u00edcone)", compact_side: "Compacta (desenho ao lado)",
     language: "Idioma", language_auto: "Seguir o Home Assistant",
     image: "Foto da sua impressora (URL ou caminho /local/...)", printer_type: "Tipo de impressora", type_mfp: "Multifun\u00e7\u00f5es (com scanner)", type_inkjet: "Jato de tinta (alimenta\u00e7\u00e3o traseira)",
     type_laser: "Laser (sa\u00edda superior)", type_office: "Multifun\u00e7\u00f5es de escrit\u00f3rio",
@@ -345,7 +345,7 @@ const T = {
     extras_hint: "Extra entiteter, en per rad (under statusen)",
     shop_url: "Var patroner k\u00f6ps, {ref} \u00e4r skrivarmodellen",
     shop_tip: "Best\u00e4ll patroner",
-    name: "Namn", compact: "Kompakt l\u00e4ge (ikon i st\u00e4llet f\u00f6r illustration)",
+    name: "Namn", compact: "Layout", compact_off: "Fullst\u00e4ndig", compact_icon: "Kompakt (ikon)", compact_side: "Kompakt (bild vid sidan)",
     language: "Spr\u00e5k", language_auto: "F\u00f6lj Home Assistant",
     image: "Foto p\u00e5 din skrivare (URL eller /local/... s\u00f6kv\u00e4g)", printer_type: "Skrivartyp", type_mfp: "Allt-i-ett (med skanner)", type_inkjet: "Bl\u00e4ckstr\u00e5le (bakre inmatning)",
     type_laser: "Laser (utmatning upptill)", type_office: "Kontorsmultifunktion",
@@ -388,7 +388,7 @@ const T = {
     extras_hint: "Ekstra entiteter, \u00e9n per linje (under statusen)",
     shop_url: "Hvor patroner kj\u00f8pes, {ref} er skrivermodellen",
     shop_tip: "Bestill patroner",
-    name: "Navn", compact: "Kompakt modus (ikon i stedet for illustrasjon)",
+    name: "Navn", compact: "Oppsett", compact_off: "Fullstendig", compact_icon: "Kompakt (ikon)", compact_side: "Kompakt (tegning ved siden)",
     language: "Spr\u00e5k", language_auto: "F\u00f8lg Home Assistant",
     image: "Bilde av skriveren din (URL eller /local/... bane)", printer_type: "Skrivertype", type_mfp: "Alt-i-ett (med skanner)", type_inkjet: "Blekk (bakre mating)",
     type_laser: "Laser (utmating p\u00e5 toppen)", type_office: "Kontormultifunksjon",
@@ -431,7 +431,7 @@ const T = {
     extras_hint: "Ekstra entiteter, \u00e9n pr. linje (under status)",
     shop_url: "Hvor patroner k\u00f8bes, {ref} er printermodellen",
     shop_tip: "Bestil patroner",
-    name: "Navn", compact: "Kompakt tilstand (ikon i stedet for illustration)",
+    name: "Navn", compact: "Layout", compact_off: "Fuld", compact_icon: "Kompakt (ikon)", compact_side: "Kompakt (tegning ved siden)",
     language: "Sprog", language_auto: "F\u00f8lg Home Assistant",
     image: "Foto af din printer (URL eller /local/... sti)", printer_type: "Printertype", type_mfp: "Alt-i-en (med scanner)", type_inkjet: "Bl\u00e6k (bagerste indf\u00f8ring)",
     type_laser: "Laser (udskrift foroven)", type_office: "Kontormultifunktion",
@@ -474,7 +474,7 @@ const T = {
     extras_hint: "Dodatkowe encje, jedna w wierszu (pod stanem)",
     shop_url: "Gdzie kupi\u0107 kartrid\u017ce, {ref} to model drukarki",
     shop_tip: "Zam\u00f3w kartrid\u017ce",
-    name: "Nazwa", compact: "Tryb kompaktowy (ikona zamiast ilustracji)",
+    name: "Nazwa", compact: "Uk\u0142ad", compact_off: "Pe\u0142ny", compact_icon: "Kompaktowy (ikona)", compact_side: "Kompaktowy (rysunek z boku)",
     language: "J\u0119zyk", language_auto: "Zgodnie z Home Assistant",
     image: "Zdj\u0119cie drukarki (URL lub \u015bcie\u017cka /local/...)", printer_type: "Typ drukarki", type_mfp: "Urz\u0105dzenie wielofunkcyjne (ze skanerem)", type_inkjet: "Atramentowa (podajnik z ty\u0142u)",
     type_laser: "Laserowa (wyj\u015bcie u g\u00f3ry)", type_office: "Biurowe urz\u0105dzenie wielofunkcyjne",
@@ -517,7 +517,7 @@ const T = {
     extras_hint: "\u0414\u043e\u043f\u043e\u043b\u043d\u0438\u0442\u0435\u043b\u044c\u043d\u044b\u0435 \u043e\u0431\u044a\u0435\u043a\u0442\u044b, \u043f\u043e \u043e\u0434\u043d\u043e\u043c\u0443 \u0432 \u0441\u0442\u0440\u043e\u043a\u0435 (\u043f\u043e\u0434 \u0441\u043e\u0441\u0442\u043e\u044f\u043d\u0438\u0435\u043c)",
     shop_url: "\u0413\u0434\u0435 \u043a\u0443\u043f\u0438\u0442\u044c \u043a\u0430\u0440\u0442\u0440\u0438\u0434\u0436\u0438, {ref} \u2014 \u043c\u043e\u0434\u0435\u043b\u044c \u043f\u0440\u0438\u043d\u0442\u0435\u0440\u0430",
     shop_tip: "\u0417\u0430\u043a\u0430\u0437\u0430\u0442\u044c \u043a\u0430\u0440\u0442\u0440\u0438\u0434\u0436\u0438",
-    name: "\u041d\u0430\u0437\u0432\u0430\u043d\u0438\u0435", compact: "\u041a\u043e\u043c\u043f\u0430\u043a\u0442\u043d\u044b\u0439 \u0440\u0435\u0436\u0438\u043c (\u0437\u043d\u0430\u0447\u043e\u043a \u0432\u043c\u0435\u0441\u0442\u043e \u0438\u043b\u043b\u044e\u0441\u0442\u0440\u0430\u0446\u0438\u0438)",
+    name: "\u041d\u0430\u0437\u0432\u0430\u043d\u0438\u0435", compact: "\u041c\u0430\u043a\u0435\u0442", compact_off: "\u041f\u043e\u043b\u043d\u044b\u0439", compact_icon: "\u041a\u043e\u043c\u043f\u0430\u043a\u0442\u043d\u044b\u0439 (\u0437\u043d\u0430\u0447\u043e\u043a)", compact_side: "\u041a\u043e\u043c\u043f\u0430\u043a\u0442\u043d\u044b\u0439 (\u0440\u0438\u0441\u0443\u043d\u043e\u043a \u0441\u0431\u043e\u043a\u0443)",
     language: "\u042f\u0437\u044b\u043a", language_auto: "\u0421\u043b\u0435\u0434\u043e\u0432\u0430\u0442\u044c Home Assistant",
     image: "\u0424\u043e\u0442\u043e \u0432\u0430\u0448\u0435\u0433\u043e \u043f\u0440\u0438\u043d\u0442\u0435\u0440\u0430 (URL \u0438\u043b\u0438 \u043f\u0443\u0442\u044c /local/...)", printer_type: "\u0422\u0438\u043f \u043f\u0440\u0438\u043d\u0442\u0435\u0440\u0430", type_mfp: "\u041c\u0424\u0423 (\u0441\u043e \u0441\u043a\u0430\u043d\u0435\u0440\u043e\u043c)", type_inkjet: "\u0421\u0442\u0440\u0443\u0439\u043d\u044b\u0439 (\u0437\u0430\u0434\u043d\u044f\u044f \u043f\u043e\u0434\u0430\u0447\u0430)",
     type_laser: "\u041b\u0430\u0437\u0435\u0440\u043d\u044b\u0439 (\u0432\u044b\u0432\u043e\u0434 \u0441\u0432\u0435\u0440\u0445\u0443)", type_office: "\u041e\u0444\u0438\u0441\u043d\u043e\u0435 \u041c\u0424\u0423",
@@ -560,7 +560,7 @@ const T = {
     extras_hint: "\u989d\u5916\u5b9e\u4f53\uff0c\u6bcf\u884c\u4e00\u4e2a\uff08\u663e\u793a\u5728\u72b6\u6001\u4e0b\u65b9\uff09",
     shop_url: "\u5728\u54ea\u91cc\u8d2d\u4e70\u58a8\u76d2\uff0c{ref} \u4e3a\u6253\u5370\u673a\u578b\u53f7",
     shop_tip: "\u8ba2\u8d2d\u58a8\u76d2",
-    name: "\u540d\u79f0", compact: "\u7d27\u51d1\u6a21\u5f0f\uff08\u7528\u56fe\u6807\u4ee3\u66ff\u63d2\u56fe\uff09",
+    name: "\u540d\u79f0", compact: "\u5e03\u5c40", compact_off: "\u5b8c\u6574", compact_icon: "\u7d27\u51d1\uff08\u56fe\u6807\uff09", compact_side: "\u7d27\u51d1\uff08\u56fe\u793a\u5728\u4fa7\uff09",
     language: "\u8bed\u8a00", language_auto: "\u8ddf\u968f Home Assistant",
     image: "\u6253\u5370\u673a\u7167\u7247\uff08URL \u6216 /local/... \u8def\u5f84\uff09", printer_type: "\u6253\u5370\u673a\u7c7b\u578b", type_mfp: "\u4e00\u4f53\u673a\uff08\u542b\u626b\u63cf\u4eea\uff09", type_inkjet: "\u55b7\u58a8\uff08\u540e\u8fdb\u7eb8\uff09",
     type_laser: "\u6fc0\u5149\uff08\u9876\u90e8\u51fa\u7eb8\uff09", type_office: "\u529e\u516c\u591a\u529f\u80fd\u4e00\u4f53\u673a",
@@ -1551,6 +1551,13 @@ function webUrl(cfg, st, hass) {
 
 const SHELL = "#dfe3e8";
 const SHELL_DARK = "#adb4bd";
+// #4 asked for drawings closer to ha-appliance-card, which models light
+// rather than filling flat shapes. One lighter and one darker shade are
+// enough: the gradients below read every plate top-lit without redrawing
+// a single path, so the four machines keep their outlines.
+const SHELL_LIGHT = "#f8fafc";
+const SHELL_SHADE = "#a2a9b2";
+const RECESS_DARK = "#979ea7";
 const SHELL_LINE = "#8d939b";
 const PANEL = "#31363c";
 const PAPER = "#ffffff";
@@ -1738,17 +1745,46 @@ function svgOffice(jam, ink) {
 }
 
 const MODELS = {
-  mfp: { draw: svgMfp, bay: { x: 26, y: 52, w: 30, h: 48 } },
-  laser: { draw: svgLaser, bay: { x: 30, y: 52, w: 30, h: 48 } },
-  inkjet: { draw: svgInkjet, bay: { x: 28, y: 56, w: 30, h: 40 } },
-  office: { draw: svgOffice, bay: { x: 132, y: 60, w: 30, h: 44 } },
+  mfp: { draw: svgMfp, bay: { x: 26, y: 52, w: 30, h: 48 }, ground: { cy: 136, rx: 80 } },
+  laser: { draw: svgLaser, bay: { x: 30, y: 52, w: 30, h: 48 }, ground: { cy: 136, rx: 80 } },
+  inkjet: { draw: svgInkjet, bay: { x: 28, y: 56, w: 30, h: 40 }, ground: { cy: 125, rx: 82 } },
+  office: { draw: svgOffice, bay: { x: 132, y: 60, w: 30, h: 44 }, ground: { cy: 135, rx: 72 } },
 };
+
+// Gradients live in the same <svg> as the shapes that reference them, and
+// a shadow root resolves url(#id) inside its own tree, so two cards on one
+// dashboard cannot collide on these ids.
+function shellDefs() {
+  return `
+  <defs>
+    <linearGradient id="pc-g-fill" x1="0" y1="0" x2=".3" y2="1">
+      <stop offset="0" stop-color="${SHELL_LIGHT}"/>
+      <stop offset=".38" stop-color="${SHELL}"/>
+      <stop offset="1" stop-color="${SHELL_SHADE}"/>
+    </linearGradient>
+    <linearGradient id="pc-g-recess" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="${RECESS_DARK}"/>
+      <stop offset="1" stop-color="${SHELL_DARK}"/>
+    </linearGradient>
+    <linearGradient id="pc-g-paper" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="${PAPER}"/>
+      <stop offset="1" stop-color="#e7eaee"/>
+    </linearGradient>
+    <radialGradient id="pc-g-ground">
+      <stop offset="0" stop-color="#000" stop-opacity=".2"/>
+      <stop offset=".7" stop-color="#000" stop-opacity=".07"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0"/>
+    </radialGradient>
+  </defs>`;
+}
 
 function printerSvg(norm, cfg, carts, noPaper) {
   const model = MODELS[cfg.printer_type] || MODELS.mfp;
   const ink = carts && carts.length ? inkBay(carts, model.bay, cfg.more_info !== false) : "";
   return `
 <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" role="img">
+  ${shellDefs()}
+  <ellipse class="ground" cx="100" cy="${model.ground.cy}" rx="${model.ground.rx}" ry="5.5"/>
   ${model.draw(norm === "stopped", ink, noPaper)}
 </svg>`;
 }
@@ -1823,7 +1859,8 @@ class PrinterCard extends HTMLElement {
 
   getCardSize() {
     const cfg = this._config || {};
-    if (cfg.compact) return 2;
+    if (cfg.compact === "side") return 3;
+    if (cfg.compact && cfg.compact !== "off") return 2;
     return cfg.cartridge_style === "inside" && !cfg.image ? 3 : 4;
   }
 
@@ -2001,8 +2038,14 @@ class PrinterCard extends HTMLElement {
     // which is the shortest the card gets while keeping the illustration. It
     // needs that illustration, so compact mode falls back to bars -- and so
     // does a photo, since nothing here knows where that machine keeps its ink.
-    const inside = cfg.cartridge_style === "inside" && !cfg.compact && !photo;
-    const bars = cfg.cartridge_style === "bars" || cfg.compact;
+    // #4: "side" keeps the drawing and puts it next to the name, the way
+    // ha-appliance-card does, instead of swapping it for an icon. true still
+    // means the icon badge, so no existing configuration changes layout.
+    const compactMode = cfg.compact === "side" ? "side"
+      : cfg.compact && cfg.compact !== "off" ? "icon" : "";
+    const isCompact = !!compactMode;
+    const inside = cfg.cartridge_style === "inside" && !isCompact && !photo;
+    const bars = cfg.cartridge_style === "bars" || isCompact;
     // Only when there is something to show: a plug_entity pointing at an
     // entity that no longer exists would otherwise draw a crossed-out plug,
     // which reads as "socket off" rather than "entity missing".
@@ -2010,12 +2053,12 @@ class PrinterCard extends HTMLElement {
     // Asked for on #2: the name on the top line, sharing it with the socket
     // instead of sitting under the picture. Compact mode already puts the two
     // side by side, so it has nothing to gain and keeps its own layout.
-    const topName = cfg.name_position === "top" && !cfg.compact;
+    const topName = cfg.name_position === "top" && !isCompact;
     const shop = shopLink(hass, cfg, cfg.entity, name);
 
 
     const signature = JSON.stringify([
-      norm, name, msg, url, lang(hass), cfg.compact, cfg.printer_type,
+      norm, name, msg, url, lang(hass), compactMode, cfg.printer_type,
       cfg.cartridge_style, showPower, plugOn, watts, !!cfg.print_entity,
       inside, noPaper, counters, cfg.cartridge_rows, photo, cfg.counters_align,
       topName, shop && shop.url, extras.map((e) => [e.entity, e.label, e.value]),
@@ -2123,8 +2166,9 @@ ha-card.compact { padding:12px 16px; gap:10px; }
 .printing .photo .frame::after { animation:pc-photo-ring 2.2s ease-in-out infinite; }
 @keyframes pc-photo-ring { 0%, 100% { opacity:0; } 50% { opacity:.9; } }
 ha-card.offline .illu { opacity:.55; }
-.shell .fill { fill:${SHELL}; stroke:${SHELL_LINE}; stroke-width:1.6; }
-.shell .recess { fill:${SHELL_DARK}; }
+.shell .fill { fill:url(#pc-g-fill); stroke:${SHELL_LINE}; stroke-width:1.6; }
+.shell .recess { fill:url(#pc-g-recess); }
+.ground { fill:url(#pc-g-ground); }
 .shell .seam { stroke:${SHELL_LINE}; stroke-width:1.2; opacity:.55; }
 .slot { fill:${PANEL}; }
 .panel rect { fill:${PANEL}; }
@@ -2135,7 +2179,7 @@ ha-card.offline .illu { opacity:.55; }
 .sheet-clip { clip-path:url(#pc-slot); }
 .sheet .sheet-page { fill:${PAPER}; stroke:${PAPER_LINE}; stroke-width:1.4; }
 .sheet .sheet-text rect { fill:${PAPER_LINE}; }
-.paper-stack { fill:${PAPER}; stroke:${PAPER_LINE}; stroke-width:1.4; }
+.paper-stack { fill:url(#pc-g-paper); stroke:${PAPER_LINE}; stroke-width:1.4; }
 .sheet { opacity:0; --pc-hidden:-56px; }
 .printing .sheet { animation:pc-sheet 2.6s ease-in-out infinite; }
 .sheet.jam { opacity:1; transform:translateY(calc(var(--pc-hidden) * .55)) rotate(-2.5deg); }
@@ -2186,6 +2230,11 @@ ha-card.compact .name, ha-card.compact .state, ha-card.compact .msg {
   overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 ha-card.compact button, ha-card.compact .btn { min-width:0; padding:8px 10px; }
 ha-card.compact button span, ha-card.compact .btn span { display:none; }
+ha-card.side .illu, ha-card.side .illu.photo { width:88px; max-width:88px; margin:0; flex:none; }
+ha-card.side .corner { align-self:center; }
+ha-card.side button, ha-card.side .btn {
+  width:34px; height:34px; padding:0; border-radius:50%; justify-content:center; flex:none;
+}
 .actions { display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end; flex:0 0 auto; }
 button, .btn { display:flex; align-items:center; justify-content:center; gap:6px; padding:8px 13px; border:none; border-radius:12px; cursor:pointer; font:inherit; font-size:13px; text-decoration:none; background:var(--secondary-background-color); color:var(--primary-text-color); }
 button:hover, .btn:hover { filter:brightness(.93); }
@@ -2235,11 +2284,11 @@ svg .clickable { cursor:pointer; }
   .printing .sheet { opacity:1; transform:none; }
 }
       </style>
-      <ha-card class="${norm}${cfg.compact ? " compact" : ""}">
-        ${cfg.compact || topName ? "" : corner}
+      <ha-card class="${norm}${isCompact ? " compact" : ""}${compactMode === "side" ? " side" : ""}">
+        ${isCompact || topName ? "" : corner}
         ${headMarkup}
         <div class="top">
-          ${cfg.compact
+          ${compactMode === "icon"
             ? `<div class="badge"><ha-icon icon="${STATE_ICONS[norm]}"></ha-icon></div>`
             : photo
             ? `<div class="illu photo">
@@ -2249,7 +2298,7 @@ svg .clickable { cursor:pointer; }
                  </div>
                </div>`
             : `<div class="illu">${printerSvg(norm, cfg, inside ? carts : null, noPaper)}</div>`}
-          ${cfg.compact ? `<div class="bottom">
+          ${isCompact ? `<div class="bottom">
             <div class="body${clk}"${ent(cfg.entity)}>
               <div class="name">${escapeHtml(name)}</div>
               <div class="state" title="${escapeHtml(st ? String(st.state) : "")}">${t(hass, norm)}</div>
@@ -2260,7 +2309,7 @@ svg .clickable { cursor:pointer; }
             <div class="actions">${buttons}</div>
           </div>` : ""}
         </div>
-        ${cfg.compact ? "" : `<div class="bottom">
+        ${isCompact ? "" : `<div class="bottom">
           <div class="body${clk}"${ent(cfg.entity)}>
             ${topName ? "" : `<div class="name">${escapeHtml(name)}</div>`}
             <div class="state" title="${escapeHtml(st ? String(st.state) : "")}">${t(hass, norm)}</div>
@@ -2536,8 +2585,13 @@ details .form { padding-top:10px; }
                   .join("")}
               </select>
             </div>
-            <div class="row row-inline">
-              <label><input type="checkbox" data-field="compact" ${cfg.compact ? "checked" : ""}/> ${t(hass, "compact")}</label>
+            <div class="row">
+              <label>${t(hass, "compact")}</label>
+              <select data-field="compact">
+                <option value="off" ${!cfg.compact || cfg.compact === "off" ? "selected" : ""}>${t(hass, "compact_off")}</option>
+                <option value="icon" ${cfg.compact && cfg.compact !== "off" && cfg.compact !== "side" ? "selected" : ""}>${t(hass, "compact_icon")}</option>
+                <option value="side" ${cfg.compact === "side" ? "selected" : ""}>${t(hass, "compact_side")}</option>
+              </select>
             </div>
           </div>
         </details>
@@ -2597,7 +2651,10 @@ details .form { padding-top:10px; }
         const field = el.dataset.field;
         // Every select has a default -- only store the key when it differs,
         // so the YAML stays as short as what the user actually chose.
-        const dflt = { printer_type: "mfp", cartridge_style: "cartridges", language: "auto", cartridge_rows: "auto", cartridge_order: "color", counters_align: "left", name_position: "below" }[field];
+        const dflt = { printer_type: "mfp", cartridge_style: "cartridges", language: "auto", cartridge_rows: "auto", cartridge_order: "color", counters_align: "left", name_position: "below", compact: "off" }[field];
+        // compact predates its two extra choices: keep writing true for the
+        // icon layout so a card saved by an older editor still reads the same.
+        if (field === "compact") return this._set(field, el.value === "off" ? undefined : el.value === "icon" ? true : el.value);
         this._set(field, el.value === dflt ? undefined : el.value);
       });
     });

@@ -36,7 +36,7 @@ Aucune intégration n'est privilégiée. L'état passe par une table de mots-cl�
 - **Six états, pas cinq.** Une imprimante qui dit « toner low » imprime encore : c'est un **avertissement**, en orange, pas un arrêt. `idle`, `Ready to print`, `Sleep mode`, `Bourrage papier`, `Druckt` et les autres sont détectés automatiquement (insensible aux accents, 13 langues) et ramenés à prête / impression / veille / attention / arrêtée / hors ligne. `state_map` couvre le reste.
 - **La prise fait foi** : une imprimante sans courant est hors ligne quoi qu'ait dit le dernier relevé, et avec `printing_watts` un wattmètre force l'état *impression* pour les petits travaux qui tiennent entre deux relevés de 60 secondes.
 - **Trois dispositions de cartouches** : en cartouches, en barres, ou `inside`, dessinées dans la machine pour une carte deux lignes plus courte.
-- **Éditeur visuel** pour toutes les options, un **mode compact**, et une option `language` pour figer la carte dans une langue quelle que soit celle de Home Assistant.
+- **Éditeur visuel** pour toutes les options, **deux dispositions compactes**, et une option `language` pour figer la carte dans une langue quelle que soit celle de Home Assistant.
 
 Les quatre modèles, ici avec `cartridge_style: inside` :
 
@@ -100,8 +100,8 @@ Copier `ha-printer-card.js` depuis la [dernière release](https://github.com/ADN
 | `more_info` | `false` pour que les valeurs n'ouvrent plus leur entité au clic. Par défaut `true`. |
 | `state_map` | Table facultative : état brut → `printing`\|`idle`\|`sleep`\|`warning`\|`stopped`\|`offline`\|`unknown`. |
 | `name` | Titre de la carte. Par défaut le nom de l'appareil, puis le nom convivial de l'entité. |
-| `name_position` | `below` (défaut) garde le nom sous l'illustration. `top` le remonte dans une ligne d'en-tête en haut à gauche, où il partage la ligne avec la prise et sa consommation. Le mode compact pose déjà le nom à côté de l'icône et ignore l'option. |
-| `compact` | `true` pour une icône colorée au lieu de l'illustration (cartouches en barres, boutons en icônes). |
+| `name_position` | `below` (défaut) garde le nom sous l'illustration. `top` le remonte dans une ligne d'en-tête en haut à gauche, où il partage la ligne avec la prise et sa consommation. Les dispositions compactes posent déjà le nom à côté du dessin et ignorent l'option. |
+| `compact` | Disposition. `true` pour une icône colorée au lieu de l'illustration, `side` pour garder le dessin et le poser à côté du nom, absent pour la carte pleine. Les deux dispositions compactes passent les cartouches en barres et les boutons en icônes. |
 | `show_supplies` / `show_parts` / `show_counters` / `show_message` / `show_power` | `false` pour masquer les cartouches, les pièces d'usure, les compteurs de pages, le message de l'imprimante, ou le coin prise. Tous à `true` par défaut, et aucun ne s'affiche si l'imprimante n'a rien à y mettre. |
 | `language` | Fige la carte dans une langue : `en`, `fr`, `de`, `es`, `it`, `nl`, `pt`, `sv`, `no`, `da`, `pl`, `ru`, `zh`. Par défaut, suit Home Assistant. |
 
