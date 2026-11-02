@@ -1,5 +1,7 @@
 # HA Printer Card
 
+<a href="https://github.com/ADNPolymerase/ha-printer-card/blob/main/README.fr.md"><img src="https://raw.githubusercontent.com/ADNPolymerase/ha-printer-card/main/docs/lang-fr.svg" alt="Lire en français" height="60"></a>
+
 [![hacs_badge](https://img.shields.io/badge/HACS-Default-blue.svg)](https://github.com/hacs/default)
 [![GitHub Release](https://img.shields.io/github/v/release/ADNPolymerase/ha-printer-card?sort=semver)](https://github.com/ADNPolymerase/ha-printer-card/releases)
 [![HACS Action](https://github.com/ADNPolymerase/ha-printer-card/actions/workflows/hacs.yml/badge.svg)](https://github.com/ADNPolymerase/ha-printer-card/actions/workflows/hacs.yml)
@@ -16,7 +18,6 @@ A Lovelace card for printers: a sheet that really slides out while the machine p
 No integration is privileged. The state goes through a keyword table rather than one vendor's vocabulary, and the supplies are found by looking at the printer's device rather than at a naming convention, so a Brother drum, a Samsung toner, an Epson maintenance box and a Dell `sensor.black` all land on the card.
 
 > Feedback and issues welcome.
-> 🇫🇷 [Lire en français](README.fr.md)
 
 [![HA Printer Card screenshot](https://raw.githubusercontent.com/ADNPolymerase/ha-printer-card/main/docs/screenshot.png)](https://raw.githubusercontent.com/ADNPolymerase/ha-printer-card/main/docs/screenshot.png)
 

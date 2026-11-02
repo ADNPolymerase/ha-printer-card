@@ -1,5 +1,7 @@
 # HA Printer Card
 
+<a href="https://github.com/ADNPolymerase/ha-printer-card/blob/main/README.md"><img src="https://raw.githubusercontent.com/ADNPolymerase/ha-printer-card/main/docs/lang-en.svg" alt="Read in English" height="60"></a>
+
 [![hacs_badge](https://img.shields.io/badge/HACS-Default-blue.svg)](https://github.com/hacs/default)
 [![GitHub Release](https://img.shields.io/github/v/release/ADNPolymerase/ha-printer-card?sort=semver)](https://github.com/ADNPolymerase/ha-printer-card/releases)
 [![HACS Action](https://github.com/ADNPolymerase/ha-printer-card/actions/workflows/hacs.yml/badge.svg)](https://github.com/ADNPolymerase/ha-printer-card/actions/workflows/hacs.yml)
@@ -16,7 +18,6 @@ Une carte Lovelace pour imprimante : une feuille qui sort vraiment pendant l'imp
 Aucune intégration n'est privilégiée. L'état passe par une table de mots-clés plutôt que par le vocabulaire d'un constructeur, et les consommables sont trouvés en regardant l'appareil de l'imprimante plutôt qu'une convention de nommage : un tambour Brother, un toner Samsung, une boîte de maintenance Epson et un `sensor.black` Dell arrivent tous sur la carte.
 
 > Retours et issues bienvenus.
-> 🇬🇧 [Read in English](README.md)
 
 [![Capture HA Printer Card](https://raw.githubusercontent.com/ADNPolymerase/ha-printer-card/main/docs/screenshot.fr.png)](https://raw.githubusercontent.com/ADNPolymerase/ha-printer-card/main/docs/screenshot.fr.png)
 
