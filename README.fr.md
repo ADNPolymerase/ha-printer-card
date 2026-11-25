@@ -82,9 +82,9 @@ Copier `ha-printer-card.js` depuis la [dernière release](https://github.com/ADN
 <details>
 <summary>« The ha-printer-card directory belongs to juju35/ha-printer-card »</summary>
 
-Une autre carte d'imprimante, [juju35/ha-printer-card](https://github.com/juju35/ha-printer-card), porte le même nom de dépôt que celle-ci. HACS installe une carte dans `config/www/community/<nom du dépôt>` : les deux réclament donc le dossier `ha-printer-card`, et seule la première installée le garde.
+Jusqu'au 25 novembre 2026, une autre carte d'imprimante portait le même nom de dépôt que celle-ci. HACS installe une carte dans `config/www/community/<nom du dépôt>` : les deux réclamaient donc le dossier `ha-printer-card`, et seule la première installée le gardait. Cette carte s'appelle désormais [juju35/ha-printer-scanner-card](https://github.com/juju35/ha-printer-scanner-card), les deux peuvent donc cohabiter.
 
-Les cartes elles-mêmes ne se marchent pas dessus (`custom:printer-card` là-bas, `custom:ha-printer-card` ici), c'est uniquement le dossier. Pour passer de l'une à l'autre : désinstaller l'autre carte et retirer son dépôt de HACS, vérifier que `/config/www/community/ha-printer-card/` a disparu, redémarrer Home Assistant, installer celle-ci, puis vider le cache du navigateur.
+Si vous l'aviez installée avant le renommage, le dossier appartient encore à l'ancien dépôt : désinstallez cette carte et retirez son dépôt de HACS, vérifiez que `/config/www/community/ha-printer-card/` a disparu, redémarrez Home Assistant, puis installez celle-ci et videz le cache du navigateur.
 </details>
 
 ## Configuration

@@ -82,9 +82,9 @@ Copy `ha-printer-card.js` from the [latest release](https://github.com/ADNPolyme
 <details>
 <summary>"The ha-printer-card directory belongs to juju35/ha-printer-card"</summary>
 
-Another printer card, [juju35/ha-printer-card](https://github.com/juju35/ha-printer-card), carries the same repository name as this one. HACS installs a card into `config/www/community/<repository name>`, so both claim the `ha-printer-card` folder and only the one installed first keeps it.
+Until 25 November 2026 another printer card carried the same repository name. HACS installs a card into `config/www/community/<repository name>`, so both claimed the `ha-printer-card` folder and only the one installed first kept it. That card has since been renamed to [juju35/ha-printer-scanner-card](https://github.com/juju35/ha-printer-scanner-card), so the two can now live side by side.
 
-The cards themselves do not clash (`custom:printer-card` there, `custom:ha-printer-card` here), only the folder does. To switch: uninstall the other card and remove its repository from HACS, check that `/config/www/community/ha-printer-card/` is gone, restart Home Assistant, install this one, then hard-refresh your browser.
+If you installed it before the rename, the folder still belongs to the old repository: uninstall that card and remove its repository from HACS, check that `/config/www/community/ha-printer-card/` is gone, restart Home Assistant, then install this one and hard-refresh your browser.
 </details>
 
 ## Configuration
