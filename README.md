@@ -79,6 +79,14 @@ If the search finds nothing, HACS has not refreshed its list yet. Add it as a cu
 Copy `ha-printer-card.js` from the [latest release](https://github.com/ADNPolymerase/ha-printer-card/releases) into `/config/www/`, then add it as a dashboard resource of type *JavaScript module* pointing at `/local/ha-printer-card.js`.
 </details>
 
+<details>
+<summary>"The ha-printer-card directory belongs to juju35/ha-printer-card"</summary>
+
+Another printer card, [juju35/ha-printer-card](https://github.com/juju35/ha-printer-card), carries the same repository name as this one. HACS installs a card into `config/www/community/<repository name>`, so both claim the `ha-printer-card` folder and only the one installed first keeps it.
+
+The cards themselves do not clash (`custom:printer-card` there, `custom:ha-printer-card` here), only the folder does. To switch: uninstall the other card and remove its repository from HACS, check that `/config/www/community/ha-printer-card/` is gone, restart Home Assistant, install this one, then hard-refresh your browser.
+</details>
+
 ## Configuration
 
 | Option | Description |

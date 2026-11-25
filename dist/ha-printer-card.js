@@ -1,4 +1,4 @@
-const CARD_VERSION = "1.3.2";
+const CARD_VERSION = "1.3.3";
 
 console.info(
   "%c HA-PRINTER-CARD %c v" + CARD_VERSION + " ",

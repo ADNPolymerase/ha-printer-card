@@ -79,6 +79,14 @@ Si la recherche ne trouve rien, c'est que HACS n'a pas encore rafraîchi sa list
 Copier `ha-printer-card.js` depuis la [dernière release](https://github.com/ADNPolymerase/ha-printer-card/releases) dans `/config/www/`, puis l'ajouter en ressource de tableau de bord, type *module JavaScript*, pointant sur `/local/ha-printer-card.js`.
 </details>
 
+<details>
+<summary>« The ha-printer-card directory belongs to juju35/ha-printer-card »</summary>
+
+Une autre carte d'imprimante, [juju35/ha-printer-card](https://github.com/juju35/ha-printer-card), porte le même nom de dépôt que celle-ci. HACS installe une carte dans `config/www/community/<nom du dépôt>` : les deux réclament donc le dossier `ha-printer-card`, et seule la première installée le garde.
+
+Les cartes elles-mêmes ne se marchent pas dessus (`custom:printer-card` là-bas, `custom:ha-printer-card` ici), c'est uniquement le dossier. Pour passer de l'une à l'autre : désinstaller l'autre carte et retirer son dépôt de HACS, vérifier que `/config/www/community/ha-printer-card/` a disparu, redémarrer Home Assistant, installer celle-ci, puis vider le cache du navigateur.
+</details>
+
 ## Configuration
 
 | Option | Description |
